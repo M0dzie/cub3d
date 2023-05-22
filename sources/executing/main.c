@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/05/22 16:45:04 by msapin           ###   ########.fr       */
+/*   Updated: 2023/05/22 23:12:15 by mehdisapin       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@ int	display_error(char *name, int num_error)
 	err[5] = ": cannot get file";
 	err[6] = ": missing texture file";
 	err[7] = ": wrong number of arguments";
-	err[8] = ": not recognized";
+	err[8] = ": no map description";
+	err[9] = ": map not long enough";
+	err[10] = ": map not wide enough";
 	// err[6] = ": invalid map\n\nneed to be surround by wall";
 	// err[7] = ": invalid map\n\nmust be composed of 0, 1, C, E, P char only";
 	// err[10] = ": cannot initialize mlx";
@@ -94,7 +96,24 @@ int	fill_map(t_cub *cub, char *file_name)
 	return (0);
 }
 
-int	init_map(t_cub *cub)
+void	get_map_dimension(t_cub *cub)
+{
+	int	i;
+	int	tmp_width;
+
+	cub->map->height = ft_arrlen(cub->file_split + 6);
+	i = 5;
+	cub->map->width = 0;
+	tmp_width = 0;
+	while (cub->file_split[++i])
+	{
+		tmp_width = ft_strlen_null(cub->file_split[i]);
+		if (cub->map->width < tmp_width)
+			cub->map->width = tmp_width;
+	}
+}
+
+int	init_map(t_cub *cub, char **argv)
 {
 	int	num_error;
 	(void)num_error;
@@ -103,7 +122,16 @@ int	init_map(t_cub *cub)
 	if (!cub->map)
 		return (display_error("cub->map", 4));
 	cub->map->array = NULL;
-	printf("%s\n", (cub->file_split + 6)[0]);
+	if (!cub->file_split[6])
+		return (display_error(argv[1], 8));
+	get_map_dimension(cub);
+	if (cub->map->height < 3)
+		return (display_error(argv[1], 9));
+	if (cub->map->width < 3)
+		return (display_error(argv[1], 10));
+
+	// printf("height map %d\n", cub->map->height);
+	// printf("%s\n", (cub->file_split + 6)[0]);
 	// num_error = fill_map(vars, file_name);
 	// if (num_error != 0)
 	// 	return (num_error);
@@ -253,27 +281,11 @@ int	display_error_texture(t_cub *cub)
 	if (cub->fd_north <= 0 || cub->fd_south <= 0 || cub->fd_west <= 0 || cub->fd_east <= 0 || !cub->rgb_floor || !cub->rgb_roof)
 		ft_putstr_fd("Error\n", 2);
 
-
 	if (cub->fd_north == 0 || cub->fd_south == 0 || cub->fd_west == 0 || cub->fd_east == 0)
-		// ft_putstr_fd("missing texture line:\n\n", 2);
 		display_missing_texture(cub);
 	
-
 	if (cub->fd_north < 0 || cub->fd_south < 0 || cub->fd_west < 0 || cub->fd_east < 0)
-		// ft_putstr_fd("no such texture file:\n\n", 2);
 		display_invalid_texture(cub);
-
-
-	// if (cub->fd_north <= 0)
-	// 	ft_putstr_fd("north:  NO ./path_to_the_north_texture\n", 2);
-	// if (cub->fd_south <= 0)
-	// 	ft_putstr_fd("south:  SO ./path_to_the_south_texture\n", 2);
-	// if (cub->fd_west <= 0)
-	// 	ft_putstr_fd("west:   WE ./path_to_the_west_texture\n", 2);
-	// if (cub->fd_east <= 0)
-	// 	ft_putstr_fd("east:   EA ./path_to_the_east_texture\n", 2);
-
-
 
 	if ((cub->fd_north <= 0 || cub->fd_south <= 0 || cub->fd_west <= 0 || cub->fd_east <= 0) && (!cub->rgb_floor || !cub->rgb_roof))
 		ft_putstr_fd("\n", 2);
@@ -303,14 +315,13 @@ void	init_fds(t_cub *cub)
 
 int	init_texture(t_cub *cub)
 {
-	// char	**file_split;
 	char	**line_split;
 	int		i;
 
 	init_fds(cub);
 	cub->file_split = ft_split(cub->file, '\n');
 	i = -1;
-	while (cub->file_split[++i] && i < 6)
+	while (cub->file_split[++i] && cub->file_split[i][0] != '1' && i < 6)
 	{
 		line_split = ft_split(cub->file_split[i], ' ');
 		if (ft_arrlen(line_split) != 2)
@@ -363,9 +374,8 @@ int	main(int argc, char **argv)
 	if (init_file(cub, argv[1]) != 0)
 		return (free(cub), -1);
 	if (init_texture(cub) != 0)
-		// return (ft_arrfree(cub->file_split), free(cub->file), free(cub), -1);
 		return (free_cub(cub), -1);
-	if (init_map(cub) != 0)
+	if (init_map(cub, argv) != 0)
 		return (-1);
 	return (free_cub(cub), 0);
 }
