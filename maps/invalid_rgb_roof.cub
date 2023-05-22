@@ -4,7 +4,7 @@ WE textures/west_texture
 EA textures/east_texture
 
 F 220,100,0
-C 225,30,0
+C -225,30,0
 
 111111
 100101

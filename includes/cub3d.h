@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
+/*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/05/21 17:05:27 by mehdisapin       ###   ########.fr       */
+/*   Updated: 2023/05/22 15:13:26 by msapin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,21 +24,17 @@ typedef struct s_map
 
 typedef struct s_cub
 {
-	// fds for textures
+	// fds textures, found if better to use fd int or string as path
 	int	fd_north;
 	int	fd_south;
 	int	fd_west;
 	int	fd_east;
 
-	// rgb color, found if better to use int tab or string
-	int *rgb_floor;
-	int *rgb_roof;
-
-	// structure for map
+	int 			*rgb_floor;
+	int 			*rgb_roof;
+	char			*file;
+	char			**file_split;
 	struct s_map	*map;
-
-	// tmp file
-	char	*file;
 }					t_cub;
 
 #endif
