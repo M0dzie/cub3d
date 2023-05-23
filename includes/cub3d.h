@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/05/22 15:13:26 by msapin           ###   ########.fr       */
+/*   Updated: 2023/05/23 17:56:09 by mehdisapin       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,16 @@ typedef struct s_cub
 	char			**file_split;
 	struct s_map	*map;
 }					t_cub;
+
+int	are_rgb_valid(t_cub *cub);
+int	check_border(t_cub *cub);
+int	display_error(char *name, int num_error);
+int	display_error_texture(t_cub *cub);
+int	init_file(t_cub *cub, char *file_name);
+int	init_map(t_cub *cub, char **argv);
+int	init_texture(t_cub *cub);
+int	parsing_map(t_cub *cub, char **argv);
+
+void	free_cub(t_cub *cub);
 
 #endif
