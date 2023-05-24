@@ -6,7 +6,7 @@
 /*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/05/23 17:59:21 by mehdisapin       ###   ########.fr       */
+/*   Updated: 2023/05/24 19:30:04 by mehdisapin       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,6 @@ int	parsing_map(t_cub *cub, char **argv)
 	if (init_texture(cub) != 0)
 		return (free_cub(cub), -1);
 	if (init_map(cub, argv) != 0)
-		return (-1);
+		return (free_cub(cub), -1);
 	return (0);
 }
