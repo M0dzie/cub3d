@@ -6,7 +6,7 @@
 /*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 17:17:04 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/05/23 18:02:26 by mehdisapin       ###   ########.fr       */
+/*   Updated: 2023/05/24 18:05:47 by mehdisapin       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ void	display_path(t_cub *cub, char *id, char *str)
 			ft_putstr_fd(str, 2);
 			ft_putendl_fd(line_split[1], 2);
 		}
+		ft_arrfree(line_split);
 	}
-	ft_arrfree(line_split);
 }
 
 void	display_missing_texture(t_cub *cub)
