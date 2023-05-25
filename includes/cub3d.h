@@ -3,24 +3,81 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
+/*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/05/23 17:56:09 by mehdisapin       ###   ########.fr       */
+/*   Updated: 2023/05/25 16:29:22 by msapin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 # include "libft/includes/libft.h"
+# include "mlx_linux/mlx.h"
 # include <stdio.h>
+
+# ifndef GRID_MINI
+#  define GRID_MINI 30
+# endif
+
+# ifndef GRID_MAP
+#  define GRID_MAP 100
+# endif
+
+# define WIN_WIDTH 1920
+# define WIN_HEIGHT 1080
+
+# ifndef KEYS
+#  define ESC 65307
+#  define W 119
+#  define A 97
+#  define S 115
+#  define D 100
+#  define L_ARROW 65361
+#  define R_ARROW 65363
+# endif
+
+typedef struct s_mlx
+{
+	void	*ptr;
+	void	*win;
+}			t_mlx;
+
+typedef struct s_data
+{
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}			t_data;
 
 typedef struct s_map
 {
 	char	**array;
 	int		width;
 	int		height;
+
+	// tests
+	int		min_x;
+	int		min_y;
+	int		max_x;
+	int		max_y;
 }			t_map;
+
+typedef struct s_player
+{
+	int		pos_x;
+	int		pos_y;
+	int		mini_x;
+	int		mini_y;
+	int		orien;
+}			t_player;
+
+typedef struct s_imgs
+{
+	t_data	minimap;
+}			t_imgs;
 
 typedef struct s_cub
 {
@@ -35,6 +92,10 @@ typedef struct s_cub
 	char			*file;
 	char			**file_split;
 	struct s_map	*map;
+	struct s_player	*p;
+	void			*mlx;
+	void			*win;
+	t_imgs			*imgs;
 }					t_cub;
 
 int	are_rgb_valid(t_cub *cub);
@@ -46,6 +107,10 @@ int	init_map(t_cub *cub, char **argv);
 int	init_texture(t_cub *cub);
 int	parsing_map(t_cub *cub, char **argv);
 
+void	generate_minimap(t_cub *cub);
 void	free_cub(t_cub *cub);
+void	init_mlx(t_cub *cub);
+void	init_raycasting(t_cub *cub);
+void	move_player(t_cub *cub);
 
 #endif

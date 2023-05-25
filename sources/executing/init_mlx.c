@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   init_mlx.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
+/*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:11:26 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/05/25 11:23:53 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/05/25 16:27:35 by msapin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
-#include "../../includes/thomas.h"
+// #include "../../includes/thomas.h"
 
 static int	ft_exit(void)
 {
@@ -19,27 +19,46 @@ static int	ft_exit(void)
 	return (1);
 }
 
-static int	check_keycode(int keycode)
+static int	check_keycode(int keycode, t_cub *cub)
 {
 	if (keycode == ESC)
 		ft_exit();
-	// if (keycode == W)
-	// 	y -= 5;
-	// if (keycode == S)
-	// 	y += 5;
-	// if (keycode == A)
-	// 	x -= 5;
-	// if (keycode == D)
-	// 	x += 5;
+	if (keycode == W)
+	{
+		// printf("W pressed\n");
+		// y -= 5;
+		move_player(cub);
+	}
+	if (keycode == S)
+	{
+		// printf("S pressed\n");
+		// y += 5;
+		move_player(cub);
+	}
+	if (keycode == A)
+	{
+		// printf("A pressed\n");
+		// x -= 5;
+		move_player(cub);
+	}
+	if (keycode == D)
+	{
+		// printf("D pressed\n");
+		// x += 5;
+		move_player(cub);
+	}
 	return (1);
 }
 
-void	init_mlx(t_mlx *mlx, t_map *map)
+void	init_mlx(t_cub *cub)
 {
-	(void) map;
-	mlx->ptr = mlx_init();
-	mlx->win = mlx_new_window(mlx->ptr, 2048, 1024, "cub3d");
-	mlx_hook(mlx->win, 2, 1l << 0, check_keycode, mlx);
-	mlx_hook(mlx->win, 17, 1l << 0, ft_exit, mlx);
-	mlx_loop(mlx->ptr);
+	cub->mlx = mlx_init();
+	cub->win = mlx_new_window(cub->mlx, WIN_WIDTH, WIN_HEIGHT, "cub3d");
+	cub->imgs = malloc(sizeof(t_imgs));
+		
+	generate_minimap(cub);
+
+	mlx_hook(cub->win, 2, 1l << 0, check_keycode, cub);
+	mlx_hook(cub->win, 17, 1l << 0, ft_exit, cub);
+	mlx_loop(cub->mlx);
 }
