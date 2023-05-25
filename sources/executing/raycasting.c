@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 11:59:47 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/05/25 16:28:34 by msapin           ###   ########.fr       */
+/*   Updated: 2023/05/25 20:55:16 by mehdisapin       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static void	display_map(t_map *map)
 
 void	init_raycasting(t_cub *cub)
 {
+	(void)display_map;
 	// t_mlx	mlx;
 	// int		pos_x = 1;
 	// int		pos_y = 1;
@@ -28,7 +29,7 @@ void	init_raycasting(t_cub *cub)
 	// int		d_y = 1;
 	// char		aim = 'N';
 
-	display_map(cub->map);
+	// display_map(cub->map);
 	init_mlx(cub);
 	// j'ai besoin de la position de depart du personnage ET orientation
 }
