@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
+/*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/05/24 19:30:04 by mehdisapin       ###   ########.fr       */
+/*   Updated: 2023/05/25 13:24:34 by msapin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,33 @@ static int	is_extension_valid(char *file_name, char *extension)
 	return (free(tmp_name), 0);
 }
 
+int	init_player(t_cub *cub)
+{
+	int		i;
+	int		j;
+	char	c;
+
+	cub->p = malloc(sizeof(t_player));
+	if (!cub->p)
+		return (display_error("cub->p", 4));
+	i = -1;
+	while (cub->map->array[++i])
+	{
+		j = -1;
+		while (cub->map->array[i][++j])
+		{
+			c = cub->map->array[i][j];
+			if (c == 'N' || c == 'S' || c == 'W' || c == 'E')
+			{
+				cub->p->orien = (int)c;
+				cub->p->mini_x = (j - 0.5) * GRID_MINI;
+				cub->p->mini_y = (i - 0.5) * GRID_MINI;
+			}
+		}
+	}
+	return (0);
+}
+
 int	parsing_map(t_cub *cub, char **argv)
 {
 	if (is_extension_valid(argv[1], ".cub") != 0)
@@ -66,5 +93,8 @@ int	parsing_map(t_cub *cub, char **argv)
 		return (free_cub(cub), -1);
 	if (init_map(cub, argv) != 0)
 		return (free_cub(cub), -1);
+	if (init_player(cub) != 0)
+		return (free_cub(cub), -1);
+	// parse_info(cub);
 	return (0);
 }
