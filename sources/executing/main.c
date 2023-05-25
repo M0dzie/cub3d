@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
+/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/05/23 18:00:58 by mehdisapin       ###   ########.fr       */
+/*   Updated: 2023/05/25 10:16:10 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
+#include "../../includes/thomas.h"
 
 void	free_cub(t_cub *cub)
 {
@@ -41,5 +42,6 @@ int	main(int argc, char **argv)
 		return (display_error("t_cub", 4));
 	if (parsing_map(cub, argv) != 0)
 		return (-1);
+	init_raycasting(cub->map);
 	return (free_cub(cub), 0);
 }
