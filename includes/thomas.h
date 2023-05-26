@@ -3,33 +3,50 @@
 /*                                                        :::      ::::::::   */
 /*   thomas.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 11:54:07 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/05/25 16:18:47 by msapin           ###   ########.fr       */
+/*   Updated: 2023/05/26 20:10:37 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef THOMAS_H
 # define THOMAS_H
 # include "cub3d.h"
-# include "mlx_linux/mlx.h"
+# include "math.h"
+# include "mlx/mlx.h"
 
-// # define ESC 65307
-// # define W 119
-// # define A 97
-// # define S 115
-// # define D 100
-// # define L_ARROW 65361
-// # define R_ARROW 65363
+// KEY MAC
+// #  define ESC 53
+// #  define W 13
+// #  define A 0
+// #  define S 1
+// #  define D 2
+// #  define M 46
+// #  define L_ARROW 123
+// #  define R_ARROW 124
 
-// typedef struct s_mlx
-// {
-// 	void	*ptr;
-// 	void	*win;
-// }			t_mlx;
+typedef struct s_vector2_f
+{
+	float	x;
+	float	y;
+}			t_vector2_f;
 
-// void	init_mlx(t_mlx *mlx, t_map *map);
-// void	init_raycasting(t_cub *cub);
+typedef struct s_vector2_d
+{
+	double	x;
+	double	y;
+}			t_vector2_d;
+
+typedef struct s_ray
+{
+	t_vector2_f	wall_coor;
+	t_vector2_d	wall_tiles;
+	double		length;
+	int			side;
+	double		angle;
+}				t_ray;
+
+void	where_am_i(t_cub *cub);
 
 #endif
