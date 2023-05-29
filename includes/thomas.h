@@ -6,7 +6,7 @@
 /*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 11:54:07 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/05/26 20:10:37 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/05/29 14:38:21 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ typedef struct s_ray
 	t_vector2_f	wall_coor;
 	t_vector2_d	wall_tiles;
 	double		length;
-	int			side;
+	int			side; // savoir quelle face du mur afficher
 	double		angle;
 }				t_ray;
 
