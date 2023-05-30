@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 11:59:47 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/05/30 10:58:52 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/05/30 11:15:04 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,16 @@ void	dda(t_cub *cub)
 
 	// start.x = cub->p->pos_x;
 	// start.y = cub->p->pos_y;
-	start.x = cub->p->mini_x;
+	start.x = cub->p->mini_x + GRID_MINI / 4;
 	start.y = cub->p->mini_y;
 	wall.x = start.x;
 	wall.y = 314;
 	diff.x = wall.x - start.x;
 	diff.y = wall.y - start.y;
+	if (diff.x < 0)
+		diff.x *= -1;
+	if (diff.y < 0)
+		diff.y *= -1;
 	if (diff.x > diff.y)
 		length = diff.x;
 	else
@@ -53,14 +57,11 @@ void	dda(t_cub *cub)
 	inc.x = diff.x / length;
 	inc.y = diff.y / length;
 	draw = start;
-	printf("inc.y = %lf\n", inc.y);
-	return ;
 	while (draw.y != wall.y)
 	{
-		// mlx_pixel_put(cub->mlx, cub->mlx, draw.x, draw.y, 0xFF0000);
-		put_pixel(&cub->imgs->p, draw.x, draw.y, 0xFF0000);
+		mlx_pixel_put(cub->mlx, cub->win, draw.x, draw.y, 0xFF0000);
 		// draw.x += inc.x;
-		draw.y += inc.y;
+		draw.y -= inc.y;
 	}
 	// printf("pos_x = %lf and pos_y = %lf\n", start.x, start.y);
 }
