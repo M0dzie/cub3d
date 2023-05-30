@@ -6,39 +6,11 @@
 /*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 17:15:32 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/05/30 18:21:43 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/05/30 19:45:58 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
-
-static void	update_pos(t_cub *cub, int y, int x)
-{
-	cub->p->pos.x = x;
-	printf("test\n");
-	cub->p->pos.y = y;
-	if (cub->map->array[y][x] == 'N')
-	{
-		cub->p->dir.x = 0;
-		cub->p->dir.y = -1;
-	}
-	if (cub->map->array[y][x]  == 'S')
-	{
-		cub->p->dir.x = 0;
-		cub->p->dir.y = 1;
-	}
-	if (cub->map->array[y][x]  == 'E')
-	{
-		cub->p->dir.x = 1;
-		cub->p->dir.y = 0;
-	}
-	if (cub->map->array[y][x]  == 'W')
-	{
-		cub->p->dir.x = -1;
-		cub->p->dir.y = 0;
-	}
-	printf("test\n");
-}
 
 int	are_char_valid(t_cub *cub)
 {
@@ -59,10 +31,7 @@ int	are_char_valid(t_cub *cub)
 			|| c == 'W' || c == ' '))
 				return (display_error("map", 11), 0);
 			if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
-			{
-				update_pos(cub, i, j);
 				nb_start++;
-			}
 		}
 	}
 	if (nb_start != 1)

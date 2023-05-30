@@ -6,7 +6,7 @@
 /*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/05/30 18:17:02 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/05/30 19:47:44 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,32 @@ static int	is_extension_valid(char *file_name, char *extension)
 	return (free(tmp_name), 0);
 }
 
+static void	init_pos(t_cub *cub, int y, int x)
+{
+	cub->p->pos.x = x;
+	cub->p->pos.y = y;
+	if (cub->map->array[y][x] == 'N')
+	{
+		cub->p->dir.x = 0;
+		cub->p->dir.y = -1;
+	}
+	if (cub->map->array[y][x]  == 'S')
+	{
+		cub->p->dir.x = 0;
+		cub->p->dir.y = 1;
+	}
+	if (cub->map->array[y][x]  == 'E')
+	{
+		cub->p->dir.x = 1;
+		cub->p->dir.y = 0;
+	}
+	if (cub->map->array[y][x]  == 'W')
+	{
+		cub->p->dir.x = -1;
+		cub->p->dir.y = 0;
+	}
+}
+
 int	init_player(t_cub *cub)
 {
 	int		i;
@@ -74,6 +100,7 @@ int	init_player(t_cub *cub)
 			c = cub->map->array[i][j];
 			if (c == 'N' || c == 'S' || c == 'W' || c == 'E')
 			{
+				init_pos(cub, i, j);
 				cub->p->mini_x = j * GRID_MINI;
 				cub->p->mini_y = i * GRID_MINI;
 			}
