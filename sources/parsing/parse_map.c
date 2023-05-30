@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
+/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/05/25 23:22:46 by mehdisapin       ###   ########.fr       */
+/*   Updated: 2023/05/30 18:17:02 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ int	init_player(t_cub *cub)
 			c = cub->map->array[i][j];
 			if (c == 'N' || c == 'S' || c == 'W' || c == 'E')
 			{
-				cub->p->orien = (int)c;
 				cub->p->mini_x = j * GRID_MINI;
 				cub->p->mini_y = i * GRID_MINI;
 			}

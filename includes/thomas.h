@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   thomas.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
+/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 11:54:07 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/05/30 15:00:18 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/05/30 18:12:59 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,6 @@
 // #  define M 46
 // #  define L_ARROW 123
 // #  define R_ARROW 124
-
-typedef struct s_vector
-{
-	double	x;
-	double	y;
-}			t_vector;
 
 void	dda(t_cub *cub);
 void	put_pixel(t_data *data, int x, int y, int color);
