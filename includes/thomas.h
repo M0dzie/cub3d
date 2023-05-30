@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   thomas.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 11:54:07 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/05/30 10:56:13 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/05/30 15:00:18 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define THOMAS_H
 # include "cub3d.h"
 # include "math.h"
+# include <limits.h>
+# include <stdlib.h>
 // # include "mlx/mlx.h"
 
 // KEY MAC
@@ -31,15 +33,6 @@ typedef struct s_vector
 	double	x;
 	double	y;
 }			t_vector;
-
-// typedef struct s_ray
-// {
-// 	t_vector	wall_coor;
-// 	t_vector	wall_tiles;
-// 	double		length;
-// 	int			side; // savoir quelle face du mur afficher
-// 	double		angle;
-// }				t_ray;
 
 void	dda(t_cub *cub);
 void	put_pixel(t_data *data, int x, int y, int color);
