@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
+/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/05/25 23:10:04 by mehdisapin       ###   ########.fr       */
+/*   Updated: 2023/05/30 18:15:43 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,12 @@
 #  define R_ARROW 65363
 # endif
 
+typedef struct s_vector
+{
+	double	x;
+	double	y;
+}			t_vector;
+
 typedef struct s_mlx
 {
 	void	*ptr;
@@ -70,11 +76,10 @@ typedef struct s_map
 
 typedef struct s_player
 {
-	int		pos_x;
-	int		pos_y;
-	int		mini_x;
-	int		mini_y;
-	int		orien;
+	t_vector	pos;
+	t_vector	dir;
+	int			mini_x;
+	int			mini_y;
 }			t_player;
 
 typedef struct s_imgs
