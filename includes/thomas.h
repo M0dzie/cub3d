@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   thomas.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
+/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 11:54:07 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/05/30 09:49:15 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/05/30 10:56:13 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,6 @@ typedef struct s_vector
 // }				t_ray;
 
 void	dda(t_cub *cub);
+void	put_pixel(t_data *data, int x, int y, int color);
 
 #endif
