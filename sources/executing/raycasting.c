@@ -3,18 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 11:59:47 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/05/26 19:32:52 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/05/30 10:11:01 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 #include "../../includes/thomas.h"
-
-int	check_keycode(int keycode, t_cub *cub);
-int	ft_exit(void);
 
 static void	display_map(t_map *map)
 {
@@ -32,10 +29,37 @@ static void	display_map(t_map *map)
 // 	mlx_loop(cub->mlx);
 // }
 
-void	where_am_i(t_cub *cub)
+void	dda(t_cub *cub)
 {
-	printf("case : x = %d and y = %d\npixels : x = %d and y = %d\n", \
-	cub->p->pos_x, cub->p->pos_y, cub->p->mini_x, cub->p->mini_y);	
+	t_vector	start;
+	t_vector	wall;
+	t_vector	diff;
+	t_vector	inc;
+	t_vector	draw;
+	double		length;
+
+	// start.x = cub->p->pos_x;
+	// start.y = cub->p->pos_y;
+	start.x = cub->p->mini_x;
+	start.y = cub->p->mini_y;
+	wall.x = start.x;
+	wall.y = 314;
+	diff.x = wall.x - start.x;
+	diff.y = wall.y - start.y;
+	if (diff.x > diff.y)
+		length = diff.x;
+	else
+		length = diff.y;
+	inc.x = diff.x / length;
+	inc.y = diff.y / length;
+	draw = start;
+	while (draw.x != wall.x && draw.y != wall.y)
+	{
+		mlx_pixel_put(cub->mlx, cub->mlx, draw.x, draw.y, 0xFF0000);
+		draw.x += inc.x;
+		draw.y += inc.y;
+	}
+	// printf("pos_x = %lf and pos_y = %lf\n", start.x, start.y);
 }
 
 void	init_raycasting(t_cub *cub)
