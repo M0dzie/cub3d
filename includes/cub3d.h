@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
+/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/05/31 13:04:21 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/05/31 22:49:21 by mehdisapin       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 # include "libft/includes/libft.h"
 # include "mlx_linux/mlx.h"
 # include <stdio.h>
+# include <math.h>
 
 # ifndef GRID_MINI
 #  define GRID_MINI 30
@@ -27,7 +28,8 @@
 # define WIN_WIDTH 1280
 # define WIN_HEIGHT 720
 
-# define SPEED_MINI 2
+# define SPEED_MINI 5
+# define SPEED_ANGLE 5
 
 # ifndef KEYS
 #  define ESC 65307
@@ -78,6 +80,11 @@ typedef struct s_player
 {
 	t_vector	pos;
 	t_vector	dir;
+	t_vector	p1;
+	t_vector	p2;
+	t_vector	coef_ns;
+	t_vector	coef_we;
+	int			angle;
 	int			mini_x;
 	int			mini_y;
 }			t_player;
@@ -135,7 +142,9 @@ int	parsing_map(t_cub *cub, char **argv);
 void	generate_background(t_cub *cub);
 void	generate_minimap(t_cub *cub);
 void	generate_player(t_cub *cub);
+void	get_next_wall(t_cub *cub);
 void	free_cub(t_cub *cub);
+void    init_data_raycaster(t_cub *cub);
 void	init_mlx(t_cub *cub);
 void	init_raycasting(t_cub *cub);
 void	move_player(t_cub *cub);
