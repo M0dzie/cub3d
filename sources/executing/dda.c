@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dda.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 12:03:31 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/05/30 18:16:39 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/05/31 14:11:45 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,61 +19,41 @@
 */
 void	dda(t_cub *cub)
 {
-	t_vector	ray_dir;
-	t_vector	delta_dist;
-	// ray_dir.x = dir.x + angle;
-	// ray_dir.y = dir.y + angle;
-	printf("pos.x = %lf and pos.y = %lf\n", cub->p->pos.x, cub->p->pos.y);
-	ray_dir = cub->p->dir;
-	delta_dist.x = sqrt(1 + (ray_dir.y * ray_dir.y) / (ray_dir.x * ray_dir.x));
-	delta_dist.y = sqrt(1 + (ray_dir.x * ray_dir.x) / (ray_dir.y * ray_dir.y));
+	t_vector	start;
+	t_vector	wall;
+	t_vector	diff;
+	t_vector	inc;
+	t_vector	draw;
+	double		length;
 
-	t_vector	side_dist;
-	t_vector	map;
-	int			step_x;
-	int			step_y;
-	int			hit;
-	hit  = 0;
-	step_x  = 0;
-	step_y  = 0;
-	map = cub->p->pos;
-	if (ray_dir.x < 0)
-	{
-		step_x = -1;
-		side_dist.x = (cub->p->pos.x - map.x) * delta_dist.x;
-	}
+	start.x = cub->p->mini_x + GRID_MINI / 4;
+	start.y = cub->p->mini_y;
+	// start.x = cub->p->pos.x * GRID_MINI + GRID_MINI / 4;
+	// start.y = cub->p->pos.y * GRID_MINI;
+	wall.x = cub->raycaster.map.x * GRID_MINI + GRID_MINI / 4;
+	wall.y = cub->raycaster.map.y * GRID_MINI;
+	printf("map.x = %lf and map.y = %lf\n", cub->raycaster.map.x, cub->raycaster.map.y);
+	printf("start.x = %lf and start.y = %lf\n", start.x, start.y);
+	printf("wall.x = %lf and wall.y = %lf\n", wall.x, wall.y);
+	diff.x = wall.x - start.x;
+	diff.y = wall.y - start.y;
+	// if (diff.x < 0)
+	// 	diff.x *= -1;
+	// if (diff.y < 0)
+	// 	diff.y *= -1;
+	if (diff.x > diff.y)
+		length = diff.x;
 	else
+		length = diff.y;
+	printf("length = %lf\n", length);
+	inc.x = diff.x / length;
+	inc.y = diff.y / length;
+	draw = start;
+	printf("inc.x = %lf and inc.y = %lf\n", inc.x, inc.y);
+	while (draw.y != wall.y)
 	{
-		step_x = 1;
-		side_dist.x = (map.x + 1 - cub->p->pos.x) * delta_dist.x;
+		mlx_pixel_put(cub->mlx, cub->win, draw.x, draw.y, 0x0007fc03);
+		draw.x += inc.x;
+		draw.y += inc.y;
 	}
-	if (ray_dir.y < 0)
-	{
-		step_y = -1;
-		side_dist.y = (cub->p->pos.y - map.y) * delta_dist.y;
-	}
-	else
-	{
-		step_y = 1;
-		side_dist.y = (map.y + 1 - cub->p->pos.y) * delta_dist.y;
-	}
-
-	printf("delta_dist.x = %lf and delta_dist.y = %lf\n", delta_dist.x, delta_dist.y);
-	while (!hit)
-	{
-		if (side_dist.x < side_dist.y)
-		{
-			side_dist.x += delta_dist.x;
-			map.x += step_x;
-		}
-		else
-		{
-			side_dist.y += delta_dist.y;
-			map.y += step_y;
-		}
-		if (cub->map->array[(int)map.y][(int)map.x] == '1')
-			hit = 1;
-	}
-	printf("side_dist.x = %lf and side_dist.y = %lf\n", side_dist.x, side_dist.y);
-	printf("map.x = %lf and map.y = %lf\n", map.x, map.y);
 }

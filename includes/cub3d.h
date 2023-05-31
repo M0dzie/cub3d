@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/05/30 18:15:43 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/05/31 13:04:21 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,19 @@ typedef struct s_imgs
 	t_data	p;
 }			t_imgs;
 
+typedef struct s_raycaster
+{
+	t_vector	ray_dir;
+	t_vector	delta_dist;
+	t_vector	side_dist;
+	t_vector	map;
+	int			step_x;
+	int			step_y;
+	int			hit;
+	int			side;
+	double		wall_dist;
+}				t_raycaster;
+
 typedef struct s_cub
 {
 	// fds textures, found if better to use fd int or string as path
@@ -107,6 +120,7 @@ typedef struct s_cub
 	void			*mlx;
 	void			*win;
 	t_imgs			*imgs;
+	t_raycaster		raycaster;
 }					t_cub;
 
 int	are_rgb_valid(t_cub *cub);
