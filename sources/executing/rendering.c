@@ -6,7 +6,7 @@
 /*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:43:13 by msapin            #+#    #+#             */
-/*   Updated: 2023/05/25 23:22:35 by mehdisapin       ###   ########.fr       */
+/*   Updated: 2023/05/31 23:54:53 by mehdisapin       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,14 @@
 
 void	render_minimap(t_cub *cub)
 {
-	mlx_put_image_to_window(cub->mlx, cub->win, cub->imgs->back.img, 0, 0);
 	if (cub->imgs->show_mini)
+	{
+		// mlx_destroy_display(cub->mlx);
+		// mlx_destroy_image(cub->mlx, &cub->imgs->p.img);
+		generate_minimap(cub);
 		mlx_put_image_to_window(cub->mlx, cub->win, cub->imgs->minimap.img, (WIN_WIDTH / 2) - (cub->map->width * GRID_MINI / 2), (WIN_HEIGHT / 2) - (cub->map->height * GRID_MINI / 2));
-	mlx_put_image_to_window(cub->mlx, cub->win, cub->imgs->p.img, cub->p->mini_x, cub->p->mini_y);
+		generate_player(cub);
+	}
 }
 
 void	move_player(t_cub *cub)
@@ -44,12 +48,7 @@ void	put_miniwall(t_data data, int start_x, int start_y)
 	{
 		x = -1;
 		while (++x < GRID_MINI)
-		{
-			if (y == (GRID_MINI - 1) || x == (GRID_MINI - 1) || y == 0 || x == 0)
-				put_pixel(&data, x + start_x, y + start_y, 0x00202020);
-			else
-				put_pixel(&data, x + start_x, y + start_y, 0x00202020);
-		}
+			put_pixel(&data, x + start_x, y + start_y, 0x00202020);
 	}
 }
 
@@ -115,19 +114,26 @@ void	generate_background(t_cub *cub)
 
 void	generate_player(t_cub *cub)
 {
-	int		y;
-	int		x;
+	t_vector	tmp;
+	// int	len_line = cub->raycaster.wall_dist * GRID_MINI;
+	int	len_line = 30;
 
-	cub->imgs->p.img = mlx_new_image(cub->mlx, GRID_MINI / 2, GRID_MINI / 2);
-	cub->imgs->p.addr = mlx_get_data_addr(cub->imgs->p.img, &cub->imgs->p.bits_per_pixel, &cub->imgs->p.line_length, &cub->imgs->p.endian);
-	y = -1;
-	while (++y < GRID_MINI / 2)
+	cub->p->p1.x = cub->p->mini_x;
+	cub->p->p1.y = cub->p->mini_y;
+
+	cub->p->p2.x = cub->p->coef_ns.x * len_line + cub->p->p1.x;
+	cub->p->p2.y = cub->p->coef_ns.y * len_line + cub->p->p1.y;
+
+	
+	tmp.x = cub->p->p1.x;
+	tmp.y = cub->p->p1.y;
+	while ((int)tmp.x != (int)cub->p->p2.x || (int)tmp.y != (int)cub->p->p2.y)
 	{
-		x = -1;
-		while (++x < GRID_MINI / 2)
-			put_pixel(&cub->imgs->p, x, y, 0x00DE8D4E);
+		if (tmp.x > 0 && tmp.y > 0)
+		{
+			put_pixel(&cub->imgs->minimap, tmp.x + GRID_MINI / 2, tmp.y, 0x0007fc03);
+		}
+		tmp.x += cub->p->coef_ns.x;
+		tmp.y += cub->p->coef_ns.y;
 	}
-	cub->p->mini_x += ((WIN_WIDTH / 2) - (cub->map->width * GRID_MINI / 2) + GRID_MINI / 4);
-	cub->p->mini_y += ((WIN_HEIGHT / 2) - (cub->map->height * GRID_MINI / 2) + GRID_MINI / 4);
-	mlx_put_image_to_window(cub->mlx, cub->win, cub->imgs->p.img, cub->p->mini_x, cub->p->mini_y);
 }
