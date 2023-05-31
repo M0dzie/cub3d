@@ -6,7 +6,7 @@
 /*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 11:54:07 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/05/31 10:23:51 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/05/31 13:05:29 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,18 @@
 // #  define L_ARROW 123
 // #  define R_ARROW 124
 
-typedef struct s_raycaster
-{
-	t_vector	ray_dir;
-	t_vector	delta_dist;
-	t_vector	side_dist;
-	t_vector	map;
-	int			step_x;
-	int			step_y;
-	int			hit;
-}				t_raycaster;
+// typedef struct s_raycaster
+// {
+// 	t_vector	ray_dir;
+// 	t_vector	delta_dist;
+// 	t_vector	side_dist;
+// 	t_vector	map;
+// 	int			step_x;
+// 	int			step_y;
+// 	int			hit;
+// 	int			side;
+// 	double		wall_dist;
+// }				t_raycaster;
 
 
 void	dda(t_cub *cub);
