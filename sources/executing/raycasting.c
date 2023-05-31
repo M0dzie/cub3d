@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
+/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 11:59:47 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/05/31 14:05:28 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/05/31 23:29:15 by mehdisapin       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,30 +43,29 @@ static void	init_step_and_side_dist(t_cub *cub)
 }
 
 // static void	init_data_raycaster(t_cub *cub, t_raycaster *raycaster)
-static void	init_data_raycaster(t_cub *cub)
+void    init_data_raycaster(t_cub *cub)
 {
-	printf("pos.x = %lf and pos.y = %lf\n", cub->p->pos.x, cub->p->pos.y);
-	printf("dir.x = %lf and dir.y = %lf\n", cub->p->dir.x, cub->p->dir.y);
-	// cub->raycaster.ray_dir.x = cub->p->dir.x + angle;
-	// cub->raycaster.ray_dir.y = cub->p->dir.y + angle;
-	cub->raycaster.ray_dir = cub->p->dir;
-	cub->raycaster.delta_dist.x = sqrt(1 + (cub->raycaster.ray_dir.y * \
-	cub->raycaster.ray_dir.y) / (cub->raycaster.ray_dir.x * cub->raycaster.ray_dir.x));
-	cub->raycaster.delta_dist.y = sqrt(1 + (cub->raycaster.ray_dir.x * \
-	cub->raycaster.ray_dir.x) / (cub->raycaster.ray_dir.y * cub->raycaster.ray_dir.y));
-	cub->raycaster.hit = 0;
-	cub->raycaster.side = 0;
-	cub->raycaster.step_x = 0;
-	cub->raycaster.step_y = 0;
-	cub->raycaster.wall_dist = 0;
-	cub->raycaster.map = cub->p->pos;
-	printf("ray_dir.x = %lf and ray_dir.y = %lf\n", cub->raycaster.ray_dir.x, cub->raycaster.ray_dir.y);
-	printf("delta_dist.x = %lf and delta_dist.y = %lf\n", cub->raycaster.delta_dist.x, cub->raycaster.delta_dist.y);
-	init_step_and_side_dist(cub);
+    // printf("pos.x = %lf and pos.y = %lf\n", cub->p->pos.x, cub->p->pos.y);
+    // printf("dir.x = %lf and dir.y = %lf\n", cub->p->dir.x, cub->p->dir.y);
+    cub->raycaster.ray_dir.x = cub->p->dir.x + cub->p->angle;
+    cub->raycaster.ray_dir.y = cub->p->dir.y + cub->p->angle;
+    cub->raycaster.delta_dist.x = sqrt(1 + (cub->raycaster.ray_dir.y * \
+    cub->raycaster.ray_dir.y) / (cub->raycaster.ray_dir.x * cub->raycaster.ray_dir.x));
+    cub->raycaster.delta_dist.y = sqrt(1 + (cub->raycaster.ray_dir.x * \
+    cub->raycaster.ray_dir.x) / (cub->raycaster.ray_dir.y * cub->raycaster.ray_dir.y));
+    cub->raycaster.hit = 0;
+    cub->raycaster.side = 0;
+    cub->raycaster.step_x = 0;
+    cub->raycaster.step_y = 0;
+    cub->raycaster.wall_dist = 0;
+    cub->raycaster.map = cub->p->pos;
+    // printf("ray_dir.x = %lf and ray_dir.y = %lf\n", cub->raycaster.ray_dir.x, cub->raycaster.ray_dir.y);
+    // printf("delta_dist.x = %lf and delta_dist.y = %lf\n", cub->raycaster.delta_dist.x, cub->raycaster.delta_dist.y);
+    init_step_and_side_dist(cub);
 }
 
 // static void	get_next_wall(t_cub *cub, t_raycaster *raycaster)
-static void	get_next_wall(t_cub *cub)
+void	get_next_wall(t_cub *cub)
 {
 	while (!cub->raycaster.hit)
 	{
@@ -86,13 +85,13 @@ static void	get_next_wall(t_cub *cub)
 		'1')
 			cub->raycaster.hit = 1;
 	}
-	printf("side_dist.x = %lf and side_dist.y = %lf\n", cub->raycaster.side_dist.x, cub->raycaster.side_dist.y);
-	printf("next_wall => map.x = %lf and map.y = %lf\n", cub->raycaster.map.x, cub->raycaster.map.y);
+	// printf("side_dist.x = %lf and side_dist.y = %lf\n", cub->raycaster.side_dist.x, cub->raycaster.side_dist.y);
+	// printf("next_wall => map.x = %lf and map.y = %lf\n", cub->raycaster.map.x, cub->raycaster.map.y);
 	if (cub->raycaster.side == 0)
 		cub->raycaster.wall_dist = cub->raycaster.side_dist.x - cub->raycaster.delta_dist.x;
 	else
 		cub->raycaster.wall_dist = cub->raycaster.side_dist.y - cub->raycaster.delta_dist.y;
-	printf("wall_dist = %lf\n", cub->raycaster.wall_dist);
+	// printf("wall_dist = %lf\n", cub->raycaster.wall_dist);
 }
 
 void	init_raycasting(t_cub *cub)

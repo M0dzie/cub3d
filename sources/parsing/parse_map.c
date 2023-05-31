@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/05/30 19:47:44 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/05/31 22:38:28 by mehdisapin       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,23 @@ static int	is_extension_valid(char *file_name, char *extension)
 	return (free(tmp_name), 0);
 }
 
+void	parse_player_angle(t_cub *cub, char c)
+{
+	// cub->p->orien = (int)c;
+	if (c == 'N')
+		cub->p->angle = 0;
+	else if (c == 'S')
+		cub->p->angle = 180;
+	else if (c == 'W')
+		cub->p->angle = 270;
+	else if (c == 'E')
+		cub->p->angle = 90;
+	cub->p->coef_ns.x = sin(cub->p->angle * M_PI / 180);
+	cub->p->coef_ns.y = -cos(cub->p->angle * M_PI / 180);
+	cub->p->coef_we.x = sin((cub->p->angle - 90) * M_PI / 180);
+	cub->p->coef_we.y = -cos((cub->p->angle - 90) * M_PI / 180);
+}
+
 static void	init_pos(t_cub *cub, int y, int x)
 {
 	cub->p->pos.x = x;
@@ -101,6 +118,7 @@ int	init_player(t_cub *cub)
 			if (c == 'N' || c == 'S' || c == 'W' || c == 'E')
 			{
 				init_pos(cub, i, j);
+				parse_player_angle(cub, c);
 				cub->p->mini_x = j * GRID_MINI;
 				cub->p->mini_y = i * GRID_MINI;
 			}
