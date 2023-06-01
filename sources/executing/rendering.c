@@ -6,7 +6,7 @@
 /*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:43:13 by msapin            #+#    #+#             */
-/*   Updated: 2023/05/31 23:54:53 by mehdisapin       ###   ########.fr       */
+/*   Updated: 2023/06/01 21:06:06 by mehdisapin       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,7 @@ void	render_minimap(t_cub *cub)
 {
 	if (cub->imgs->show_mini)
 	{
-		// mlx_destroy_display(cub->mlx);
-		// mlx_destroy_image(cub->mlx, &cub->imgs->p.img);
 		generate_minimap(cub);
-		mlx_put_image_to_window(cub->mlx, cub->win, cub->imgs->minimap.img, (WIN_WIDTH / 2) - (cub->map->width * GRID_MINI / 2), (WIN_HEIGHT / 2) - (cub->map->height * GRID_MINI / 2));
 		generate_player(cub);
 	}
 }
@@ -77,6 +74,8 @@ void	generate_minimap(t_cub *cub)
 	int		x;
 	char	c;
 
+	if (cub->imgs->minimap.img)
+		mlx_destroy_image(cub->mlx, cub->imgs->minimap.img);
 	cub->imgs->minimap.img = mlx_new_image(cub->mlx, cub->map->width * GRID_MINI, cub->map->height * GRID_MINI);
 	cub->imgs->minimap.addr = mlx_get_data_addr(cub->imgs->minimap.img, &cub->imgs->minimap.bits_per_pixel, &cub->imgs->minimap.line_length, &cub->imgs->minimap.endian);
 	y = -1;
@@ -116,7 +115,7 @@ void	generate_player(t_cub *cub)
 {
 	t_vector	tmp;
 	// int	len_line = cub->raycaster.wall_dist * GRID_MINI;
-	int	len_line = 30;
+	int	len_line = 10;
 
 	cub->p->p1.x = cub->p->mini_x;
 	cub->p->p1.y = cub->p->mini_y;
@@ -124,15 +123,14 @@ void	generate_player(t_cub *cub)
 	cub->p->p2.x = cub->p->coef_ns.x * len_line + cub->p->p1.x;
 	cub->p->p2.y = cub->p->coef_ns.y * len_line + cub->p->p1.y;
 
-	
 	tmp.x = cub->p->p1.x;
 	tmp.y = cub->p->p1.y;
 	while ((int)tmp.x != (int)cub->p->p2.x || (int)tmp.y != (int)cub->p->p2.y)
 	{
 		if (tmp.x > 0 && tmp.y > 0)
-		{
 			put_pixel(&cub->imgs->minimap, tmp.x + GRID_MINI / 2, tmp.y, 0x0007fc03);
-		}
+		else
+			break ;
 		tmp.x += cub->p->coef_ns.x;
 		tmp.y += cub->p->coef_ns.y;
 	}
