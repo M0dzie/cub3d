@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rendering.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
+/*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:43:13 by msapin            #+#    #+#             */
-/*   Updated: 2023/06/01 21:06:06 by mehdisapin       ###   ########.fr       */
+/*   Updated: 2023/06/06 16:54:34 by msapin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,15 @@ void	move_player(t_cub *cub)
 	render_minimap(cub);
 }
 
-void	put_pixel(t_data *data, int x, int y, int color)
+int	put_pixel(t_data *data, int x, int y, int color)
 {
 	char	*dst;
 
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+	if (*(unsigned int *)dst == 0x00202020)
+		return (0);
 	*(unsigned int *)dst = color;
+	return (1);
 }
 
 void	put_miniwall(t_data data, int start_x, int start_y)
@@ -114,21 +117,16 @@ void	generate_background(t_cub *cub)
 void	generate_player(t_cub *cub)
 {
 	t_vector	tmp;
-	// int	len_line = cub->raycaster.wall_dist * GRID_MINI;
-	int	len_line = 10;
 
-	cub->p->p1.x = cub->p->mini_x;
-	cub->p->p1.y = cub->p->mini_y;
-
-	cub->p->p2.x = cub->p->coef_ns.x * len_line + cub->p->p1.x;
-	cub->p->p2.y = cub->p->coef_ns.y * len_line + cub->p->p1.y;
-
-	tmp.x = cub->p->p1.x;
-	tmp.y = cub->p->p1.y;
-	while ((int)tmp.x != (int)cub->p->p2.x || (int)tmp.y != (int)cub->p->p2.y)
+	tmp.x = cub->p->start.x;
+	tmp.y = cub->p->start.y + (double)GRID_MINI / 2;
+	while (1)
 	{
 		if (tmp.x > 0 && tmp.y > 0)
-			put_pixel(&cub->imgs->minimap, tmp.x + GRID_MINI / 2, tmp.y, 0x0007fc03);
+		{
+			if (!put_pixel(&cub->imgs->minimap, tmp.x + GRID_MINI / 2, tmp.y, 0x0007fc03))
+				break ;
+		}
 		else
 			break ;
 		tmp.x += cub->p->coef_ns.x;

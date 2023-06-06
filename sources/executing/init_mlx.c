@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_mlx.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
+/*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:11:26 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/05/31 23:44:00 by mehdisapin       ###   ########.fr       */
+/*   Updated: 2023/06/06 16:53:59 by msapin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,26 +40,26 @@ static int	check_keycode(int keycode, t_cub *cub)
 		ft_exit();
 	if (keycode == W)
 	{
-		cub->p->mini_x += cub->p->coef_ns.x * SPEED_MINI;
-		cub->p->mini_y += cub->p->coef_ns.y * SPEED_MINI;
+		cub->p->start.x += cub->p->coef_ns.x * SPEED_MINI;
+		cub->p->start.y += cub->p->coef_ns.y * SPEED_MINI;
 		move_player(cub);
 	}
 	if (keycode == S)
 	{
-		cub->p->mini_x -= cub->p->coef_ns.x * SPEED_MINI;
-		cub->p->mini_y -= cub->p->coef_ns.y * SPEED_MINI;
+		cub->p->start.x -= cub->p->coef_ns.x * SPEED_MINI;
+		cub->p->start.y -= cub->p->coef_ns.y * SPEED_MINI;
 		move_player(cub);
 	}
 	if (keycode == A)
 	{
-		cub->p->mini_x += cub->p->coef_we.x * SPEED_MINI;
-		cub->p->mini_y += cub->p->coef_we.y * SPEED_MINI;
+		cub->p->start.x += cub->p->coef_we.x * SPEED_MINI;
+		cub->p->start.y += cub->p->coef_we.y * SPEED_MINI;
 		move_player(cub);
 	}
 	if (keycode == D)
 	{
-		cub->p->mini_x -= cub->p->coef_we.x * SPEED_MINI;
-		cub->p->mini_y -= cub->p->coef_we.y * SPEED_MINI;
+		cub->p->start.x -= cub->p->coef_we.x * SPEED_MINI;
+		cub->p->start.y -= cub->p->coef_we.y * SPEED_MINI;
 		move_player(cub);
 	}
 	if (keycode == L_ARROW)
