@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
+/*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/05/31 22:38:28 by mehdisapin       ###   ########.fr       */
+/*   Updated: 2023/06/06 16:51:06 by msapin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ static int	is_extension_valid(char *file_name, char *extension)
 
 void	parse_player_angle(t_cub *cub, char c)
 {
-	// cub->p->orien = (int)c;
 	if (c == 'N')
 		cub->p->angle = 0;
 	else if (c == 'S')
@@ -75,6 +74,9 @@ void	parse_player_angle(t_cub *cub, char c)
 
 static void	init_pos(t_cub *cub, int y, int x)
 {
+	(void)cub;
+	(void)y;
+	(void)x;
 	cub->p->pos.x = x;
 	cub->p->pos.y = y;
 	if (cub->map->array[y][x] == 'N')
@@ -119,8 +121,8 @@ int	init_player(t_cub *cub)
 			{
 				init_pos(cub, i, j);
 				parse_player_angle(cub, c);
-				cub->p->mini_x = j * GRID_MINI;
-				cub->p->mini_y = i * GRID_MINI;
+				cub->p->start.x = j * GRID_MINI;
+				cub->p->start.y = i * GRID_MINI;
 			}
 		}
 	}

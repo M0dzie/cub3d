@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
+/*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/05/31 22:49:21 by mehdisapin       ###   ########.fr       */
+/*   Updated: 2023/06/06 16:53:46 by msapin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,15 @@
 # include <math.h>
 
 # ifndef GRID_MINI
-#  define GRID_MINI 30
+#  define GRID_MINI 40
 # endif
 
 # ifndef GRID_MAP
 #  define GRID_MAP 100
 # endif
 
-# define WIN_WIDTH 1280
-# define WIN_HEIGHT 720
+# define WIN_WIDTH 1920
+# define WIN_HEIGHT 1080
 
 # define SPEED_MINI 5
 # define SPEED_ANGLE 5
@@ -76,17 +76,21 @@ typedef struct s_map
 	int		max_y;
 }			t_map;
 
+typedef struct    s_ray
+{
+    t_vector    start;
+    t_vector    end;
+}                t_ray;
+
 typedef struct s_player
 {
 	t_vector	pos;
 	t_vector	dir;
-	t_vector	p1;
-	t_vector	p2;
 	t_vector	coef_ns;
 	t_vector	coef_we;
+	t_vector	start;
+	t_vector	end;
 	int			angle;
-	int			mini_x;
-	int			mini_y;
 }			t_player;
 
 typedef struct s_imgs
