@@ -6,7 +6,7 @@
 /*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 11:54:07 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/06/06 16:17:16 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/06 17:00:15 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,11 @@
 // #  define L_ARROW 123
 // #  define R_ARROW 124
 
+// DEFINE VARIABLE
+# ifndef FOV
+#  define FOV 66
+# endif
+
 typedef struct	s_ray
 {
 	t_vector	start;
@@ -33,7 +38,7 @@ typedef struct	s_ray
 }				t_ray;
 
 void	dda(t_cub *cub);
-void	init_camera(t_cub *cub);
+void	init_camera(t_cub *cub, t_data *data);
 void	put_pixel(t_data *data, int x, int y, int color);
 
 #endif
