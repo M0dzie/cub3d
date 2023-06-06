@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
+/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 11:59:47 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/05/31 23:29:15 by mehdisapin       ###   ########.fr       */
+/*   Updated: 2023/06/06 11:48:44 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void    init_data_raycaster(t_cub *cub)
 // static void	get_next_wall(t_cub *cub, t_raycaster *raycaster)
 void	get_next_wall(t_cub *cub)
 {
+	init_data_raycaster(cub);
 	while (!cub->raycaster.hit)
 	{
 		if (cub->raycaster.side_dist.x < cub->raycaster.side_dist.y)
@@ -96,11 +97,6 @@ void	get_next_wall(t_cub *cub)
 
 void	init_raycasting(t_cub *cub)
 {
-	// t_raycaster	raycaster;
-
-	init_data_raycaster(cub);
 	get_next_wall(cub);
-	// init_data_raycaster(cub, &cub->raycaster);
-	// get_next_wall(cub, &cub->raycaster);
 	init_mlx(cub);
 }
