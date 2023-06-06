@@ -6,26 +6,20 @@
 /*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 10:29:51 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/06/06 11:48:28 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/06 16:18:47 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 #include "../../includes/thomas.h"
 
-// double	get_radian(int angle)
-// {
-// 	double	radian;
+void	init_camera(t_cub *cub)
+{
+	(void)	cub;
+	t_ray	*ray;
 
-// 	radian = angle * M_PI / 180;
-// 	return (radian);
-// }
-
-// void	get_new_dir(t_cub *cub, double angle)
-// {
-// }
-
-// void	init_camera(t_cub *cub)
-// {
-// 	printf("CAMERA\n");
-// }
+	ray = malloc(sizeof(t_ray) * 60 + 1);
+	// ray = malloc(sizeof(t_ray) * WIN_WIDTH + 1);
+	if (!ray)
+		return ;
+}
