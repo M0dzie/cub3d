@@ -6,7 +6,7 @@
 /*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/06/06 16:53:46 by msapin           ###   ########.fr       */
+/*   Updated: 2023/06/07 13:56:20 by msapin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,19 +78,17 @@ typedef struct s_map
 
 typedef struct    s_ray
 {
+	t_vector	coef_ns;
+	t_vector	coef_we;
     t_vector    start;
-    t_vector    end;
-}                t_ray;
+	int			dist;
+	int			angle;
+}               t_ray;
 
 typedef struct s_player
 {
-	t_vector	pos;
-	t_vector	dir;
-	t_vector	coef_ns;
-	t_vector	coef_we;
-	t_vector	start;
-	t_vector	end;
-	int			angle;
+	t_ray	**ray;
+	t_ray	pos;
 }			t_player;
 
 typedef struct s_imgs
@@ -100,19 +98,6 @@ typedef struct s_imgs
 	t_data	back;
 	t_data	p;
 }			t_imgs;
-
-typedef struct s_raycaster
-{
-	t_vector	ray_dir;
-	t_vector	delta_dist;
-	t_vector	side_dist;
-	t_vector	map;
-	int			step_x;
-	int			step_y;
-	int			hit;
-	int			side;
-	double		wall_dist;
-}				t_raycaster;
 
 typedef struct s_cub
 {
@@ -131,7 +116,6 @@ typedef struct s_cub
 	void			*mlx;
 	void			*win;
 	t_imgs			*imgs;
-	t_raycaster		raycaster;
 }					t_cub;
 
 int	are_rgb_valid(t_cub *cub);
