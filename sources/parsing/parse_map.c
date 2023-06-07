@@ -6,7 +6,7 @@
 /*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/06/06 16:51:06 by msapin           ###   ########.fr       */
+/*   Updated: 2023/06/07 13:58:43 by msapin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,49 +56,28 @@ static int	is_extension_valid(char *file_name, char *extension)
 	return (free(tmp_name), 0);
 }
 
+void	parse_ray(t_cub *cub)
+{
+	(void)cub;
+
+}
+
 void	parse_player_angle(t_cub *cub, char c)
 {
 	if (c == 'N')
-		cub->p->angle = 0;
+		cub->p->pos.angle = 0;
 	else if (c == 'S')
-		cub->p->angle = 180;
+		cub->p->pos.angle = 180;
 	else if (c == 'W')
-		cub->p->angle = 270;
+		cub->p->pos.angle = 270;
 	else if (c == 'E')
-		cub->p->angle = 90;
-	cub->p->coef_ns.x = sin(cub->p->angle * M_PI / 180);
-	cub->p->coef_ns.y = -cos(cub->p->angle * M_PI / 180);
-	cub->p->coef_we.x = sin((cub->p->angle - 90) * M_PI / 180);
-	cub->p->coef_we.y = -cos((cub->p->angle - 90) * M_PI / 180);
-}
-
-static void	init_pos(t_cub *cub, int y, int x)
-{
-	(void)cub;
-	(void)y;
-	(void)x;
-	cub->p->pos.x = x;
-	cub->p->pos.y = y;
-	if (cub->map->array[y][x] == 'N')
-	{
-		cub->p->dir.x = 0;
-		cub->p->dir.y = -1;
-	}
-	if (cub->map->array[y][x]  == 'S')
-	{
-		cub->p->dir.x = 0;
-		cub->p->dir.y = 1;
-	}
-	if (cub->map->array[y][x]  == 'E')
-	{
-		cub->p->dir.x = 1;
-		cub->p->dir.y = 0;
-	}
-	if (cub->map->array[y][x]  == 'W')
-	{
-		cub->p->dir.x = -1;
-		cub->p->dir.y = 0;
-	}
+		cub->p->pos.angle = 90;
+	cub->p->pos.coef_ns.x = sin(cub->p->pos.angle * M_PI / 180);
+	cub->p->pos.coef_ns.y = -cos(cub->p->pos.angle * M_PI / 180);
+	cub->p->pos.coef_we.x = sin((cub->p->pos.angle - 90) * M_PI / 180);
+	cub->p->pos.coef_we.y = -cos((cub->p->pos.angle - 90) * M_PI / 180);
+	
+	parse_ray(cub);
 }
 
 int	init_player(t_cub *cub)
@@ -119,10 +98,9 @@ int	init_player(t_cub *cub)
 			c = cub->map->array[i][j];
 			if (c == 'N' || c == 'S' || c == 'W' || c == 'E')
 			{
-				init_pos(cub, i, j);
 				parse_player_angle(cub, c);
-				cub->p->start.x = j * GRID_MINI;
-				cub->p->start.y = i * GRID_MINI;
+				cub->p->pos.start.x = j * GRID_MINI;
+				cub->p->pos.start.y = i * GRID_MINI;
 			}
 		}
 	}
@@ -141,6 +119,5 @@ int	parsing_map(t_cub *cub, char **argv)
 		return (free_cub(cub), -1);
 	if (init_player(cub) != 0)
 		return (free_cub(cub), -1);
-	// parse_info(cub);
 	return (0);
 }

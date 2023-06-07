@@ -6,7 +6,7 @@
 /*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:11:26 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/06/06 16:53:59 by msapin           ###   ########.fr       */
+/*   Updated: 2023/06/07 11:49:02 by msapin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,15 @@ static int	ft_exit(void)
 
 void	new_angle(t_cub *cub, int sign)
 {
-	cub->p->angle += (SPEED_ANGLE * sign);
-	if (cub->p->angle > 359)
-		cub->p->angle -= 360;
-	else if (cub->p->angle < 0)
-		cub->p->angle += 360;
-	cub->p->coef_ns.x = sin(cub->p->angle * M_PI / 180);
-	cub->p->coef_ns.y = -cos(cub->p->angle * M_PI / 180);
-	cub->p->coef_we.x = sin((cub->p->angle - 90) * M_PI / 180);
-	cub->p->coef_we.y = -cos((cub->p->angle - 90) * M_PI / 180);
+	cub->p->pos.angle += (SPEED_ANGLE * sign);
+	if (cub->p->pos.angle > 359)
+		cub->p->pos.angle -= 360;
+	else if (cub->p->pos.angle < 0)
+		cub->p->pos.angle += 360;
+	cub->p->pos.coef_ns.x = sin(cub->p->pos.angle * M_PI / 180);
+	cub->p->pos.coef_ns.y = -cos(cub->p->pos.angle * M_PI / 180);
+	cub->p->pos.coef_we.x = sin((cub->p->pos.angle - 90) * M_PI / 180);
+	cub->p->pos.coef_we.y = -cos((cub->p->pos.angle - 90) * M_PI / 180);
 }
 
 static int	check_keycode(int keycode, t_cub *cub)
@@ -40,26 +40,26 @@ static int	check_keycode(int keycode, t_cub *cub)
 		ft_exit();
 	if (keycode == W)
 	{
-		cub->p->start.x += cub->p->coef_ns.x * SPEED_MINI;
-		cub->p->start.y += cub->p->coef_ns.y * SPEED_MINI;
+		cub->p->pos.start.x += cub->p->pos.coef_ns.x * SPEED_MINI;
+		cub->p->pos.start.y += cub->p->pos.coef_ns.y * SPEED_MINI;
 		move_player(cub);
 	}
 	if (keycode == S)
 	{
-		cub->p->start.x -= cub->p->coef_ns.x * SPEED_MINI;
-		cub->p->start.y -= cub->p->coef_ns.y * SPEED_MINI;
+		cub->p->pos.start.x -= cub->p->pos.coef_ns.x * SPEED_MINI;
+		cub->p->pos.start.y -= cub->p->pos.coef_ns.y * SPEED_MINI;
 		move_player(cub);
 	}
 	if (keycode == A)
 	{
-		cub->p->start.x += cub->p->coef_we.x * SPEED_MINI;
-		cub->p->start.y += cub->p->coef_we.y * SPEED_MINI;
+		cub->p->pos.start.x += cub->p->pos.coef_we.x * SPEED_MINI;
+		cub->p->pos.start.y += cub->p->pos.coef_we.y * SPEED_MINI;
 		move_player(cub);
 	}
 	if (keycode == D)
 	{
-		cub->p->start.x -= cub->p->coef_we.x * SPEED_MINI;
-		cub->p->start.y -= cub->p->coef_we.y * SPEED_MINI;
+		cub->p->pos.start.x -= cub->p->pos.coef_we.x * SPEED_MINI;
+		cub->p->pos.start.y -= cub->p->pos.coef_we.y * SPEED_MINI;
 		move_player(cub);
 	}
 	if (keycode == L_ARROW)
@@ -72,7 +72,7 @@ static int	check_keycode(int keycode, t_cub *cub)
 		new_angle(cub, 1);
 		move_player(cub);
 	}
-	// printf("player angle: %d%%\n", cub->p->angle);
+	// printf("player angle: %d%%\n", cub->p->pos.angle);
 	if (keycode == M)
 	{
 		if (cub->imgs->show_mini)

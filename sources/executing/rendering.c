@@ -6,7 +6,7 @@
 /*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:43:13 by msapin            #+#    #+#             */
-/*   Updated: 2023/06/06 16:54:34 by msapin           ###   ########.fr       */
+/*   Updated: 2023/06/07 14:06:46 by msapin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,22 +114,39 @@ void	generate_background(t_cub *cub)
 	mlx_put_image_to_window(cub->mlx, cub->win, cub->imgs->back.img, 0, 0);
 }
 
+void	draw_player_body(t_cub *cub)
+{
+	int	y = -1;
+
+	while (++y < GRID_MINI / 2)
+	{
+		int	x = -1;
+		while (++x < GRID_MINI / 2)
+			put_pixel(&cub->imgs->minimap, x + cub->p->pos.start.x, y + cub->p->pos.start.y, 0x0082180e);
+	}
+}
+
 void	generate_player(t_cub *cub)
 {
 	t_vector	tmp;
 
-	tmp.x = cub->p->start.x;
-	tmp.y = cub->p->start.y + (double)GRID_MINI / 2;
+	// draw_player_body(cub);
+	tmp.x = cub->p->pos.start.x;
+	tmp.y = cub->p->pos.start.y + (double)GRID_MINI / 2;
+	cub->p->pos.dist = 0;
 	while (1)
 	{
 		if (tmp.x > 0 && tmp.y > 0)
 		{
-			if (!put_pixel(&cub->imgs->minimap, tmp.x + GRID_MINI / 2, tmp.y, 0x0007fc03))
+			if (!put_pixel(&cub->imgs->minimap, tmp.x + GRID_MINI / 2, tmp.y, 0x00ff1500))
 				break ;
 		}
 		else
 			break ;
-		tmp.x += cub->p->coef_ns.x;
-		tmp.y += cub->p->coef_ns.y;
+		tmp.x += cub->p->pos.coef_ns.x;
+		tmp.y += cub->p->pos.coef_ns.y;
+		cub->p->pos.dist++;
 	}
+	cub->p->pos.dist -= GRID_MINI / 2;
+	// printf("count %d\n", cub->p->pos.dist);
 }
