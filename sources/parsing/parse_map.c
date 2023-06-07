@@ -6,7 +6,7 @@
 /*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/06/07 13:58:43 by msapin           ###   ########.fr       */
+/*   Updated: 2023/06/07 17:34:08 by msapin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,12 @@ void	parse_player_angle(t_cub *cub, char c)
 	cub->p->pos.coef_ns.y = -cos(cub->p->pos.angle * M_PI / 180);
 	cub->p->pos.coef_we.x = sin((cub->p->pos.angle - 90) * M_PI / 180);
 	cub->p->pos.coef_we.y = -cos((cub->p->pos.angle - 90) * M_PI / 180);
+
+	cub->p->pos.coef_nwse.x = sin((cub->p->pos.angle - 45) * M_PI / 180);
+	cub->p->pos.coef_nwse.y = -cos((cub->p->pos.angle - 45) * M_PI / 180);
+
+	cub->p->pos.coef_nesw.x = sin((cub->p->pos.angle - 135) * M_PI / 180);
+	cub->p->pos.coef_nesw.y = -cos((cub->p->pos.angle - 135) * M_PI / 180);
 	
 	parse_ray(cub);
 }

@@ -6,7 +6,7 @@
 /*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:43:13 by msapin            #+#    #+#             */
-/*   Updated: 2023/06/07 14:06:46 by msapin           ###   ########.fr       */
+/*   Updated: 2023/06/07 17:50:48 by msapin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,19 @@ void	render_minimap(t_cub *cub)
 	if (cub->imgs->show_mini)
 	{
 		generate_minimap(cub);
-		generate_player(cub);
 	}
+	generate_player(cub);
 }
 
-void	move_player(t_cub *cub)
+void	move_player(t_cub *cub, t_vector coef, int sign)
 {
 	(void)cub;
+	if (sign)
+	{
+		cub->p->pos.start.x += (coef.x * SPEED_MINI) * sign;
+		cub->p->pos.start.y += (coef.y * SPEED_MINI) * sign;
+	}
+
 	render_minimap(cub);
 }
 
@@ -116,37 +122,111 @@ void	generate_background(t_cub *cub)
 
 void	draw_player_body(t_cub *cub)
 {
-	int	y = -1;
+	int			angle;
+	int			i;
+	t_vector	start;
+	t_vector	coef;
 
-	while (++y < GRID_MINI / 2)
+	angle = -1;
+	while (++angle < 360)
 	{
-		int	x = -1;
-		while (++x < GRID_MINI / 2)
-			put_pixel(&cub->imgs->minimap, x + cub->p->pos.start.x, y + cub->p->pos.start.y, 0x0082180e);
+		start.x = cub->p->pos.start.x;
+		start.y = cub->p->pos.start.y;
+		coef.x = sin(angle * M_PI / 180);
+		coef.y = -cos(angle * M_PI / 180);
+		i = -1;
+		while (++i < GRID_MINI / 3)
+		{
+			if (start.x > 0 && start.y > 0)
+				put_pixel(&cub->imgs->minimap, start.x + GRID_MINI / 2, start.y + GRID_MINI / 2, 0x0082180e);
+			else
+				break ;
+			start.x += coef.x;
+			start.y += coef.y;
+		}
 	}
 }
 
-void	generate_player(t_cub *cub)
+int	is_wall(t_data *data, int x, int y)
 {
+	char	*dst;
+
+	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+	if (*(unsigned int *)dst == 0x00202020)
+		return (1);
+	return (0);
+}
+
+void	draw_until_wall(t_cub *cub, t_ray *ray, t_vector coef, int sign)
+{
+	(void)sign;
 	t_vector	tmp;
 
-	// draw_player_body(cub);
-	tmp.x = cub->p->pos.start.x;
-	tmp.y = cub->p->pos.start.y + (double)GRID_MINI / 2;
-	cub->p->pos.dist = 0;
+	tmp.x = ray->start.x;
+	tmp.y = ray->start.y + (double)GRID_MINI / 2;
+	ray->dist = 0;
 	while (1)
 	{
 		if (tmp.x > 0 && tmp.y > 0)
 		{
-			if (!put_pixel(&cub->imgs->minimap, tmp.x + GRID_MINI / 2, tmp.y, 0x00ff1500))
+			if (!put_pixel(&cub->imgs->minimap, tmp.x + GRID_MINI / 2, tmp.y - 1, 0x00ff1500))
 				break ;
 		}
 		else
 			break ;
-		tmp.x += cub->p->pos.coef_ns.x;
-		tmp.y += cub->p->pos.coef_ns.y;
-		cub->p->pos.dist++;
+		tmp.x += (coef.x) * sign;
+		tmp.y += (coef.y) * sign;
+		ray->dist++;
 	}
-	cub->p->pos.dist -= GRID_MINI / 2;
-	// printf("count %d\n", cub->p->pos.dist);
+	ray->dist -= GRID_MINI / 2;
+}
+
+void	distance_to_wall(t_cub *cub, t_ray *ray, t_vector coef, int sign, char *degree)		// to delete
+{
+	t_vector	tmp;
+
+	tmp.x = ray->start.x;
+	tmp.y = ray->start.y + (double)GRID_MINI / 2;
+	ray->dist = 0;
+	while (1)
+	{
+		if (tmp.x > 0 && tmp.y > 0)
+		{
+			if (is_wall(&cub->imgs->minimap, tmp.x + GRID_MINI / 2, tmp.y - 1))
+				break ;
+		}
+		else
+			break ;
+		tmp.x += (coef.x) * sign;
+		tmp.y += (coef.y) * sign;
+		ray->dist++;
+	}
+	ray->dist -= GRID_MINI / 3;
+	printf("%s° = %d\n", degree, ray->dist);
+}
+
+void	generate_player(t_cub *cub)
+{
+	draw_player_body(cub);
+	draw_until_wall(cub, &cub->p->pos, cub->p->pos.coef_ns, 1);
+	// draw_until_wall(cub, &cub->p->pos, cub->p->pos.coef_ns, -1);
+
+	// draw_until_wall(cub, &cub->p->pos, cub->p->pos.coef_we, 1);
+	// draw_until_wall(cub, &cub->p->pos, cub->p->pos.coef_we, -1);
+
+	// draw_until_wall(cub, &cub->p->pos, cub->p->pos.coef_nwse, 1);
+	// draw_until_wall(cub, &cub->p->pos, cub->p->pos.coef_nwse, -1);
+
+	distance_to_wall(cub, &cub->p->pos, cub->p->pos.coef_ns, 1, "N");
+	distance_to_wall(cub, &cub->p->pos, cub->p->pos.coef_ns, -1, "S");
+
+	distance_to_wall(cub, &cub->p->pos, cub->p->pos.coef_we, 1, "W");
+	distance_to_wall(cub, &cub->p->pos, cub->p->pos.coef_we, -1, "E");
+
+	distance_to_wall(cub, &cub->p->pos, cub->p->pos.coef_nwse, 1, "NW");
+	distance_to_wall(cub, &cub->p->pos, cub->p->pos.coef_nwse, -1, "SE");
+
+	distance_to_wall(cub, &cub->p->pos, cub->p->pos.coef_nesw, 1, "NE");
+	distance_to_wall(cub, &cub->p->pos, cub->p->pos.coef_nesw, -1, "SW");
+	printf("\n");
 }
