@@ -6,7 +6,7 @@
 /*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/06/07 13:56:20 by msapin           ###   ########.fr       */
+/*   Updated: 2023/06/07 17:33:44 by msapin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ typedef struct    s_ray
 {
 	t_vector	coef_ns;
 	t_vector	coef_we;
+	t_vector	coef_nwse;
+	t_vector	coef_nesw;
     t_vector    start;
 	int			dist;
 	int			angle;
@@ -135,7 +137,7 @@ void	free_cub(t_cub *cub);
 void    init_data_raycaster(t_cub *cub);
 void	init_mlx(t_cub *cub);
 void	init_raycasting(t_cub *cub);
-void	move_player(t_cub *cub);
+void	move_player(t_cub *cub, t_vector coef, int sign);
 void	render_minimap(t_cub *cub);
 
 #endif

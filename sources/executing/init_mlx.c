@@ -6,7 +6,7 @@
 /*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:11:26 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/06/07 11:49:02 by msapin           ###   ########.fr       */
+/*   Updated: 2023/06/07 17:33:22 by msapin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,12 @@ void	new_angle(t_cub *cub, int sign)
 	cub->p->pos.coef_ns.y = -cos(cub->p->pos.angle * M_PI / 180);
 	cub->p->pos.coef_we.x = sin((cub->p->pos.angle - 90) * M_PI / 180);
 	cub->p->pos.coef_we.y = -cos((cub->p->pos.angle - 90) * M_PI / 180);
+
+	cub->p->pos.coef_nwse.x = sin((cub->p->pos.angle - 45) * M_PI / 180);
+	cub->p->pos.coef_nwse.y = -cos((cub->p->pos.angle - 45) * M_PI / 180);
+
+	cub->p->pos.coef_nesw.x = sin((cub->p->pos.angle - 135) * M_PI / 180);
+	cub->p->pos.coef_nesw.y = -cos((cub->p->pos.angle - 135) * M_PI / 180);
 }
 
 static int	check_keycode(int keycode, t_cub *cub)
@@ -40,37 +46,37 @@ static int	check_keycode(int keycode, t_cub *cub)
 		ft_exit();
 	if (keycode == W)
 	{
-		cub->p->pos.start.x += cub->p->pos.coef_ns.x * SPEED_MINI;
-		cub->p->pos.start.y += cub->p->pos.coef_ns.y * SPEED_MINI;
-		move_player(cub);
+		// cub->p->pos.start.x += cub->p->pos.coef_ns.x * SPEED_MINI;
+		// cub->p->pos.start.y += cub->p->pos.coef_ns.y * SPEED_MINI;
+		move_player(cub, cub->p->pos.coef_ns, 1);
 	}
 	if (keycode == S)
 	{
-		cub->p->pos.start.x -= cub->p->pos.coef_ns.x * SPEED_MINI;
-		cub->p->pos.start.y -= cub->p->pos.coef_ns.y * SPEED_MINI;
-		move_player(cub);
+		// cub->p->pos.start.x -= cub->p->pos.coef_ns.x * SPEED_MINI;
+		// cub->p->pos.start.y -= cub->p->pos.coef_ns.y * SPEED_MINI;
+		move_player(cub, cub->p->pos.coef_ns, -1);
 	}
 	if (keycode == A)
 	{
-		cub->p->pos.start.x += cub->p->pos.coef_we.x * SPEED_MINI;
-		cub->p->pos.start.y += cub->p->pos.coef_we.y * SPEED_MINI;
-		move_player(cub);
+		// cub->p->pos.start.x += cub->p->pos.coef_we.x * SPEED_MINI;
+		// cub->p->pos.start.y += cub->p->pos.coef_we.y * SPEED_MINI;
+		move_player(cub, cub->p->pos.coef_we, 1);
 	}
 	if (keycode == D)
 	{
-		cub->p->pos.start.x -= cub->p->pos.coef_we.x * SPEED_MINI;
-		cub->p->pos.start.y -= cub->p->pos.coef_we.y * SPEED_MINI;
-		move_player(cub);
+		// cub->p->pos.start.x -= cub->p->pos.coef_we.x * SPEED_MINI;
+		// cub->p->pos.start.y -= cub->p->pos.coef_we.y * SPEED_MINI;
+		move_player(cub, cub->p->pos.coef_we, -1);
 	}
 	if (keycode == L_ARROW)
 	{
 		new_angle(cub, -1);
-		move_player(cub);
+		move_player(cub, cub->p->pos.coef_ns, 0);
 	}
 	if (keycode == R_ARROW)
 	{
 		new_angle(cub, 1);
-		move_player(cub);
+		move_player(cub, cub->p->pos.coef_ns, 0);
 	}
 	// printf("player angle: %d%%\n", cub->p->pos.angle);
 	if (keycode == M)
