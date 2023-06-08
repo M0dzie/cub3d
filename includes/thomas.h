@@ -6,7 +6,7 @@
 /*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 11:54:07 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/06/08 14:41:30 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/08 22:23:24 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,19 +52,19 @@
 
 // DEFINE VAR
 # ifndef WALL_H
-#  define WALL_H 1080
+#  define WALL_H 720
 # endif
 
 # ifndef EYE_H
-#  define EYE_H 540
+#  define EYE_H 360
 # endif
 
 // # ifndef CUB_SIZE
 // #  define CUB_SIZE 64
 // # endif
 
-void	dda(t_cub *cub);
 void	init_camera(t_cub *cub);
 int		put_pixel(t_data *data, int x, int y, int color);
+int		distance_to_wall(t_cub *cub, t_vector coef, int sign);
 
 #endif
