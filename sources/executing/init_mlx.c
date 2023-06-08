@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_mlx.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:11:26 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/06/07 17:33:22 by msapin           ###   ########.fr       */
+/*   Updated: 2023/06/08 22:11:30 by mehdisapin       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,63 +19,44 @@ static int	ft_exit(void)
 	return (1);
 }
 
-void	new_angle(t_cub *cub, int sign)
+double	get_angle(double angle, int rotation)
 {
-	cub->p->pos.angle += (SPEED_ANGLE * sign);
-	if (cub->p->pos.angle > 359)
-		cub->p->pos.angle -= 360;
-	else if (cub->p->pos.angle < 0)
-		cub->p->pos.angle += 360;
-	cub->p->pos.coef_ns.x = sin(cub->p->pos.angle * M_PI / 180);
-	cub->p->pos.coef_ns.y = -cos(cub->p->pos.angle * M_PI / 180);
-	cub->p->pos.coef_we.x = sin((cub->p->pos.angle - 90) * M_PI / 180);
-	cub->p->pos.coef_we.y = -cos((cub->p->pos.angle - 90) * M_PI / 180);
+	angle += rotation;
+	if (angle > 359)
+		angle -= 360;
+	else if (angle < 0)
+		angle += 360;
+	return (angle);
+}
 
-	cub->p->pos.coef_nwse.x = sin((cub->p->pos.angle - 45) * M_PI / 180);
-	cub->p->pos.coef_nwse.y = -cos((cub->p->pos.angle - 45) * M_PI / 180);
+void	set_angle(t_cub *cub, int sign)
+{
+	cub->p->pos.angle = get_angle(cub->p->pos.angle, SPEED_ANGLE * sign);
 
-	cub->p->pos.coef_nesw.x = sin((cub->p->pos.angle - 135) * M_PI / 180);
-	cub->p->pos.coef_nesw.y = -cos((cub->p->pos.angle - 135) * M_PI / 180);
+	// new angle for each ray
+	// calcul_coef(cub);
 }
 
 static int	check_keycode(int keycode, t_cub *cub)
 {
-	// init_data_raycaster(cub);
-	// get_next_wall(cub);
 	if (keycode == ESC)
 		ft_exit();
 	if (keycode == W)
-	{
-		// cub->p->pos.start.x += cub->p->pos.coef_ns.x * SPEED_MINI;
-		// cub->p->pos.start.y += cub->p->pos.coef_ns.y * SPEED_MINI;
 		move_player(cub, cub->p->pos.coef_ns, 1);
-	}
 	if (keycode == S)
-	{
-		// cub->p->pos.start.x -= cub->p->pos.coef_ns.x * SPEED_MINI;
-		// cub->p->pos.start.y -= cub->p->pos.coef_ns.y * SPEED_MINI;
 		move_player(cub, cub->p->pos.coef_ns, -1);
-	}
 	if (keycode == A)
-	{
-		// cub->p->pos.start.x += cub->p->pos.coef_we.x * SPEED_MINI;
-		// cub->p->pos.start.y += cub->p->pos.coef_we.y * SPEED_MINI;
 		move_player(cub, cub->p->pos.coef_we, 1);
-	}
 	if (keycode == D)
-	{
-		// cub->p->pos.start.x -= cub->p->pos.coef_we.x * SPEED_MINI;
-		// cub->p->pos.start.y -= cub->p->pos.coef_we.y * SPEED_MINI;
 		move_player(cub, cub->p->pos.coef_we, -1);
-	}
 	if (keycode == L_ARROW)
 	{
-		new_angle(cub, -1);
+		set_angle(cub, -1);
 		move_player(cub, cub->p->pos.coef_ns, 0);
 	}
 	if (keycode == R_ARROW)
 	{
-		new_angle(cub, 1);
+		set_angle(cub, 1);
 		move_player(cub, cub->p->pos.coef_ns, 0);
 	}
 	// printf("player angle: %d%%\n", cub->p->pos.angle);
@@ -104,7 +85,8 @@ void	init_mlx(t_cub *cub)
 		
 	generate_background(cub);
 	generate_minimap(cub);
-	generate_player(cub);
+	// calcul_coef(cub);
+	// generate_player(cub);
 
 	mlx_hook(cub->win, 2, 1l << 0, check_keycode, cub);
 	mlx_hook(cub->win, 17, 1l << 0, ft_exit, cub);
