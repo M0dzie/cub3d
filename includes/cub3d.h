@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/06/08 14:41:56 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/08 21:13:26 by mehdisapin       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,22 +18,22 @@
 # include <math.h>
 
 # ifndef GRID_MINI
-#  define GRID_MINI 40
+#  define GRID_MINI 30
 # endif
 
 # ifndef GRID_MAP
 #  define GRID_MAP 100
 # endif
 
-# define WIN_WIDTH 1980
-# define WIN_HEIGHT 1080
-// # define WIN_WIDTH 1280
-// # define WIN_HEIGHT 720
+// # define WIN_WIDTH 1980
+// # define WIN_HEIGHT 1080
+# define WIN_WIDTH 1280.0
+# define WIN_HEIGHT 720
 
 # define SPEED_MINI 5
 # define SPEED_ANGLE 5
 
-# define FOV 66
+# define FOV 66.0
 
 # ifndef KEYS
 #  define ESC 65307
@@ -103,10 +103,11 @@ typedef struct s_dist
 typedef struct	s_ray_map
 {
 	t_vector	coef_ns;
-	t_vector	coef_we;
-	t_vector	start;
+	// t_vector	coef_we;
+	// t_vector	start;
 	int			dist;
-	int			angle;
+	// int			angle;
+	double		angle;
 }				t_ray_map;
 
 typedef struct	s_ray
@@ -117,13 +118,15 @@ typedef struct	s_ray
 	t_vector	coef_nesw;
 	t_vector	start;
 	t_dist		dist;
-	int			angle;
+	// int			angle;
+	double		angle;
 }				t_ray;
 
 typedef struct	s_player
 {
 	t_ray_map	**ray;
 	t_ray		pos;
+	double		coef;
 }				t_player;
 
 typedef struct s_imgs
@@ -157,10 +160,16 @@ int	are_rgb_valid(t_cub *cub);
 int	check_border(t_cub *cub);
 int	display_error(char *name, int num_error);
 int	display_error_texture(t_cub *cub);
+int	distance_to_wall(t_cub *cub, t_vector coef, int sign);
 int	init_file(t_cub *cub, char *file_name);
 int	init_map(t_cub *cub, char **argv);
 int	init_texture(t_cub *cub);
 int	parsing_map(t_cub *cub, char **argv);
+
+double	get_angle(double angle, int rotation);
+
+int	calcul_coef(t_cub *cub);
+void	draw_player_body(t_cub *cub);
 
 void	generate_background(t_cub *cub);
 void	generate_minimap(t_cub *cub);

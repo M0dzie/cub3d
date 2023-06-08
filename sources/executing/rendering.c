@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rendering.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:43:13 by msapin            #+#    #+#             */
-/*   Updated: 2023/06/08 14:13:29 by msapin           ###   ########.fr       */
+/*   Updated: 2023/06/08 22:13:55 by mehdisapin       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void	move_player(t_cub *cub, t_vector coef, int sign)
 {
 	t_vector	tmp_coef;
 
+	calcul_coef(cub);
 	tmp_coef.x = (coef.x * SPEED_MINI) * sign;
 	tmp_coef.y = (coef.y * SPEED_MINI) * sign;
 	if (sign)
@@ -195,6 +196,7 @@ void	draw_player_body(t_cub *cub)
 		i = -1;
 		while (++i < GRID_MINI / 3)
 		{
+			// printf("x %f y %f\n", start.x, start.y);
 			if (start.x > 0 && start.y > 0)
 				put_pixel(&cub->imgs->minimap, start.x + GRID_MINI / 2, start.y + GRID_MINI / 2, 0x0082180e);
 			else
@@ -207,7 +209,6 @@ void	draw_player_body(t_cub *cub)
 
 void	draw_until_wall(t_cub *cub, t_ray *ray, t_vector coef, int sign)
 {
-	(void)sign;
 	t_vector	tmp;
 
 	tmp.x = ray->start.x;
@@ -226,13 +227,39 @@ void	draw_until_wall(t_cub *cub, t_ray *ray, t_vector coef, int sign)
 	}
 }
 
+void	draw_ray(t_cub *cub, t_vector coef, int sign)
+{
+	t_vector	tmp;
+
+	tmp.x = cub->p->pos.start.x;
+	tmp.y = cub->p->pos.start.y + (double)GRID_MINI / 2;
+	// printf("draw x %f - y %f - %f - %f\n", tmp.x, tmp.y, coef.x, coef.y);
+	while (1)
+	{
+		if (tmp.x > 0 && tmp.y > 0)
+		{
+			if (!put_pixel(&cub->imgs->minimap, tmp.x + GRID_MINI / 2, tmp.y - 1, 0x00ff1500))
+				break ;
+		}
+		else
+			break ;
+		tmp.x += (coef.x) * sign;
+		tmp.y += (coef.y) * sign;
+	}
+}
+
+void	draw_fov(t_cub *cub)
+{
+	int	i;
+
+	i = -1;
+	while (++i < WIN_WIDTH)
+		draw_ray(cub, cub->p->ray[i]->coef_ns, 1);
+}
+
 void	generate_player(t_cub *cub)
 {
 	draw_player_body(cub);
-	draw_until_wall(cub, &cub->p->pos, cub->p->pos.coef_ns, 1);
-	// draw_until_wall(cub, &cub->p->pos, cub->p->pos.coef_ns, -1);
-	// draw_until_wall(cub, &cub->p->pos, cub->p->pos.coef_we, 1);
-	// draw_until_wall(cub, &cub->p->pos, cub->p->pos.coef_we, -1);
-	// draw_until_wall(cub, &cub->p->pos, cub->p->pos.coef_nwse, 1);
-	// draw_until_wall(cub, &cub->p->pos, cub->p->pos.coef_nwse, -1);
+	// calcul_coef(cub);
+	draw_fov(cub);
 }
