@@ -6,7 +6,7 @@
 /*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/06/07 17:33:44 by msapin           ###   ########.fr       */
+/*   Updated: 2023/06/08 14:09:51 by msapin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@
 
 # define SPEED_MINI 5
 # define SPEED_ANGLE 5
+
+# define FOV 66
 
 # ifndef KEYS
 #  define ESC 65307
@@ -76,22 +78,43 @@ typedef struct s_map
 	int		max_y;
 }			t_map;
 
-typedef struct    s_ray
+typedef struct s_dist
+{
+	int	n;
+	int	s;
+	int	w;
+	int	e;
+	int	nw;
+	int	se;
+	int	ne;
+	int	sw;
+}		t_dist;
+
+typedef struct	s_ray_map
+{
+	t_vector	coef_ns;
+	t_vector	coef_we;
+	t_vector	start;
+	int			dist;
+	int			angle;
+}				t_ray_map;
+
+typedef struct	s_ray
 {
 	t_vector	coef_ns;
 	t_vector	coef_we;
 	t_vector	coef_nwse;
 	t_vector	coef_nesw;
-    t_vector    start;
-	int			dist;
+	t_vector	start;
+	t_dist		dist;
 	int			angle;
-}               t_ray;
+}				t_ray;
 
-typedef struct s_player
+typedef struct	s_player
 {
-	t_ray	**ray;
-	t_ray	pos;
-}			t_player;
+	t_ray_map	**ray;
+	t_ray		pos;
+}				t_player;
 
 typedef struct s_imgs
 {
