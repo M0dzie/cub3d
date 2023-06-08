@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/06/08 14:09:51 by msapin           ###   ########.fr       */
+/*   Updated: 2023/06/08 14:41:56 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,10 @@
 #  define GRID_MAP 100
 # endif
 
-# define WIN_WIDTH 1920
+# define WIN_WIDTH 1980
 # define WIN_HEIGHT 1080
+// # define WIN_WIDTH 1280
+// # define WIN_HEIGHT 720
 
 # define SPEED_MINI 5
 # define SPEED_ANGLE 5
@@ -42,6 +44,14 @@
 #  define M 109
 #  define L_ARROW 65361
 #  define R_ARROW 65363
+// #  define ESC 53
+// #  define W 13
+// #  define A 0
+// #  define S 1
+// #  define D 2
+// #  define M 46
+// #  define L_ARROW 123
+// #  define R_ARROW 124
 # endif
 
 typedef struct s_vector
@@ -157,6 +167,7 @@ void	generate_minimap(t_cub *cub);
 void	generate_player(t_cub *cub);
 void	get_next_wall(t_cub *cub);
 void	free_cub(t_cub *cub);
+void	init_camera(t_cub *cub);
 void    init_data_raycaster(t_cub *cub);
 void	init_mlx(t_cub *cub);
 void	init_raycasting(t_cub *cub);
