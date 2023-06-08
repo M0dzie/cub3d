@@ -6,7 +6,7 @@
 /*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/06/06 16:15:41 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/08 14:29:42 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ int	main(int argc, char **argv)
 		return (display_error("t_cub", 4));
 	if (parsing_map(cub, argv) != 0)
 		return (-1);
-	// init_raycasting(cub);
 	init_mlx(cub);
 	return (free_cub(cub), 0);
 }

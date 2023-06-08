@@ -6,14 +6,14 @@
 /*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 11:54:07 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/06/06 17:00:15 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/08 14:32:08 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef THOMAS_H
 # define THOMAS_H
 # include "cub3d.h"
-# include "mlx/mlx.h"
+// # include "mlx/mlx.h"
 # include <stdlib.h>
 
 // KEY MAC
@@ -26,19 +26,45 @@
 // #  define L_ARROW 123
 // #  define R_ARROW 124
 
-// DEFINE VARIABLE
-# ifndef FOV
-#  define FOV 66
+// typedef struct s_raycaster
+// {
+// 	t_vector	ray_dir;
+// 	t_vector	delta_dist;
+// 	t_vector	side_dist;
+// 	t_vector	map;
+// 	int			step_x;
+// 	int			step_y;
+// 	int			hit;
+// 	int			side;
+// 	double		wall_dist;
+// }				t_raycaster;
+
+// typedef struct s_player
+// {
+// 	t_vector	pos;
+// 	t_vector	dir;
+// 	t_vector	coef_ns;
+// 	t_vector	coef_we;
+// 	t_vector	start;
+// 	t_vector	end;
+// 	int			angle;
+// }			t_player;
+
+// DEFINE VAR
+# ifndef WALL_H
+#  define WALL_H 1080
 # endif
 
-typedef struct	s_ray
-{
-	t_vector	start;
-	t_vector	end;
-}				t_ray;
+# ifndef EYE_H
+#  define EYE_H 540
+# endif
+
+// # ifndef CUB_SIZE
+// #  define CUB_SIZE 64
+// # endif
 
 void	dda(t_cub *cub);
-void	init_camera(t_cub *cub, t_data *data);
-void	put_pixel(t_data *data, int x, int y, int color);
+void	init_camera(t_cub *cub);
+int		put_pixel(t_data *data, int x, int y, int color);
 
 #endif
