@@ -6,7 +6,7 @@
 /*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 10:29:51 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/06/08 23:13:57 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/08 23:40:23 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	init_camera(t_cub *cub)
 	int		height;
 	int		i;
 	int		y;
-	double	fisheye_angle;
+	// double	fisheye_angle;
 
 	i = -1;
 	// height = WALL_H / cub->p->pos.dist.n;
