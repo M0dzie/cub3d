@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rendering.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
+/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:43:13 by msapin            #+#    #+#             */
-/*   Updated: 2023/06/08 22:13:55 by mehdisapin       ###   ########.fr       */
+/*   Updated: 2023/06/08 23:37:57 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void	calcul_distance(t_cub *cub)
 
 void	render_minimap(t_cub *cub)
 {
+	init_camera(cub);
 	if (cub->imgs->show_mini)
 	{
 		generate_minimap(cub);
