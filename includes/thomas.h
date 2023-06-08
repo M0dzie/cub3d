@@ -6,7 +6,7 @@
 /*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 11:54:07 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/06/08 23:36:37 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/09 00:04:30 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,9 @@
 #  define WALL_H 720
 # endif
 
-# ifndef EYE_H
-#  define EYE_H 360
-# endif
+// # ifndef EYE_H
+// #  define EYE_H 360
+// # endif
 
 // # ifndef CUB_SIZE
 // #  define CUB_SIZE 64
