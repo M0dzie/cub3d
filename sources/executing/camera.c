@@ -6,7 +6,7 @@
 /*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 10:29:51 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/06/08 22:57:05 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/08 23:13:57 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,10 @@ static void	draw_floor(t_cub *cub, int x, int *y)
 
 void	init_camera(t_cub *cub)
 {
-	int	height;
-	int	i;
-	int	y;
+	int		height;
+	int		i;
+	int		y;
+	double	fisheye_angle;
 
 	i = -1;
 	// height = WALL_H / cub->p->pos.dist.n;
@@ -46,6 +47,8 @@ void	init_camera(t_cub *cub)
 	{
 		y = -1;
 		height = WALL_H / cub->p->ray[i]->dist;
+		// fisheye_angle = cub->p->ray[i]->angle - 0;
+		// height *= cos(fisheye_angle);
 		// printf("dist = %d\n", cub->p->ray[i]->dist);
 		// printf("angle = %lf\n", cub->p->ray[i]->angle);
 		draw_sky(cub, height, i, &y);
