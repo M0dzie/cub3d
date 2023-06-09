@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 11:59:47 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/06/06 16:14:54 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/09 14:12:15 by mehdisapin       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 #include "../../includes/thomas.h"
 
-// static void	init_step_and_side_dist(t_cub *cub)
+/*// static void	init_step_and_side_dist(t_cub *cub)
 // {
 // 	if (cub->raycaster.ray_dir.x < 0)
 // 	{
@@ -95,4 +95,4 @@
 // void	init_raycasting(t_cub *cub)
 // {
 // 	init_mlx(cub);
-// }
+// }*/

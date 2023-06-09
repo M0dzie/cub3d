@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   camera.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 10:29:51 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/06/09 00:00:18 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/09 14:14:45 by mehdisapin       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,21 @@
 static void	draw_sky(t_cub *cub, int height, int x, int *y)
 {
 	while (++(*y) < (WIN_HEIGHT - height) / 2)
-		if (x > 0 && y > 0)
+		if (x > 0 && *y > 0)
 			put_pixel(&cub->imgs->back, x, (*y), 0x0000FF);
 }
 
 static void	draw_wall(t_cub *cub, int height, int x, int *y)
 {
 	while (++(*y) < (WIN_HEIGHT - height) / 2 + height)
-		if (x > 0 && y > 0)
+		if (x > 0 && *y > 0)
 			put_pixel(&cub->imgs->back, x, (*y), 0xFFFFFF);
 }
 
 static void	draw_floor(t_cub *cub, int x, int *y)
 {
 	while (++(*y) < WIN_HEIGHT)
-		if (x > 0 && y > 0)
+		if (x > 0 && *y > 0)
 			put_pixel(&cub->imgs->back, x, (*y), 0xFF0000);
 }
 
