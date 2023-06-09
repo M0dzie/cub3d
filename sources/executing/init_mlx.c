@@ -6,7 +6,7 @@
 /*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:11:26 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/06/08 22:11:30 by mehdisapin       ###   ########.fr       */
+/*   Updated: 2023/06/09 13:04:13 by mehdisapin       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,6 @@ double	get_angle(double angle, int rotation)
 void	set_angle(t_cub *cub, int sign)
 {
 	cub->p->pos.angle = get_angle(cub->p->pos.angle, SPEED_ANGLE * sign);
-
-	// new angle for each ray
-	// calcul_coef(cub);
 }
 
 static int	check_keycode(int keycode, t_cub *cub)
@@ -76,6 +73,15 @@ static int	check_keycode(int keycode, t_cub *cub)
 	return (1);
 }
 
+void	display_images(t_cub *cub)
+{
+	mlx_put_image_to_window(cub->mlx, cub->win, cub->imgs->back.img, 0, 0);
+	if (cub->imgs->show_mini)
+	{
+		mlx_put_image_to_window(cub->mlx, cub->win, cub->imgs->minimap.img, (WIN_WIDTH / 2) - (cub->map->width * GRID_MINI / 2), (WIN_HEIGHT / 2) - (cub->map->height * GRID_MINI / 2));
+	}
+}
+
 void	init_mlx(t_cub *cub)
 {
 	cub->mlx = mlx_init();
@@ -83,10 +89,12 @@ void	init_mlx(t_cub *cub)
 	cub->imgs = malloc(sizeof(t_imgs));
 	cub->imgs->show_mini = 1;
 		
-	generate_background(cub);
 	generate_minimap(cub);
-	// calcul_coef(cub);
-	// generate_player(cub);
+	calcul_coef(cub);
+	generate_player(cub);
+	generate_background(cub);
+
+	display_images(cub);
 
 	mlx_hook(cub->win, 2, 1l << 0, check_keycode, cub);
 	mlx_hook(cub->win, 17, 1l << 0, ft_exit, cub);

@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   rendering.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:43:13 by msapin            #+#    #+#             */
-/*   Updated: 2023/06/08 23:37:57 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/09 12:59:18 by mehdisapin       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
+#include "../../includes/thomas.h"
 
 int	is_wall(t_data *data, int x, int y)
 {
@@ -61,12 +62,12 @@ void	calcul_distance(t_cub *cub)
 
 void	render_minimap(t_cub *cub)
 {
-	init_camera(cub);
-	if (cub->imgs->show_mini)
-	{
-		generate_minimap(cub);
-	}
+	// init_camera(cub);
+	generate_minimap(cub);
+	calcul_coef(cub);
 	generate_player(cub);
+	generate_background(cub);
+	display_images(cub);
 }
 
 void	move_player(t_cub *cub, t_vector coef, int sign)
@@ -160,24 +161,51 @@ void	generate_minimap(t_cub *cub)
 				put_minifloor(cub->imgs->minimap, x * GRID_MINI, y * GRID_MINI);
 		}
 	}
-	mlx_put_image_to_window(cub->mlx, cub->win, cub->imgs->minimap.img, (WIN_WIDTH / 2) - (cub->map->width * GRID_MINI / 2), (WIN_HEIGHT / 2) - (cub->map->height * GRID_MINI / 2));
 }
 
 void	generate_background(t_cub *cub)
 {
-	int		y;
+	int		wall_height;
+	int		margin;
 	int		x;
+	int		y;
 
+	if (cub->imgs->back.img)
+		mlx_destroy_image(cub->mlx, cub->imgs->back.img);
 	cub->imgs->back.img = mlx_new_image(cub->mlx, WIN_WIDTH, WIN_HEIGHT);
 	cub->imgs->back.addr = mlx_get_data_addr(cub->imgs->back.img, &cub->imgs->back.bits_per_pixel, &cub->imgs->back.line_length, &cub->imgs->back.endian);
-	y = -1;
-	while (++y < WIN_HEIGHT)
+	x = -1;
+	while (cub->p->ray[++x])
 	{
-		x = -1;
-		while (++x < WIN_WIDTH)
-			put_pixel(&cub->imgs->back, x, y, 0x006ABED7);
+		wall_height = WALL_H / cub->p->ray[x]->dist * 25;
+		margin = (WIN_HEIGHT - wall_height) / 2;
+		// printf("margin %d\n", margin);
+		y = -1;
+		if (margin > 0)
+		{
+			while (++y < margin)
+				put_pixel(&cub->imgs->back, x, y, 0x191970);
+			while (y < margin + wall_height - 1)
+			{
+				put_pixel(&cub->imgs->back, x, y, 0x413C37);
+				y++;
+			}
+			while (y < WIN_HEIGHT)
+			{
+				put_pixel(&cub->imgs->back, x, y, 0x4F4943);
+				y++;
+			}
+		}
+		else
+		{
+			while (++y < WIN_HEIGHT)
+				put_pixel(&cub->imgs->back, x, y, 0x413C37);
+		}
+
+		// draw_sky(cub, height, i, &y);
+		// draw_wall(cub, height, i, &y);
+		// draw_floor(cub, i, &y);
 	}
-	mlx_put_image_to_window(cub->mlx, cub->win, cub->imgs->back.img, 0, 0);
 }
 
 void	draw_player_body(t_cub *cub)
@@ -197,7 +225,6 @@ void	draw_player_body(t_cub *cub)
 		i = -1;
 		while (++i < GRID_MINI / 3)
 		{
-			// printf("x %f y %f\n", start.x, start.y);
 			if (start.x > 0 && start.y > 0)
 				put_pixel(&cub->imgs->minimap, start.x + GRID_MINI / 2, start.y + GRID_MINI / 2, 0x0082180e);
 			else
@@ -234,7 +261,6 @@ void	draw_ray(t_cub *cub, t_vector coef, int sign)
 
 	tmp.x = cub->p->pos.start.x;
 	tmp.y = cub->p->pos.start.y + (double)GRID_MINI / 2;
-	// printf("draw x %f - y %f - %f - %f\n", tmp.x, tmp.y, coef.x, coef.y);
 	while (1)
 	{
 		if (tmp.x > 0 && tmp.y > 0)
@@ -261,6 +287,5 @@ void	draw_fov(t_cub *cub)
 void	generate_player(t_cub *cub)
 {
 	draw_player_body(cub);
-	// calcul_coef(cub);
 	draw_fov(cub);
 }
