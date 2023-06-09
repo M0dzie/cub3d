@@ -6,7 +6,7 @@
 /*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/06/09 11:04:08 by mehdisapin       ###   ########.fr       */
+/*   Updated: 2023/06/09 14:12:29 by mehdisapin       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,9 +170,9 @@ double	get_angle(double angle, int rotation);
 
 int	calcul_coef(t_cub *cub);
 void	draw_player_body(t_cub *cub);
-void	draw_sky(t_cub *cub, double height, int x, int *y);
-void	draw_wall(t_cub *cub, double height, int x, int *y);
-void	draw_floor(t_cub *cub, int x, int *y);
+// void	draw_sky(t_cub *cub, double height, int x, int *y);
+// void	draw_wall(t_cub *cub, double height, int x, int *y);
+// void	draw_floor(t_cub *cub, int x, int *y);
 void	display_images(t_cub *cub);
 
 void	generate_background(t_cub *cub);
