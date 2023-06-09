@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
+/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/06/09 14:12:29 by mehdisapin       ###   ########.fr       */
+/*   Updated: 2023/06/09 17:20:01 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,12 @@
 # define WIN_WIDTH 1280.0
 # define WIN_HEIGHT 720
 
-# define SPEED_MINI 5
-# define SPEED_ANGLE 5
+# define SPEED_MINI 2
+# define SPEED_ANGLE 2
+
+# ifndef WALL_H
+#  define WALL_H 720.0
+# endif
 
 # define FOV 66.0
 
@@ -156,30 +160,26 @@ typedef struct s_cub
 	t_imgs			*imgs;
 }					t_cub;
 
-int	are_rgb_valid(t_cub *cub);
-int	check_border(t_cub *cub);
-int	display_error(char *name, int num_error);
-int	display_error_texture(t_cub *cub);
-int	distance_to_wall(t_cub *cub, t_vector coef, int sign);
-int	init_file(t_cub *cub, char *file_name);
-int	init_map(t_cub *cub, char **argv);
-int	init_texture(t_cub *cub);
-int	parsing_map(t_cub *cub, char **argv);
+int		are_rgb_valid(t_cub *cub);
+int		calcul_coef(t_cub *cub);
+int		check_border(t_cub *cub);
+int		display_error(char *name, int num_error);
+int		display_error_texture(t_cub *cub);
+int		distance_to_wall(t_cub *cub, t_vector coef, int sign);
+int		init_file(t_cub *cub, char *file_name);
+int		init_map(t_cub *cub, char **argv);
+int		init_texture(t_cub *cub);
+int		parsing_map(t_cub *cub, char **argv);
 
 double	get_angle(double angle, int rotation);
 
-int	calcul_coef(t_cub *cub);
 void	draw_player_body(t_cub *cub);
-// void	draw_sky(t_cub *cub, double height, int x, int *y);
-// void	draw_wall(t_cub *cub, double height, int x, int *y);
-// void	draw_floor(t_cub *cub, int x, int *y);
 void	display_images(t_cub *cub);
-
+void	free_cub(t_cub *cub);
 void	generate_background(t_cub *cub);
 void	generate_minimap(t_cub *cub);
 void	generate_player(t_cub *cub);
 void	get_next_wall(t_cub *cub);
-void	free_cub(t_cub *cub);
 void	init_camera(t_cub *cub);
 void    init_data_raycaster(t_cub *cub);
 void	init_mlx(t_cub *cub);
