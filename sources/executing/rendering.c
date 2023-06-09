@@ -6,7 +6,7 @@
 /*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:43:13 by msapin            #+#    #+#             */
-/*   Updated: 2023/06/09 17:18:54 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/09 22:59:45 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,7 +178,7 @@ void	generate_background(t_cub *cub)
 	while (cub->p->ray[++x])
 	{
 		wall_height = WALL_H / cub->p->ray[x]->dist * 25;
-		wall_height *= cos((cub->p->ray[x]->angle - cub->p->pos.angle) * (M_PI / 180));
+		// wall_height *= cos((cub->p->ray[x]->angle - cub->p->pos.angle) * (M_PI / 180));
 		margin = (WIN_HEIGHT - wall_height) / 2;
 		y = -1;
 		if (margin > 0)

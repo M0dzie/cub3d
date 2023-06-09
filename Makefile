@@ -6,7 +6,7 @@
 #    By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#              #
-#    Updated: 2023/06/06 11:48:22 by thmeyer          ###   ########.fr        #
+#    Updated: 2023/06/09 21:33:53 by thmeyer          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,8 +70,7 @@ SRC_PARSING_FILES		=	parse_map.c	display_error.c	display_error_utils.c	\
 							display_error_texture.c	init_map.c					\
 							init_map_utils.c	init_texture.c	\
 
-SRC_EXECUTING_FILES		=	main.c	raycasting.c	init_mlx.c	rendering.c	dda.c \
-							camera.c
+SRC_EXECUTING_FILES		=	main.c	init_mlx.c	rendering.c camera.c
 
 SRCS_PARSING		=	$(addprefix $(SRC_PARSING_PATH), $(SRC_PARSING_FILES))
 SRCS_EXECUTING		=	$(addprefix $(SRC_EXECUTING_PATH), $(SRC_EXECUTING_FILES))
