@@ -72,3 +72,46 @@
 // 		}
 // 	}
 // }
+
+// void	init_camera_plane(t_cub *cub)
+// {
+// 	t_vector	tmp_coef;
+// 	t_vector	tmp_pos;
+// 	t_vector	tmp;
+// 	double		inc;
+// 	int			distance;
+// 	int			i;
+
+// 	i = -1;
+// 	inc = H_FOV / WIN_WIDTH;
+// 	tmp_coef.x = cub->p->pos.coef_we.x * ((WIN_WIDTH / 2) / H_FOV);
+// 	tmp_coef.y = cub->p->pos.coef_we.y * ((WIN_WIDTH / 2) / H_FOV);
+// 	tmp_pos.x = cub->p->pos.start.x + tmp_coef.x;
+// 	tmp_pos.y = cub->p->pos.start.y + tmp_coef.y;
+// 	cub->p->new_ray = ft_calloc(WIN_WIDTH + 1, sizeof(t_ray_map *));
+// 	if (!cub->p->new_ray)
+// 		return ((void)display_error("cub->p->new_ray", 4));
+// 	while (++i < WIN_WIDTH)
+// 	{
+// 		tmp.x = tmp_pos.x;
+// 		tmp.y = tmp_pos.y + (double)GRID_MINI / 2;
+// 		distance = 0;
+// 		while (1)
+// 		{
+// 			if (tmp.x > 0 && tmp.y > 0)
+// 			{
+// 				if (is_wall(&cub->imgs->minimap, tmp.x + GRID_MINI / 2, tmp.y - 1))
+// 					break ;
+// 			}
+// 			else
+// 				break ;
+// 			tmp.x += tmp_coef.x;
+// 			tmp.y += tmp_coef.y;
+// 			distance++;
+// 		}
+// 		cub->p->new_ray[i]->dist = distance;
+// 		printf("test dist = %d\n", cub->p->new_ray[i]->dist);
+// 		tmp_pos.x += cub->p->pos.coef_we.x * inc;
+// 		tmp_pos.y += cub->p->pos.coef_we.y * inc;
+// 	}
+// }
