@@ -6,7 +6,7 @@
 /*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/06/09 17:20:01 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/11 00:08:42 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@
 # endif
 
 # define FOV 66.0
+# define H_FOV 33.0
 
 # ifndef KEYS
 #  define ESC 65307
@@ -107,6 +108,7 @@ typedef struct s_dist
 typedef struct	s_ray_map
 {
 	t_vector	coef_ns;
+	t_vector	wall; //tests
 	// t_vector	coef_we;
 	// t_vector	start;
 	int			dist;
@@ -129,6 +131,7 @@ typedef struct	s_ray
 typedef struct	s_player
 {
 	t_ray_map	**ray;
+	// t_ray_map	**new_ray; // tests
 	t_ray		pos;
 	double		coef;
 }				t_player;
@@ -151,6 +154,8 @@ typedef struct s_cub
 
 	int 			*rgb_floor;
 	int 			*rgb_roof;
+	char			*floor; //tests
+	char			*roof; //tests
 	char			*file;
 	char			**file_split;
 	struct s_map	*map;
@@ -166,11 +171,14 @@ int		check_border(t_cub *cub);
 int		display_error(char *name, int num_error);
 int		display_error_texture(t_cub *cub);
 int		distance_to_wall(t_cub *cub, t_vector coef, int sign);
+int		init_color(t_cub *cub);
 int		init_file(t_cub *cub, char *file_name);
 int		init_map(t_cub *cub, char **argv);
 int		init_texture(t_cub *cub);
+int		is_wall(t_data *data, int x, int y);
 int		parsing_map(t_cub *cub, char **argv);
 
+double	fix_fisheye(t_cub *cub, double distance, int i);
 double	get_angle(double angle, int rotation);
 
 void	draw_player_body(t_cub *cub);
