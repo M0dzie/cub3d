@@ -6,7 +6,7 @@
 /*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:43:13 by msapin            #+#    #+#             */
-/*   Updated: 2023/06/10 22:39:05 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/11 00:55:25 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,13 +179,13 @@ void	generate_background(t_cub *cub)
 	{
 		cub->p->ray[x]->dist = fix_fisheye(cub, cub->p->ray[x]->dist, x);
 		wall_height = WALL_H / cub->p->ray[x]->dist * 25;
+		// wall_height = WALL_H / fix_fisheye(cub, cub->p->ray[x]->dist, x) * 25;
 		margin = (WIN_HEIGHT - wall_height) / 2;
 		y = -1;
 		if (margin > 0)
 		{
 			while (++y < margin)
-				put_pixel(&cub->imgs->back, x, y, 0x191970);
-				// put_rgb(&cub->imgs->back, x, y, cub->roof);
+				put_pixel(&cub->imgs->back, x, y, cub->roof);
 			while (y < margin + wall_height - 1)
 			{
 				put_pixel(&cub->imgs->back, x, y, 0x413C37);
@@ -193,8 +193,7 @@ void	generate_background(t_cub *cub)
 			}
 			while (y < WIN_HEIGHT)
 			{
-				put_pixel(&cub->imgs->back, x, y, 0x4F4943);
-				// put_rgb(&cub->imgs->back, x, y, cub->floor);
+				put_pixel(&cub->imgs->back, x, y, cub->floor);
 				y++;
 			}
 		}

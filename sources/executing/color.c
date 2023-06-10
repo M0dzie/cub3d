@@ -6,7 +6,7 @@
 /*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 18:43:40 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/06/10 20:53:59 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/11 00:57:37 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,30 +59,45 @@ static char	*rgb_to_hexa(int *rgb, char *base)
 	hexa = ft_strjoin(hexa, blue);
 	if (!hexa)
 		return (display_error("hexa", 4), NULL);
-	// printf("%s\n", hexa);
 	return (free(red), free(green), free(blue), hexa);
 }
 
-int	put_rgb(t_data *data, int x, int y, char *rgb)
+static int	hexa_to_int(const char *rgb)
 {
-	char	*dst;
+	int	result;
+	int	digit_value;
+	int	i;
+	int	power;
 
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	if (*(unsigned int *)dst == 0x00202020)
-		return (0);
-	*(unsigned int *)dst = *(unsigned int *)rgb;
-	// printf("char = %s and int = %u\n", dst, *(unsigned int *)dst);
-	return (1);
+	i = 1; // skip "0x"
+	result = 0;
+	power = 5;
+	while (rgb[++i])
+	{
+		if (rgb[i] >= '0' && rgb[i] <= '9')
+			digit_value = rgb[i] - '0';
+		else if (rgb[i] >= 'A' && rgb[i] <= 'F')
+			digit_value = rgb[i] - 'A' + 10;
+		result += (digit_value * pow(16, power));
+		power--;
+	}
+	return (result);
 }
 
 int	init_color(t_cub *cub)
 {
-	int	success;
+	char	*roof;
+	char	*floor;
+	int		success;
 
 	success = 0;
-	cub->roof = rgb_to_hexa(cub->rgb_roof, "0123456789ABCDEF");
-	cub->floor = rgb_to_hexa(cub->rgb_floor, "0123456789ABCDEF");
-	if (cub->roof && cub->floor)
+	roof = rgb_to_hexa(cub->rgb_roof, "0123456789ABCDEF");
+	floor = rgb_to_hexa(cub->rgb_floor, "0123456789ABCDEF");
+	cub->roof = hexa_to_int(roof);
+	cub->floor = hexa_to_int(floor);
+	// printf("roof_hexa = %s and roof_int = %d\n", roof, cub->roof);
+	// printf("floor_hexa = %s and floor_int = %d\n", floor, cub->floor);
+	if (cub->roof > 0 && cub->floor > 0)
 		success = 1;
-	return (success);
+	return (free(roof), free(floor), success);
 }
