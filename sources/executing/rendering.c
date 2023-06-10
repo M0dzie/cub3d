@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rendering.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
+/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:43:13 by msapin            #+#    #+#             */
-/*   Updated: 2023/06/09 14:48:11 by mehdisapin       ###   ########.fr       */
+/*   Updated: 2023/06/10 22:39:05 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,15 +177,15 @@ void	generate_background(t_cub *cub)
 	x = -1;
 	while (cub->p->ray[++x])
 	{
+		cub->p->ray[x]->dist = fix_fisheye(cub, cub->p->ray[x]->dist, x);
 		wall_height = WALL_H / cub->p->ray[x]->dist * 25;
 		margin = (WIN_HEIGHT - wall_height) / 2;
-		// printf("margin %d\n", margin);
-		// printf("ray %d\n", x);
 		y = -1;
 		if (margin > 0)
 		{
 			while (++y < margin)
 				put_pixel(&cub->imgs->back, x, y, 0x191970);
+				// put_rgb(&cub->imgs->back, x, y, cub->roof);
 			while (y < margin + wall_height - 1)
 			{
 				put_pixel(&cub->imgs->back, x, y, 0x413C37);
@@ -194,6 +194,7 @@ void	generate_background(t_cub *cub)
 			while (y < WIN_HEIGHT)
 			{
 				put_pixel(&cub->imgs->back, x, y, 0x4F4943);
+				// put_rgb(&cub->imgs->back, x, y, cub->floor);
 				y++;
 			}
 		}
@@ -202,10 +203,6 @@ void	generate_background(t_cub *cub)
 			while (++y < WIN_HEIGHT)
 				put_pixel(&cub->imgs->back, x, y, 0x413C37);
 		}
-
-		// draw_sky(cub, height, i, &y);
-		// draw_wall(cub, height, i, &y);
-		// draw_floor(cub, i, &y);
 	}
 }
 
@@ -256,7 +253,7 @@ void	draw_until_wall(t_cub *cub, t_ray *ray, t_vector coef, int sign)
 	}
 }
 
-void	draw_ray(t_cub *cub, t_vector coef, int sign)
+void	draw_ray(t_cub *cub, t_vector coef, int sign, int i)
 {
 	t_vector	tmp;
 
@@ -267,7 +264,11 @@ void	draw_ray(t_cub *cub, t_vector coef, int sign)
 		if (tmp.x > 0 && tmp.y > 0)
 		{
 			if (!put_pixel(&cub->imgs->minimap, tmp.x + GRID_MINI / 2, tmp.y - 1, 0x00ff1500))
+			{
+				cub->p->ray[i]->wall.x = tmp.x; // tests
+				cub->p->ray[i]->wall.y = tmp.y; // tests
 				break ;
+			}
 		}
 		else
 			break ;
@@ -282,7 +283,8 @@ void	draw_fov(t_cub *cub)
 
 	i = -1;
 	while (++i < WIN_WIDTH)
-		draw_ray(cub, cub->p->ray[i]->coef_ns, 1);
+		draw_ray(cub, cub->p->ray[i]->coef_ns, 1, i); // tests
+		// draw_ray(cub, cub->p->ray[i]->coef_ns, 1);
 }
 
 void	generate_player(t_cub *cub)

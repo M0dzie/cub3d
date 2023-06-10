@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
+/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/06/08 22:12:27 by mehdisapin       ###   ########.fr       */
+/*   Updated: 2023/06/10 20:56:06 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,5 +152,7 @@ int	parsing_map(t_cub *cub, char **argv)
 		return (free_cub(cub), -1);
 	if (init_player(cub) != 0)
 		return (free_cub(cub), -1);
+	if (!init_color(cub)) //tests
+		return (free_cub(cub), -1); //tests
 	return (0);
 }

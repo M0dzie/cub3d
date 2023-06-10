@@ -3,58 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   camera.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
+/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 10:29:51 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/06/09 14:14:45 by mehdisapin       ###   ########.fr       */
+/*   Updated: 2023/06/10 22:39:12 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 #include "../../includes/thomas.h"
 
-static void	draw_sky(t_cub *cub, int height, int x, int *y)
+static double	get_radian(double angle)
 {
-	while (++(*y) < (WIN_HEIGHT - height) / 2)
-		if (x > 0 && *y > 0)
-			put_pixel(&cub->imgs->back, x, (*y), 0x0000FF);
+	return (angle * M_PI / 180);
 }
 
-static void	draw_wall(t_cub *cub, int height, int x, int *y)
-{
-	while (++(*y) < (WIN_HEIGHT - height) / 2 + height)
-		if (x > 0 && *y > 0)
-			put_pixel(&cub->imgs->back, x, (*y), 0xFFFFFF);
-}
+// double	adjust_distance(t_cub *cub, int i)
+// {
+// 	double	distance;
 
-static void	draw_floor(t_cub *cub, int x, int *y)
-{
-	while (++(*y) < WIN_HEIGHT)
-		if (x > 0 && *y > 0)
-			put_pixel(&cub->imgs->back, x, (*y), 0xFF0000);
-}
+// 	distance = sqrt(powf(cub->p->ray[i]->wall.x - cub->p->pos.start.x, 2.0) + \
+// 	powf(cub->p->ray[i]->wall.y - cub->p->pos.start.y, 2.0));
+// 	// printf("old_dist = %d\n", cub->p->ray[i]->dist);
+// 	// printf("new_dist = %lf\n", distance);
+// 	return (distance);
+// }
 
-void	init_camera(t_cub *cub)
+double	fix_fisheye(t_cub *cub, double distance, int i)
 {
-	int		height;
-	int		i;
-	int		y;
-	// double	fisheye_angle;
+	double	new_angle;
 
-	i = -1;
-	while (cub->p->ray[++i])
-	{
-		y = -1;
-		height = WALL_H / cub->p->ray[i]->dist;
-		if (height > WIN_HEIGHT || height < 0)
-			height = WIN_HEIGHT;
-		// fisheye_angle = cub->p->ray[i]->angle - 0;
-		// height *= cos(fisheye_angle);
-		// printf("dist = %d\n", cub->p->ray[i]->dist);
-		// printf("angle = %lf\n", cub->p->ray[i]->angle);
-		draw_sky(cub, height, i, &y);
-		draw_wall(cub, height, i, &y);
-		draw_floor(cub, i, &y);
-	}
-	mlx_put_image_to_window(cub->mlx, cub->win, cub->imgs->back.img, 0, 0);
+	new_angle = get_radian(cub->p->ray[i]->angle - cub->p->pos.angle);
+	// distance = adjust_distance(cub, i);
+	distance = distance * cos(new_angle);
+	// printf("old_dist = %d\n", cub->p->ray[i]->dist);
+	// printf("new_dist = %lf\n", distance);
+	return (distance);
 }
