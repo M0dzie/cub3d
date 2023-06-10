@@ -6,7 +6,7 @@
 /*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:43:13 by msapin            #+#    #+#             */
-/*   Updated: 2023/06/10 00:28:13 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/10 20:54:20 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,6 +185,7 @@ void	generate_background(t_cub *cub)
 		{
 			while (++y < margin)
 				put_pixel(&cub->imgs->back, x, y, 0x191970);
+				// put_rgb(&cub->imgs->back, x, y, cub->roof);
 			while (y < margin + wall_height - 1)
 			{
 				put_pixel(&cub->imgs->back, x, y, 0x413C37);
@@ -193,6 +194,7 @@ void	generate_background(t_cub *cub)
 			while (y < WIN_HEIGHT)
 			{
 				put_pixel(&cub->imgs->back, x, y, 0x4F4943);
+				// put_rgb(&cub->imgs->back, x, y, cub->floor);
 				y++;
 			}
 		}

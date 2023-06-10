@@ -6,7 +6,7 @@
 /*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/06/08 14:29:42 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/10 20:37:57 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,10 @@ void	free_cub(t_cub *cub)
 		free(cub->rgb_floor);
 	if (cub->rgb_roof)
 		free(cub->rgb_roof);
+	if (cub->floor) //tests
+		free(cub->floor); //tests
+	if (cub->roof) //tests
+		free(cub->roof); //tests
 	if (cub->file)
 		free(cub->file);
 	ft_arrfree(cub->file_split);
