@@ -6,7 +6,7 @@
 /*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/06/11 00:08:42 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/11 00:58:30 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,8 +154,8 @@ typedef struct s_cub
 
 	int 			*rgb_floor;
 	int 			*rgb_roof;
-	char			*floor; //tests
-	char			*roof; //tests
+	int				floor;
+	int				roof;
 	char			*file;
 	char			**file_split;
 	struct s_map	*map;
