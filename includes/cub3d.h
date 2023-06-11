@@ -6,7 +6,7 @@
 /*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/06/11 00:58:30 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/11 16:10:56 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@
 # endif
 
 # define FOV 66.0
-# define H_FOV 33.0
 
 # ifndef KEYS
 #  define ESC 65307
@@ -108,7 +107,7 @@ typedef struct s_dist
 typedef struct	s_ray_map
 {
 	t_vector	coef_ns;
-	t_vector	wall; //tests
+	// t_vector	wall; //tests
 	// t_vector	coef_we;
 	// t_vector	start;
 	int			dist;
