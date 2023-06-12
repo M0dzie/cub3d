@@ -86,3 +86,52 @@
 // 		tmp_pos.y += cub->p->pos.coef_we.y * inc;
 // 	}
 // }
+
+// double	draw_ray(t_cub *cub, double ray_angle, int i)
+// {
+// 	double		distance = 0;
+// 	double		r_cos;
+// 	double		r_sin;
+// 	t_vector	tmp;
+
+// 	// tmp.x = cub->p->pos.start.x;
+// 	// tmp.y = cub->p->pos.start.y + (double)GRID_MINI / 2;
+// 	tmp.x = cub->p->pos.start.x + 0.5;
+// 	tmp.y = cub->p->pos.start.y + 0.5;
+// 	r_cos = cos(get_radian(ray_angle)) / 50;
+// 	r_sin = sin(get_radian(ray_angle)) / 50;
+// 	while (1)
+// 	{
+// 		if (tmp.x > 0 && tmp.y > 0)
+// 		{
+// 			if (!put_pixel(&cub->imgs->minimap, tmp.x + GRID_MINI / 2, tmp.y - 1, 0x00ff1500))
+// 			{
+// 				cub->p->ray[i]->wall.x = tmp.x; // tests
+// 				cub->p->ray[i]->wall.y = tmp.y; // tests
+// 				break ;
+// 			}
+// 		}
+// 		else
+// 			break ;
+// 		tmp.x += r_cos;
+// 		tmp.y += r_sin;
+// 	}
+// 	distance = sqrt(powf(cub->p->ray[i]->wall.x - cub->p->pos.start.x - 0.5, 2.0) + \
+// 	powf(cub->p->ray[i]->wall.y - cub->p->pos.start.y - 0.5, 2.0));
+// 	return (distance * cos(get_radian(ray_angle - cub->p->ray[i]->angle)));
+// }
+
+// void	draw_fov(t_cub *cub)
+// {
+// 	double	inc_angle = FOV - WIN_WIDTH;
+// 	double	distance = 0;
+// 	double	ray_angle = cub->p->pos.angle - (FOV / 2);
+// 	int		ray_count = -1;
+
+// 	while (++ray_count < WIN_WIDTH)
+// 	{
+// 		distance = draw_ray(cub, ray_angle, ray_count);
+// 		cub->p->ray[ray_count]->dist = distance;
+// 		ray_angle += inc_angle;
+// 	}
+// }
