@@ -135,3 +135,43 @@
 // 		ray_angle += inc_angle;
 // 	}
 // }
+
+// static void	draw_wall(t_data *background, t_vector top_left, t_vector bottom_right, int color)
+// {
+// 	while (top_left.x < bottom_right.x + 1)
+// 	{
+// 		while (top_left.y > bottom_right.y)
+// 		{
+// 			put_pixel(background, top_left.x, top_left.y, color);
+// 			top_left.y--;
+// 		}
+// 		top_left.x++;
+// 	}
+// }
+
+// void	generate_3d(t_cub *cub)
+// {
+// 	t_vector	top_left;
+// 	t_vector	bottom_right;
+// 	double		wall_height;
+// 	int			i;
+
+// 	if (cub->imgs->back.img)
+// 		mlx_destroy_image(cub->mlx, cub->imgs->back.img);
+// 	cub->imgs->back.img = mlx_new_image(cub->mlx, WIN_WIDTH, WIN_HEIGHT);
+// 	cub->imgs->back.addr = mlx_get_data_addr(cub->imgs->back.img, &cub->imgs->back.bits_per_pixel, &cub->imgs->back.line_length, &cub->imgs->back.endian);
+// 	put_floor_and_ceiling(cub);
+// 	i = -1;
+// 	while (cub->p->ray[++i])
+// 	{
+// 		cub->p->ray[i]->dist = fix_fisheye(cub, cub->p->ray[i]->dist, i);
+// 		wall_height = 1.0 / cub->p->ray[i]->dist;
+// 		wall_height = wall_height * WIN_HEIGHT;
+// 		wall_height *= 14;
+// 		top_left.x = i / 1; // 1 = wall_width
+// 		top_left.y = WIN_HEIGHT / 2 + wall_height / 2;
+// 		bottom_right.x = i * 1 + 1;
+// 		bottom_right.y = WIN_HEIGHT / 2 - wall_height / 2;
+// 		draw_wall(&cub->imgs->back, top_left, bottom_right, 0x413C37);
+// 	}
+// }

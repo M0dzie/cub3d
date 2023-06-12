@@ -6,7 +6,7 @@
 /*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:43:13 by msapin            #+#    #+#             */
-/*   Updated: 2023/06/12 14:12:58 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/12 15:34:04 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	render_minimap(t_cub *cub)
 	generate_minimap(cub);
 	calcul_coef(cub);
 	generate_player(cub);
-	generate_background(cub);
+	generate_3d(cub);
 	display_images(cub);
 }
 
@@ -161,50 +161,6 @@ void	generate_minimap(t_cub *cub)
 				put_minifloor(cub->imgs->minimap, x * GRID_MINI, y * GRID_MINI);
 		}
 	}
-}
-
-void	generate_background(t_cub *cub)
-{
-	int		wall_height;
-	int		margin;
-	int		x;
-	int		y;
-
-	if (cub->imgs->back.img)
-		mlx_destroy_image(cub->mlx, cub->imgs->back.img);
-	cub->imgs->back.img = mlx_new_image(cub->mlx, WIN_WIDTH, WIN_HEIGHT);
-	cub->imgs->back.addr = mlx_get_data_addr(cub->imgs->back.img, &cub->imgs->back.bits_per_pixel, &cub->imgs->back.line_length, &cub->imgs->back.endian);
-	x = -1;
-	while (cub->p->ray[++x])
-	{
-		cub->p->ray[x]->dist = fix_fisheye(cub, cub->p->ray[x]->dist, x);
-		wall_height = WALL_H / cub->p->ray[x]->dist * 40;
-		margin = (WIN_HEIGHT - wall_height) / 2;
-		y = -1;
-		if (margin > 0)
-		{
-			while (++y < margin)
-				put_pixel(&cub->imgs->back, x, y, cub->roof);
-			while (y < margin + wall_height - 1)
-			{
-				put_pixel(&cub->imgs->back, x, y, 0x413C37);
-				y++;
-			}
-			while (y < WIN_HEIGHT)
-			{
-				put_pixel(&cub->imgs->back, x, y, cub->floor);
-				y++;
-			}
-		}
-		else
-		{
-			while (++y < WIN_HEIGHT)
-				put_pixel(&cub->imgs->back, x, y, 0x413C37);
-		}
-	}
-	// for (int y = 200; y < 500; y++)
-	// 	printf("wall_height = %lf\n", WALL_H / cub->p->ray[y]->dist * 25);
-		
 }
 
 void	draw_player_body(t_cub *cub)
