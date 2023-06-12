@@ -6,14 +6,14 @@
 /*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 11:54:07 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/06/11 16:11:00 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/12 15:36:13 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef THOMAS_H
 # define THOMAS_H
 # include "cub3d.h"
-// # include "mlx/mlx.h"
+# include "mlx/mlx.h"
 # include <stdlib.h>
 
 #endif

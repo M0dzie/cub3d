@@ -6,7 +6,7 @@
 /*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/06/11 16:10:56 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/12 15:36:10 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,22 +40,22 @@
 # define FOV 66.0
 
 # ifndef KEYS
-#  define ESC 65307
-#  define W 119
-#  define A 97
-#  define S 115
-#  define D 100
-#  define M 109
-#  define L_ARROW 65361
-#  define R_ARROW 65363
-// #  define ESC 53
-// #  define W 13
-// #  define A 0
-// #  define S 1
-// #  define D 2
-// #  define M 46
-// #  define L_ARROW 123
-// #  define R_ARROW 124
+// #  define ESC 65307
+// #  define W 119
+// #  define A 97
+// #  define S 115
+// #  define D 100
+// #  define M 109
+// #  define L_ARROW 65361
+// #  define R_ARROW 65363
+#  define ESC 53
+#  define W 13
+#  define A 0
+#  define S 1
+#  define D 2
+#  define M 46
+#  define L_ARROW 123
+#  define R_ARROW 124
 # endif
 
 typedef struct s_vector
@@ -107,7 +107,7 @@ typedef struct s_dist
 typedef struct	s_ray_map
 {
 	t_vector	coef_ns;
-	// t_vector	wall; //tests
+	t_vector	wall; //tests
 	// t_vector	coef_we;
 	// t_vector	start;
 	int			dist;
@@ -176,6 +176,7 @@ int		init_map(t_cub *cub, char **argv);
 int		init_texture(t_cub *cub);
 int		is_wall(t_data *data, int x, int y);
 int		parsing_map(t_cub *cub, char **argv);
+int		put_pixel(t_data *data, int x, int y, int color);;
 
 double	fix_fisheye(t_cub *cub, double distance, int i);
 double	get_angle(double angle, int rotation);
@@ -183,9 +184,9 @@ double	get_angle(double angle, int rotation);
 void	draw_player_body(t_cub *cub);
 void	display_images(t_cub *cub);
 void	free_cub(t_cub *cub);
-void	generate_background(t_cub *cub);
 void	generate_minimap(t_cub *cub);
 void	generate_player(t_cub *cub);
+void	generate_3d(t_cub *cub);
 void	get_next_wall(t_cub *cub);
 void	init_camera(t_cub *cub);
 void    init_data_raycaster(t_cub *cub);

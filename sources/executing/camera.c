@@ -6,14 +6,14 @@
 /*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 10:29:51 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/06/12 15:19:37 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/12 15:35:54 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 #include "../../includes/thomas.h"
 
-double	get_radian(double angle)
+static double	get_radian(double angle)
 {
 	return (angle * M_PI / 180);
 }
