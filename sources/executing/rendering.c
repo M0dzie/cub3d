@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rendering.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
+/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:43:13 by msapin            #+#    #+#             */
-/*   Updated: 2023/06/13 14:19:13 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/13 21:49:45 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,8 +222,8 @@ void	draw_ray(t_cub *cub, t_vector coef, int sign)
 		{
 			if (!put_pixel(&cub->imgs->minimap, tmp.x + GRID_MINI / 2, tmp.y - 1, 0x00ff1500))
 			{
-				// cub->p->ray[i]->wall.x = tmp.x; // tests
-				// cub->p->ray[i]->wall.y = tmp.y; // tests
+				// cub->p->ray[i]->wall.x = tmp.x;
+				// cub->p->ray[i]->wall.y = tmp.y;
 				break ;
 			}
 		}

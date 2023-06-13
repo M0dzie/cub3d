@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
+/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/06/13 14:19:36 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/14 00:00:16 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
+#include "../../includes/thomas.h"
 
 char	*get_only_name(char *file_name)
 {
@@ -79,6 +80,7 @@ int	calcul_coef(t_cub *cub)
 		cub->p->ray[i]->coef_ns.y = -cos(cub->p->ray[i]->angle * M_PI / 180);
 		cub->p->ray[i]->dist = distance_to_wall(cub, \
 		cub->p->ray[i]->coef_ns, 1);
+		// cub->p->ray[i]->dist = find_wall_distance(cub, cub->p->pos.start, cub->p->pos.angle, i);
 	}
 	return (1);
 }

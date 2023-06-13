@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
+/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/06/13 14:20:45 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/14 00:02:14 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,10 +104,10 @@ typedef struct s_ray_map
 {
 	t_vector	coef_ns;
 	// t_vector	wall; // tests
-	// t_vector	dir; // tests
 	// t_vector	coef_we;
 	// t_vector	start;
-	int			dist;
+	// int			dist;
+	double		dist; // tests
 	double		angle;
 }				t_ray_map;
 
@@ -182,9 +182,7 @@ void	free_cub(t_cub *cub);
 void	generate_minimap(t_cub *cub);
 void	generate_player(t_cub *cub);
 void	generate_3d(t_cub *cub);
-void	get_next_wall(t_cub *cub);
 void	init_camera(t_cub *cub);
-void    init_data_raycaster(t_cub *cub);
 void	init_mlx(t_cub *cub);
 void	init_raycasting(t_cub *cub);
 void	move_player(t_cub *cub, t_vector coef, int sign);
