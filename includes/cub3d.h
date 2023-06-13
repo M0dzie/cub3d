@@ -6,7 +6,7 @@
 /*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/06/13 13:23:14 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/13 14:20:45 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,8 +107,7 @@ typedef struct s_ray_map
 	// t_vector	dir; // tests
 	// t_vector	coef_we;
 	// t_vector	start;
-	double		dist;
-	// int			angle;
+	int			dist;
 	double		angle;
 }				t_ray_map;
 
@@ -139,16 +138,6 @@ typedef struct s_imgs
 	t_data	p;
 }			t_imgs;
 
-// typedef struct s_raycaster
-// {
-// 	t_vector	step;
-// 	t_vector	dist;
-// 	t_vector	next;
-// 	t_vector	map;
-// 	int			hit;
-// 	int			side;
-// }				t_raycaster;
-
 typedef struct s_cub
 {
 	// fds textures, found if better to use fd int or string as path
@@ -175,7 +164,7 @@ int		calcul_coef(t_cub *cub);
 int		check_border(t_cub *cub);
 int		display_error(char *name, int num_error);
 int		display_error_texture(t_cub *cub);
-int		distance_to_wall(t_cub *cub, t_vector coef, int sign, int ray);
+int		distance_to_wall(t_cub *cub, t_vector coef, int sign);
 int		init_color(t_cub *cub);
 int		init_file(t_cub *cub, char *file_name);
 int		init_map(t_cub *cub, char **argv);

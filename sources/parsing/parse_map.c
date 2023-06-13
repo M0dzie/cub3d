@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/06/10 20:56:06 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/13 14:19:36 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,12 @@ int	calcul_coef(t_cub *cub)
 	i = -1;
 	while (++i < WIN_WIDTH)
 	{
-		cub->p->ray[i]->angle = get_angle(tmp_angle + ((i + 1) * cub->p->coef), 0);
+		cub->p->ray[i]->angle = get_angle(tmp_angle + ((i + 1) * cub->p->coef), \
+		0);
 		cub->p->ray[i]->coef_ns.x = sin(cub->p->ray[i]->angle * M_PI / 180);
 		cub->p->ray[i]->coef_ns.y = -cos(cub->p->ray[i]->angle * M_PI / 180);
-		cub->p->ray[i]->dist = distance_to_wall(cub, cub->p->ray[i]->coef_ns, 1);
+		cub->p->ray[i]->dist = distance_to_wall(cub, \
+		cub->p->ray[i]->coef_ns, 1);
 	}
 	return (1);
 }
@@ -152,7 +154,7 @@ int	parsing_map(t_cub *cub, char **argv)
 		return (free_cub(cub), -1);
 	if (init_player(cub) != 0)
 		return (free_cub(cub), -1);
-	if (!init_color(cub)) //tests
-		return (free_cub(cub), -1); //tests
+	if (!init_color(cub))
+		return (free_cub(cub), -1);
 	return (0);
 }
