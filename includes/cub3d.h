@@ -6,7 +6,7 @@
 /*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/06/13 10:01:37 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/13 10:15:55 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@
 #  define GRID_MAP 100
 # endif
 
-// # define WIN_WIDTH 1980
-// # define WIN_HEIGHT 1080
+// # define WIN_WIDTH 1980.0
+// # define WIN_HEIGHT 1080.0
 # define WIN_WIDTH 1280.0
-# define WIN_HEIGHT 720
+# define WIN_HEIGHT 720.0
 
-# define SPEED_MINI 2
-# define SPEED_ANGLE 2
+# define SPEED_MINI 2.0
+# define SPEED_ANGLE 2.0
 
 # define FOV 66.0
 
