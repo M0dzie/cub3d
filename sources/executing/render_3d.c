@@ -6,7 +6,7 @@
 /*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:41:02 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/06/13 19:46:58 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/13 19:49:32 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ static void	draw_wall(t_data *back, int x, int y, int max)
 
 void	generate_3d(t_cub *cub)
 {
-	int		wall_height;
-	int		margin;
+	double	wall_height;
+	double	margin;
 	int		x;
 
 	if (cub->imgs->back.img)
