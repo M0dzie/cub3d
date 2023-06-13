@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rendering.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
+/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:43:13 by msapin            #+#    #+#             */
-/*   Updated: 2023/06/13 16:01:00 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/13 19:46:47 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,24 +210,18 @@ void	draw_until_wall(t_cub *cub, t_ray *ray, t_vector coef, int sign)
 	}
 }
 
-void	draw_ray(t_cub *cub, t_vector coef, int sign, int i)
+void	draw_ray(t_cub *cub, t_vector coef, int sign)
 {
 	t_vector	tmp;
 
 	tmp.x = cub->p->pos.start.x;
 	tmp.y = cub->p->pos.start.y + (double)GRID_MINI / 2;
-	cub->p->ray[i]->dir.x = tmp.x + (coef.x) * sign;
-	cub->p->ray[i]->dir.y = tmp.y + (coef.y) * sign;
 	while (1)
 	{
 		if (tmp.x > 0 && tmp.y > 0)
 		{
 			if (!put_pixel(&cub->imgs->minimap, tmp.x + GRID_MINI / 2, tmp.y - 1, 0x00ff1500))
-			{
-				// cub->p->ray[i]->wall.x = tmp.x; // tests
-				// cub->p->ray[i]->wall.y = tmp.y; // tests
 				break ;
-			}
 		}
 		else
 			break ;
@@ -242,7 +236,7 @@ void	draw_fov(t_cub *cub)
 
 	i = -1;
 	while (++i < WIN_WIDTH)
-		draw_ray(cub, cub->p->ray[i]->coef_ns, 1, i);
+		draw_ray(cub, cub->p->ray[i]->coef_ns, 1);
 }
 
 void	generate_player(t_cub *cub)
