@@ -6,7 +6,7 @@
 /*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/06/13 10:15:55 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/13 13:23:14 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,18 +100,19 @@ typedef struct s_dist
 	int	sw;
 }		t_dist;
 
-typedef struct	s_ray_map
+typedef struct s_ray_map
 {
 	t_vector	coef_ns;
-	t_vector	wall; //tests
+	// t_vector	wall; // tests
+	// t_vector	dir; // tests
 	// t_vector	coef_we;
 	// t_vector	start;
-	int			dist;
+	double		dist;
 	// int			angle;
 	double		angle;
 }				t_ray_map;
 
-typedef struct	s_ray
+typedef struct s_ray
 {
 	t_vector	coef_ns;
 	t_vector	coef_we;
@@ -123,10 +124,9 @@ typedef struct	s_ray
 	double		angle;
 }				t_ray;
 
-typedef struct	s_player
+typedef struct s_player
 {
 	t_ray_map	**ray;
-	// t_ray_map	**new_ray; // tests
 	t_ray		pos;
 	double		coef;
 }				t_player;
@@ -139,6 +139,16 @@ typedef struct s_imgs
 	t_data	p;
 }			t_imgs;
 
+// typedef struct s_raycaster
+// {
+// 	t_vector	step;
+// 	t_vector	dist;
+// 	t_vector	next;
+// 	t_vector	map;
+// 	int			hit;
+// 	int			side;
+// }				t_raycaster;
+
 typedef struct s_cub
 {
 	// fds textures, found if better to use fd int or string as path
@@ -147,17 +157,17 @@ typedef struct s_cub
 	int	fd_west;
 	int	fd_east;
 
-	int 			*rgb_floor;
-	int 			*rgb_roof;
 	int				floor;
 	int				roof;
+	int 			*rgb_floor;
+	int 			*rgb_roof;
 	char			*file;
 	char			**file_split;
-	struct s_map	*map;
-	struct s_player	*p;
 	void			*mlx;
 	void			*win;
 	t_imgs			*imgs;
+	struct s_map	*map;
+	struct s_player	*p;
 }					t_cub;
 
 int		are_rgb_valid(t_cub *cub);
@@ -165,7 +175,7 @@ int		calcul_coef(t_cub *cub);
 int		check_border(t_cub *cub);
 int		display_error(char *name, int num_error);
 int		display_error_texture(t_cub *cub);
-int		distance_to_wall(t_cub *cub, t_vector coef, int sign);
+int		distance_to_wall(t_cub *cub, t_vector coef, int sign, int ray);
 int		init_color(t_cub *cub);
 int		init_file(t_cub *cub, char *file_name);
 int		init_map(t_cub *cub, char **argv);
