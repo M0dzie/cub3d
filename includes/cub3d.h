@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/06/12 15:36:10 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/13 10:01:37 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,29 +33,25 @@
 # define SPEED_MINI 2
 # define SPEED_ANGLE 2
 
-# ifndef WALL_H
-#  define WALL_H 720.0
-# endif
-
 # define FOV 66.0
 
 # ifndef KEYS
-// #  define ESC 65307
-// #  define W 119
-// #  define A 97
-// #  define S 115
-// #  define D 100
-// #  define M 109
-// #  define L_ARROW 65361
-// #  define R_ARROW 65363
-#  define ESC 53
-#  define W 13
-#  define A 0
-#  define S 1
-#  define D 2
-#  define M 46
-#  define L_ARROW 123
-#  define R_ARROW 124
+#  define ESC 65307
+#  define W 119
+#  define A 97
+#  define S 115
+#  define D 100
+#  define M 109
+#  define L_ARROW 65361
+#  define R_ARROW 65363
+// #  define ESC 53
+// #  define W 13
+// #  define A 0
+// #  define S 1
+// #  define D 2
+// #  define M 46
+// #  define L_ARROW 123
+// #  define R_ARROW 124
 # endif
 
 typedef struct s_vector
