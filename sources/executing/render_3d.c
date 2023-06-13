@@ -6,7 +6,7 @@
 /*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:41:02 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/06/13 14:20:04 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/13 16:15:01 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ void	generate_3d(t_cub *cub)
 	while (cub->p->ray[++x])
 	{
 		cub->p->ray[x]->dist = fix_fisheye(cub, cub->p->ray[x]->dist, x);
-		wall_height = WIN_HEIGHT / cub->p->ray[x]->dist * 40;
+		wall_height = WIN_HEIGHT / (int)cub->p->ray[x]->dist * 40;
+		// wall_height = WIN_HEIGHT / cub->p->ray[x]->dist;
 		margin = (WIN_HEIGHT - wall_height) / 2;
 		if (margin > 0 && margin < WIN_HEIGHT)
 			draw_wall(&cub->imgs->back, x, margin, margin + wall_height - 1);
