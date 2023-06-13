@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   color.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 18:43:40 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/06/11 00:57:37 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/13 14:21:36 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 static char	*int_to_hexa(int rgb, char *base, int red)
 {
-	char 	*hexa;
+	char	*hexa;
 	int		div;
 	int		mod;
 	int		i;
@@ -69,7 +69,7 @@ static int	hexa_to_int(const char *rgb)
 	int	i;
 	int	power;
 
-	i = 1; // skip "0x"
+	i = 1;
 	result = 0;
 	power = 5;
 	while (rgb[++i])

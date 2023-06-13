@@ -6,7 +6,7 @@
 /*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/06/13 10:01:37 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/13 14:20:45 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@
 #  define GRID_MAP 100
 # endif
 
-// # define WIN_WIDTH 1980
-// # define WIN_HEIGHT 1080
+// # define WIN_WIDTH 1980.0
+// # define WIN_HEIGHT 1080.0
 # define WIN_WIDTH 1280.0
-# define WIN_HEIGHT 720
+# define WIN_HEIGHT 720.0
 
-# define SPEED_MINI 2
-# define SPEED_ANGLE 2
+# define SPEED_MINI 2.0
+# define SPEED_ANGLE 2.0
 
 # define FOV 66.0
 
@@ -100,18 +100,18 @@ typedef struct s_dist
 	int	sw;
 }		t_dist;
 
-typedef struct	s_ray_map
+typedef struct s_ray_map
 {
 	t_vector	coef_ns;
-	t_vector	wall; //tests
+	// t_vector	wall; // tests
+	// t_vector	dir; // tests
 	// t_vector	coef_we;
 	// t_vector	start;
 	int			dist;
-	// int			angle;
 	double		angle;
 }				t_ray_map;
 
-typedef struct	s_ray
+typedef struct s_ray
 {
 	t_vector	coef_ns;
 	t_vector	coef_we;
@@ -123,10 +123,9 @@ typedef struct	s_ray
 	double		angle;
 }				t_ray;
 
-typedef struct	s_player
+typedef struct s_player
 {
 	t_ray_map	**ray;
-	// t_ray_map	**new_ray; // tests
 	t_ray		pos;
 	double		coef;
 }				t_player;
@@ -147,17 +146,17 @@ typedef struct s_cub
 	int	fd_west;
 	int	fd_east;
 
-	int 			*rgb_floor;
-	int 			*rgb_roof;
 	int				floor;
 	int				roof;
+	int 			*rgb_floor;
+	int 			*rgb_roof;
 	char			*file;
 	char			**file_split;
-	struct s_map	*map;
-	struct s_player	*p;
 	void			*mlx;
 	void			*win;
 	t_imgs			*imgs;
+	struct s_map	*map;
+	struct s_player	*p;
 }					t_cub;
 
 int		are_rgb_valid(t_cub *cub);

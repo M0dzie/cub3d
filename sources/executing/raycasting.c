@@ -1,19 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   thomas.h                                           :+:      :+:    :+:   */
+/*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/23 11:54:07 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/06/13 13:17:25 by thmeyer          ###   ########.fr       */
+/*   Created: 2023/06/13 11:17:16 by thmeyer           #+#    #+#             */
+/*   Updated: 2023/06/13 14:17:40 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef THOMAS_H
-# define THOMAS_H
-# include "cub3d.h"
-// # include "mlx/mlx.h"
-# include <stdlib.h>
+#include "../../includes/cub3d.h"
+#include "../../includes/thomas.h"
 
-#endif
