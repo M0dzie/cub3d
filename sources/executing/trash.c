@@ -86,3 +86,92 @@
 // 		tmp_pos.y += cub->p->pos.coef_we.y * inc;
 // 	}
 // }
+
+// double	draw_ray(t_cub *cub, double ray_angle, int i)
+// {
+// 	double		distance = 0;
+// 	double		r_cos;
+// 	double		r_sin;
+// 	t_vector	tmp;
+
+// 	// tmp.x = cub->p->pos.start.x;
+// 	// tmp.y = cub->p->pos.start.y + (double)GRID_MINI / 2;
+// 	tmp.x = cub->p->pos.start.x + 0.5;
+// 	tmp.y = cub->p->pos.start.y + 0.5;
+// 	r_cos = cos(get_radian(ray_angle)) / 50;
+// 	r_sin = sin(get_radian(ray_angle)) / 50;
+// 	while (1)
+// 	{
+// 		if (tmp.x > 0 && tmp.y > 0)
+// 		{
+// 			if (!put_pixel(&cub->imgs->minimap, tmp.x + GRID_MINI / 2, tmp.y - 1, 0x00ff1500))
+// 			{
+// 				cub->p->ray[i]->wall.x = tmp.x; // tests
+// 				cub->p->ray[i]->wall.y = tmp.y; // tests
+// 				break ;
+// 			}
+// 		}
+// 		else
+// 			break ;
+// 		tmp.x += r_cos;
+// 		tmp.y += r_sin;
+// 	}
+// 	distance = sqrt(powf(cub->p->ray[i]->wall.x - cub->p->pos.start.x - 0.5, 2.0) + \
+// 	powf(cub->p->ray[i]->wall.y - cub->p->pos.start.y - 0.5, 2.0));
+// 	return (distance * cos(get_radian(ray_angle - cub->p->ray[i]->angle)));
+// }
+
+// void	draw_fov(t_cub *cub)
+// {
+// 	double	inc_angle = FOV - WIN_WIDTH;
+// 	double	distance = 0;
+// 	double	ray_angle = cub->p->pos.angle - (FOV / 2);
+// 	int		ray_count = -1;
+
+// 	while (++ray_count < WIN_WIDTH)
+// 	{
+// 		distance = draw_ray(cub, ray_angle, ray_count);
+// 		cub->p->ray[ray_count]->dist = distance;
+// 		ray_angle += inc_angle;
+// 	}
+// }
+
+// static void	draw_wall(t_data *background, t_vector top_left, t_vector bottom_right, int color)
+// {
+// 	while (top_left.x < bottom_right.x + 1)
+// 	{
+// 		while (top_left.y > bottom_right.y)
+// 		{
+// 			put_pixel(background, top_left.x, top_left.y, color);
+// 			top_left.y--;
+// 		}
+// 		top_left.x++;
+// 	}
+// }
+
+// void	generate_3d(t_cub *cub)
+// {
+// 	t_vector	top_left;
+// 	t_vector	bottom_right;
+// 	double		wall_height;
+// 	int			i;
+
+// 	if (cub->imgs->back.img)
+// 		mlx_destroy_image(cub->mlx, cub->imgs->back.img);
+// 	cub->imgs->back.img = mlx_new_image(cub->mlx, WIN_WIDTH, WIN_HEIGHT);
+// 	cub->imgs->back.addr = mlx_get_data_addr(cub->imgs->back.img, &cub->imgs->back.bits_per_pixel, &cub->imgs->back.line_length, &cub->imgs->back.endian);
+// 	put_floor_and_ceiling(cub);
+// 	i = -1;
+// 	while (cub->p->ray[++i])
+// 	{
+// 		cub->p->ray[i]->dist = fix_fisheye(cub, cub->p->ray[i]->dist, i);
+// 		wall_height = 1.0 / cub->p->ray[i]->dist;
+// 		wall_height = wall_height * WIN_HEIGHT;
+// 		wall_height *= 14;
+// 		top_left.x = i / 1; // 1 = wall_width
+// 		top_left.y = WIN_HEIGHT / 2 + wall_height / 2;
+// 		bottom_right.x = i * 1 + 1;
+// 		bottom_right.y = WIN_HEIGHT / 2 - wall_height / 2;
+// 		draw_wall(&cub->imgs->back, top_left, bottom_right, 0x413C37);
+// 	}
+// }

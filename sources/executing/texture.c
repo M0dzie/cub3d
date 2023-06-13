@@ -1,19 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   thomas.h                                           :+:      :+:    :+:   */
+/*   texture.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
+/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/23 11:54:07 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/06/13 09:58:45 by thmeyer          ###   ########.fr       */
+/*   Created: 2023/06/12 14:19:40 by thmeyer           #+#    #+#             */
+/*   Updated: 2023/06/12 14:21:19 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef THOMAS_H
-# define THOMAS_H
-# include "cub3d.h"
-// # include "mlx/mlx.h"
-# include <stdlib.h>
+#include "../../includes/cub3d.h"
+#include "../../includes/thomas.h"
 
-#endif

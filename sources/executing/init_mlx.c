@@ -6,7 +6,7 @@
 /*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:11:26 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/06/10 19:50:11 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/12 15:33:40 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	init_mlx(t_cub *cub)
 	generate_minimap(cub);
 	calcul_coef(cub);
 	generate_player(cub);
-	generate_background(cub);
+	generate_3d(cub);
 
 	display_images(cub);
 
