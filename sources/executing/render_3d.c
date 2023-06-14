@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_3d.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:41:02 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/06/14 00:00:09 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/14 16:48:17 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ static void	draw_wall(t_data *back, int x, int y, int max)
 void	generate_3d(t_cub *cub)
 {
 	double	wall_height;
+	double	distance;
 	double	margin;
 	int		x;
 
@@ -52,9 +53,8 @@ void	generate_3d(t_cub *cub)
 	put_floor_and_ceiling(cub);
 	while (cub->p->ray[++x])
 	{
-		cub->p->ray[x]->dist = fix_fisheye(cub, cub->p->ray[x]->dist, x);
-		wall_height = WIN_HEIGHT / (int)cub->p->ray[x]->dist * 40;
-		// wall_height = WIN_HEIGHT / (int)cub->p->ray[x]->dist;
+		distance = fix_fisheye(cub, x);
+		wall_height = WIN_HEIGHT / distance;
 		margin = (WIN_HEIGHT - wall_height) / 2;
 		if (margin > 0 && margin < WIN_HEIGHT)
 			draw_wall(&cub->imgs->back, x, margin, margin + wall_height - 1);

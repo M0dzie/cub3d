@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/06/14 00:00:16 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/14 16:48:23 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,7 @@ int	calcul_coef(t_cub *cub)
 		0);
 		cub->p->ray[i]->coef_ns.x = sin(cub->p->ray[i]->angle * M_PI / 180);
 		cub->p->ray[i]->coef_ns.y = -cos(cub->p->ray[i]->angle * M_PI / 180);
-		cub->p->ray[i]->dist = distance_to_wall(cub, \
-		cub->p->ray[i]->coef_ns, 1);
-		// cub->p->ray[i]->dist = find_wall_distance(cub, cub->p->pos.start, cub->p->pos.angle, i);
+		distance_to_wall(cub, cub->p->ray[i]->coef_ns, 1, i + 1);
 	}
 	return (1);
 }

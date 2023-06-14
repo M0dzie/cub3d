@@ -239,3 +239,39 @@
 // 		cub->p->ray[i]->dist *= -1;
 // 	// printf("dist = %lf\n", cub->p->ray[i]->dist);
 // }
+
+// double	distance_to_wall(t_cub *cub, t_vector coef, int sign, int ray)
+// {
+// 	t_vector	tmp;
+// 	double		distance;
+
+// 	tmp.x = cub->p->pos.start.x;
+// 	tmp.y = cub->p->pos.start.y + (double)GRID_MINI / 2;
+// 	distance = 0;
+// 	while (1)
+// 	{
+// 		if (tmp.x > 0 && tmp.y > 0)
+// 		{
+// 			if (is_wall(&cub->imgs->minimap, tmp.x + GRID_MINI / 2, tmp.y - 1))
+// 				break ;
+// 		}
+// 		else
+// 			break ;
+// 		if (!ray)
+// 		{
+// 			tmp.x += (coef.x) * sign;
+// 			tmp.y += (coef.y) * sign;
+// 		}
+// 		else
+// 		{
+// 			tmp.x = (distance / GRID_MINI) * cos(get_radian(cub->p->ray[ray]->angle - cub->p->pos.angle));
+// 			tmp.y = (distance / GRID_MINI) * sin(get_radian(cub->p->ray[ray]->angle - cub->p->pos.angle));
+// 		}
+// 		distance++;
+// 		// distance est en gros l'indice qui incremente, pixel par pixel
+// 	}
+// 	if (!ray)
+// 		distance -= GRID_MINI / 3;
+// 	printf("distance = %.2lf\n", distance);
+// 	return (distance);
+// }
