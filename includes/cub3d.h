@@ -6,7 +6,7 @@
 /*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/06/14 13:56:33 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/14 16:14:02 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ typedef struct s_dist
 typedef struct s_ray_map
 {
 	t_vector	coef_ns;
-	// t_vector	wall; // tests
+	t_vector	wall;
 	// t_vector	coef_we;
 	// t_vector	start;
 	double		dist;
@@ -172,7 +172,7 @@ int		parsing_map(t_cub *cub, char **argv);
 int		put_pixel(t_data *data, int x, int y, int color);;
 
 double	distance_to_wall(t_cub *cub, t_vector coef, int sign, int ray);
-double	fix_fisheye(t_cub *cub, double distance, int i);
+double	fix_fisheye(t_cub *cub, int i);
 double	get_angle(double angle, int rotation);
 
 void	draw_player_body(t_cub *cub);

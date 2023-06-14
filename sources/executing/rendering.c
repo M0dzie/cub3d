@@ -6,7 +6,7 @@
 /*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:43:13 by msapin            #+#    #+#             */
-/*   Updated: 2023/06/14 14:07:04 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/14 15:57:48 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,12 @@ double	distance_to_wall(t_cub *cub, t_vector coef, int sign, int ray)
 			break ;
 		tmp.x += (coef.x) * sign;
 		tmp.y += (coef.y) * sign;
-		// tmp.x += (1 / GRID_MINI) * (coef.x) * sign;
-		// tmp.y += (1 / GRID_MINI) * (coef.y) * sign;
 		distance++;
 	}
 	if (!ray)
 		distance -= GRID_MINI / 3;
+	else
+		cub->p->ray[ray - 1]->wall = tmp;
 	return (distance);
 }
 
@@ -223,11 +223,7 @@ void	draw_ray(t_cub *cub, t_vector coef, int sign)
 		if (tmp.x > 0 && tmp.y > 0)
 		{
 			if (!put_pixel(&cub->imgs->minimap, tmp.x + GRID_MINI / 2, tmp.y - 1, 0x00ff1500))
-			{
-				// cub->p->ray[i]->wall.x = tmp.x;
-				// cub->p->ray[i]->wall.y = tmp.y;
 				break ;
-			}
 		}
 		else
 			break ;
