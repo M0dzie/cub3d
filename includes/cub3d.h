@@ -6,7 +6,7 @@
 /*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/06/14 16:14:02 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/14 16:48:31 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ typedef struct s_ray_map
 	t_vector	wall;
 	// t_vector	coef_we;
 	// t_vector	start;
-	double		dist;
+	// double		dist;
 	double		angle;
 }				t_ray_map;
 
