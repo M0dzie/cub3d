@@ -6,7 +6,7 @@
 /*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 10:29:51 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/06/14 16:48:37 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/14 17:16:02 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,6 @@ double	fix_fisheye(t_cub *cub, int i)
 	distance = adjust_distance(cub->p->pos.start, cub->p->ray[i]->wall);
 	distance /= GRID_MINI;
 	distance = distance * cos(new_angle);
+	// printf("ray = %d, dist = %lf\n", i, distance);
 	return (distance);
 }
