@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/06/14 00:02:14 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/14 13:56:33 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,8 +106,7 @@ typedef struct s_ray_map
 	// t_vector	wall; // tests
 	// t_vector	coef_we;
 	// t_vector	start;
-	// int			dist;
-	double		dist; // tests
+	double		dist;
 	double		angle;
 }				t_ray_map;
 
@@ -164,7 +163,6 @@ int		calcul_coef(t_cub *cub);
 int		check_border(t_cub *cub);
 int		display_error(char *name, int num_error);
 int		display_error_texture(t_cub *cub);
-int		distance_to_wall(t_cub *cub, t_vector coef, int sign);
 int		init_color(t_cub *cub);
 int		init_file(t_cub *cub, char *file_name);
 int		init_map(t_cub *cub, char **argv);
@@ -173,6 +171,7 @@ int		is_wall(t_data *data, int x, int y);
 int		parsing_map(t_cub *cub, char **argv);
 int		put_pixel(t_data *data, int x, int y, int color);;
 
+double	distance_to_wall(t_cub *cub, t_vector coef, int sign, int ray);
 double	fix_fisheye(t_cub *cub, double distance, int i);
 double	get_angle(double angle, int rotation);
 

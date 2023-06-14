@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rendering.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:43:13 by msapin            #+#    #+#             */
-/*   Updated: 2023/06/13 21:49:45 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/14 14:07:04 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ int	is_wall(t_data *data, int x, int y)
 	return (0);
 }
 
-int	distance_to_wall(t_cub *cub, t_vector coef, int sign)
+double	distance_to_wall(t_cub *cub, t_vector coef, int sign, int ray)
 {
 	t_vector	tmp;
-	int			distance;
+	double		distance;
 
 	tmp.x = cub->p->pos.start.x;
 	tmp.y = cub->p->pos.start.y + (double)GRID_MINI / 2;
@@ -42,27 +42,29 @@ int	distance_to_wall(t_cub *cub, t_vector coef, int sign)
 			break ;
 		tmp.x += (coef.x) * sign;
 		tmp.y += (coef.y) * sign;
+		// tmp.x += (1 / GRID_MINI) * (coef.x) * sign;
+		// tmp.y += (1 / GRID_MINI) * (coef.y) * sign;
 		distance++;
 	}
-	distance -= GRID_MINI / 3;
+	if (!ray)
+		distance -= GRID_MINI / 3;
 	return (distance);
 }
 
 void	calcul_distance(t_cub *cub)
 {
-	cub->p->pos.dist.n = distance_to_wall(cub, cub->p->pos.coef_ns, 1);
-	cub->p->pos.dist.s = distance_to_wall(cub, cub->p->pos.coef_ns, -1);
-	cub->p->pos.dist.e = distance_to_wall(cub, cub->p->pos.coef_we, 1);
-	cub->p->pos.dist.w = distance_to_wall(cub, cub->p->pos.coef_we, -1);
-	cub->p->pos.dist.nw = distance_to_wall(cub, cub->p->pos.coef_nwse, 1);
-	cub->p->pos.dist.se = distance_to_wall(cub, cub->p->pos.coef_nwse, -1);
-	cub->p->pos.dist.ne = distance_to_wall(cub, cub->p->pos.coef_nesw, 1);
-	cub->p->pos.dist.sw = distance_to_wall(cub, cub->p->pos.coef_nesw, -1);
+	cub->p->pos.dist.n = distance_to_wall(cub, cub->p->pos.coef_ns, 1, 0);
+	cub->p->pos.dist.s = distance_to_wall(cub, cub->p->pos.coef_ns, -1, 0);
+	cub->p->pos.dist.e = distance_to_wall(cub, cub->p->pos.coef_we, 1, 0);
+	cub->p->pos.dist.w = distance_to_wall(cub, cub->p->pos.coef_we, -1, 0);
+	cub->p->pos.dist.nw = distance_to_wall(cub, cub->p->pos.coef_nwse, 1, 0);
+	cub->p->pos.dist.se = distance_to_wall(cub, cub->p->pos.coef_nwse, -1, 0);
+	cub->p->pos.dist.ne = distance_to_wall(cub, cub->p->pos.coef_nesw, 1, 0);
+	cub->p->pos.dist.sw = distance_to_wall(cub, cub->p->pos.coef_nesw, -1, 0);
 }
 
 void	render_minimap(t_cub *cub)
 {
-	// init_camera(cub);
 	generate_minimap(cub);
 	calcul_coef(cub);
 	generate_player(cub);
