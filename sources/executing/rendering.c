@@ -6,7 +6,7 @@
 /*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:43:13 by msapin            #+#    #+#             */
-/*   Updated: 2023/06/15 15:10:24 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/15 15:14:31 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@ int	is_wall(t_data *data, int x, int y)
 	char	*dst;
 
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	if (*(unsigned int *)dst == WALL_COLOR)
+	if (*(unsigned int *)dst == WALL_COLOR || *(unsigned int *)dst == NORTH \
+	|| *(unsigned int *)dst == SOUTH || *(unsigned int *)dst == WEST \
+	|| *(unsigned int *)dst == EAST)
 		return (1);
 	return (0);
 }
@@ -101,7 +103,9 @@ int	put_pixel(t_data *data, int x, int y, int color)
 	char	*dst;
 
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	if (*(unsigned int *)dst == WALL_COLOR)
+	if (*(unsigned int *)dst == WALL_COLOR || *(unsigned int *)dst == NORTH \
+	|| *(unsigned int *)dst == SOUTH || *(unsigned int *)dst == WEST \
+	|| *(unsigned int *)dst == EAST)
 		return (0);
 	*(unsigned int *)dst = color;
 	return (1);
