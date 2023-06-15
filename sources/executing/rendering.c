@@ -6,7 +6,7 @@
 /*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:43:13 by msapin            #+#    #+#             */
-/*   Updated: 2023/06/15 15:14:31 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/15 15:48:12 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,10 @@ double	distance_to_wall(t_cub *cub, t_vector coef, int sign, int ray)
 	if (!ray)
 		distance -= GRID_MINI / 3;
 	else
+	{
 		cub->p->ray[ray - 1]->wall = tmp;
+		init_side_wall(cub, &cub->imgs->minimap, ray - 1);
+	}
 	return (distance);
 }
 

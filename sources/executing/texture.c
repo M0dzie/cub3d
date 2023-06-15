@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
+/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:19:40 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/06/14 16:53:35 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/15 15:51:04 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,14 @@
 #include "../../includes/thomas.h"
 
 /*
-	Une couleur par mur (une nuance de la couleur deja utilisee pour qu'a l'oeil
-nu ca ne change rien)
-
-	Define les couleurs par side NORTH SOUTH EAST WEST
-
 	Defiler les rayons qui ont le meme side pour nous donner les murs complets a render ?
 */
+
+void	init_side_wall(t_cub *cub, t_data *minimap, int ray)
+{
+	char	*dst;
+
+	dst = minimap->addr + (((int)cub->p->ray[ray]->wall.y - 1) * minimap->line_length + \
+	((int)cub->p->ray[ray]->wall.x + (GRID_MINI / 2)) * (minimap->bits_per_pixel / 8));
+	cub->p->ray[ray]->side = *(unsigned int *)dst;
+}
