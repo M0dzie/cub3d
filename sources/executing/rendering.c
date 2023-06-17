@@ -6,7 +6,7 @@
 /*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:43:13 by msapin            #+#    #+#             */
-/*   Updated: 2023/06/17 20:34:48 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/17 22:12:00 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,12 +127,12 @@ void	put_miniwall(t_data data, int start_x, int start_y)
 		{
 			if (x == 0)
 				put_pixel(&data, x + start_x, y + start_y, WEST);
-			else if (y == 0)
+			else if (x == GRID_MINI - 1)
+				put_pixel(&data, x + start_x, y + start_y, EAST);
+			if (y == 0)
 				put_pixel(&data, x + start_x, y + start_y, NORTH);
 			else if (y == GRID_MINI - 1)
 				put_pixel(&data, x + start_x, y + start_y, SOUTH);
-			else if (x == GRID_MINI - 1)
-				put_pixel(&data, x + start_x, y + start_y, EAST);
 			else
 				put_pixel(&data, x + start_x, y + start_y, WALL_COLOR);
 		}
