@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rendering.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
+/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:43:13 by msapin            #+#    #+#             */
-/*   Updated: 2023/06/14 16:46:58 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/17 22:44:16 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@ int	is_wall(t_data *data, int x, int y)
 	char	*dst;
 
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	if (*(unsigned int *)dst == 0x00202020)
+	if (*(unsigned int *)dst == WALL_COLOR || *(unsigned int *)dst == NORTH \
+	|| *(unsigned int *)dst == SOUTH || *(unsigned int *)dst == WEST \
+	|| *(unsigned int *)dst == EAST)
 		return (1);
 	return (0);
 }
@@ -47,7 +49,10 @@ double	distance_to_wall(t_cub *cub, t_vector coef, int sign, int ray)
 	if (!ray)
 		distance -= GRID_MINI / 3;
 	else
+	{
 		cub->p->ray[ray - 1]->wall = tmp;
+		init_side_wall(cub, &cub->imgs->minimap, ray - 1);
+	}
 	return (distance);
 }
 
@@ -101,7 +106,9 @@ int	put_pixel(t_data *data, int x, int y, int color)
 	char	*dst;
 
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	if (*(unsigned int *)dst == 0x00202020)
+	if (*(unsigned int *)dst == WALL_COLOR || *(unsigned int *)dst == NORTH \
+	|| *(unsigned int *)dst == SOUTH || *(unsigned int *)dst == WEST \
+	|| *(unsigned int *)dst == EAST)
 		return (0);
 	*(unsigned int *)dst = color;
 	return (1);
@@ -117,7 +124,18 @@ void	put_miniwall(t_data data, int start_x, int start_y)
 	{
 		x = -1;
 		while (++x < GRID_MINI)
-			put_pixel(&data, x + start_x, y + start_y, 0x00202020);
+		{
+			if (x == 0)
+				put_pixel(&data, x + start_x, y + start_y, WEST);
+			else if (x == GRID_MINI - 1)
+				put_pixel(&data, x + start_x, y + start_y, EAST);
+			if (y == 0)
+				put_pixel(&data, x + start_x, y + start_y, NORTH);
+			else if (y == GRID_MINI - 1)
+				put_pixel(&data, x + start_x, y + start_y, SOUTH);
+			else
+				put_pixel(&data, x + start_x, y + start_y, WALL_COLOR);
+		}
 	}
 }
 
