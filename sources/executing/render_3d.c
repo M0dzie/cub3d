@@ -6,7 +6,7 @@
 /*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:41:02 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/06/15 14:14:14 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/17 20:36:18 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,42 @@ static void	put_floor_and_ceiling(t_cub *cub)
 	}
 }
 
-static void	draw_wall(t_data *back, int x, int y, int max)
+static int	check_side_wall(t_cub *cub, int x)
 {
+	if (cub->p->ray[x]->side == NORTH)
+		return (1);
+	if (cub->p->ray[x]->side == SOUTH)
+		return (2);
+	if (cub->p->ray[x]->side == WEST)
+		return (3);
+	if (cub->p->ray[x]->side == EAST)
+		return (4);
+	return (0);
+}
+
+static void	draw_wall(t_cub *cub, int x, int y, int max)
+{
+	// if (check_side_wall(cub, x) == 1)
+	// 	printf("NORTH\n");
+	// if (check_side_wall(cub, x) == 2)
+	// 	printf("SOUTH\n");
+	// if (check_side_wall(cub, x) == 3)
+	// 	printf("WEST\n");
+	// if (check_side_wall(cub, x) == 4)
+	// 	printf("EAST\n");
+	int	side;
+
+	side = check_side_wall(cub, x);
 	while (y < max)
 	{
-		put_pixel(back, x, y, 0x413C37);
+		if (side == 1)
+			put_pixel(&cub->imgs->back, x, y, 0xBB33FF); // purple NORTH
+		if (side == 2)
+			put_pixel(&cub->imgs->back, x, y, 0xFFB533); // yellow SOUTH
+		if (side == 3)
+			put_pixel(&cub->imgs->back, x, y, 0x3336FF); // blue WEST
+		if (side == 4)
+			put_pixel(&cub->imgs->back, x, y, 0xFF33AC); // pink EAST
 		y++;
 	}
 }
@@ -57,8 +88,8 @@ void	generate_3d(t_cub *cub)
 		wall_height = WIN_HEIGHT / distance;
 		margin = (WIN_HEIGHT - wall_height) / 2;
 		if (margin > 0 && margin < WIN_HEIGHT)
-			draw_wall(&cub->imgs->back, x, margin, margin + wall_height - 1);
+			draw_wall(cub, x, margin, margin + wall_height - 1);
 		else
-			draw_wall(&cub->imgs->back, x, 0, WIN_HEIGHT);
+			draw_wall(cub, x, 0, WIN_HEIGHT);
 	}
 }
