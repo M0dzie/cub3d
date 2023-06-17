@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
+/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/06/14 16:48:31 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/17 22:48:34 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,14 @@
 # define SPEED_ANGLE 2.0
 
 # define FOV 66.0
+
+# ifndef COLORS
+#  define WALL_COLOR 0x00202020
+#  define NORTH 0x00202021
+#  define SOUTH 0x00202022
+#  define WEST 0x00202023
+#  define EAST 0x00202024
+# endif
 
 # ifndef KEYS
 #  define ESC 65307
@@ -102,12 +110,13 @@ typedef struct s_dist
 
 typedef struct s_ray_map
 {
-	t_vector	coef_ns;
-	t_vector	wall;
+	t_vector		coef_ns;
+	t_vector		wall;
 	// t_vector	coef_we;
 	// t_vector	start;
 	// double		dist;
-	double		angle;
+	double			angle;
+	unsigned int	side;
 }				t_ray_map;
 
 typedef struct s_ray
@@ -184,6 +193,7 @@ void	generate_3d(t_cub *cub);
 void	init_camera(t_cub *cub);
 void	init_mlx(t_cub *cub);
 void	init_raycasting(t_cub *cub);
+void	init_side_wall(t_cub *cub, t_data *minimap, int ray);;
 void	move_player(t_cub *cub, t_vector coef, int sign);
 void	render_minimap(t_cub *cub);
 
