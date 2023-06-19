@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/06/17 22:48:34 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/19 18:14:01 by msapin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@
 #  define GRID_MAP 100
 # endif
 
-// # define WIN_WIDTH 1980.0
-// # define WIN_HEIGHT 1080.0
-# define WIN_WIDTH 1280.0
-# define WIN_HEIGHT 720.0
+# define WIN_WIDTH 1980.0
+# define WIN_HEIGHT 1080.0
+// # define WIN_WIDTH 1280.0
+// # define WIN_HEIGHT 720.0
 
 # define SPEED_MINI 2.0
 # define SPEED_ANGLE 2.0
@@ -114,7 +114,7 @@ typedef struct s_ray_map
 	t_vector		wall;
 	// t_vector	coef_we;
 	// t_vector	start;
-	// double		dist;
+	double		dist;
 	double			angle;
 	unsigned int	side;
 }				t_ray_map;
@@ -146,13 +146,21 @@ typedef struct s_imgs
 	t_data	p;
 }			t_imgs;
 
+typedef struct s_xpm
+{
+	int		fd;
+	int		width;
+	int		height;
+	char	*path;
+	void	*tex;
+}			t_xpm;
+
 typedef struct s_cub
 {
-	// fds textures, found if better to use fd int or string as path
-	int	fd_north;
-	int	fd_south;
-	int	fd_west;
-	int	fd_east;
+	t_xpm	north;
+	t_xpm	south;
+	t_xpm	west;
+	t_xpm	east;
 
 	int				floor;
 	int				roof;
@@ -178,11 +186,15 @@ int		init_map(t_cub *cub, char **argv);
 int		init_texture(t_cub *cub);
 int		is_wall(t_data *data, int x, int y);
 int		parsing_map(t_cub *cub, char **argv);
-int		put_pixel(t_data *data, int x, int y, int color);;
+int		parse_xpm(t_cub *cub);
+int		put_pixel(t_data *data, int x, int y, int color);
+
+int		init_mlx(t_cub *cub);
 
 double	distance_to_wall(t_cub *cub, t_vector coef, int sign, int ray);
 double	fix_fisheye(t_cub *cub, int i);
 double	get_angle(double angle, int rotation);
+double	get_radian(double angle);
 
 void	draw_player_body(t_cub *cub);
 void	display_images(t_cub *cub);
@@ -191,10 +203,11 @@ void	generate_minimap(t_cub *cub);
 void	generate_player(t_cub *cub);
 void	generate_3d(t_cub *cub);
 void	init_camera(t_cub *cub);
-void	init_mlx(t_cub *cub);
 void	init_raycasting(t_cub *cub);
 void	init_side_wall(t_cub *cub, t_data *minimap, int ray);;
 void	move_player(t_cub *cub, t_vector coef, int sign);
-void	render_minimap(t_cub *cub);
+void	save_texture(int *fd, char *path, char **path_save);
+
+int		render_minimap(t_cub *cub);
 
 #endif
