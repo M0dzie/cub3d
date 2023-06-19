@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
+/*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/06/14 16:48:23 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/19 15:20:35 by msapin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,10 @@ int	calcul_coef(t_cub *cub)
 	cub->p->pos.coef_nesw.y = -cos((cub->p->pos.angle - 135) * M_PI / 180);
 	tmp_angle = get_angle(cub->p->pos.angle - FOV / 2, 0);
 	i = -1;
+	double	angle = FOV / 2;
+	double	coef_angle = FOV / WIN_WIDTH;
+	(void)angle;
+	(void)coef_angle;
 	while (++i < WIN_WIDTH)
 	{
 		cub->p->ray[i]->angle = get_angle(tmp_angle + ((i + 1) * cub->p->coef), \
@@ -79,6 +83,11 @@ int	calcul_coef(t_cub *cub)
 		cub->p->ray[i]->coef_ns.x = sin(cub->p->ray[i]->angle * M_PI / 180);
 		cub->p->ray[i]->coef_ns.y = -cos(cub->p->ray[i]->angle * M_PI / 180);
 		distance_to_wall(cub, cub->p->ray[i]->coef_ns, 1, i + 1);
+		// cub->p->ray[i]->dist = distance_to_wall(cub, cub->p->ray[i]->coef_ns, 1, i + 1) * cos(get_radian(angle));
+		if (i < WIN_WIDTH / 2)
+			angle -= coef_angle;
+		else
+			angle += coef_angle;
 	}
 	return (1);
 }
