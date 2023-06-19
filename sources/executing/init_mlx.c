@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_mlx.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:11:26 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/06/12 15:33:40 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/19 18:25:42 by msapin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,21 +82,28 @@ void	display_images(t_cub *cub)
 	}
 }
 
-void	init_mlx(t_cub *cub)
+int	init_mlx(t_cub *cub)
 {
 	cub->mlx = mlx_init();
 	cub->win = mlx_new_window(cub->mlx, WIN_WIDTH, WIN_HEIGHT, "cub3d");
 	cub->imgs = malloc(sizeof(t_imgs));
-	cub->imgs->show_mini = 1;
+	cub->imgs->show_mini = 0;
 
 	generate_minimap(cub);
 	calcul_coef(cub);
 	generate_player(cub);
-	generate_3d(cub);
 
+	if (parse_xpm(cub) != 0)
+		return (-1);
+
+	(void)check_keycode;
+
+	generate_3d(cub);
 	display_images(cub);
 
 	mlx_hook(cub->win, 2, 1l << 0, check_keycode, cub);
 	mlx_hook(cub->win, 17, 1l << 0, ft_exit, cub);
+	mlx_loop_hook(cub->mlx, render_minimap, cub);
 	mlx_loop(cub->mlx);
+	return (0);
 }

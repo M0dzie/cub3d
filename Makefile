@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+         #
+#    By: msapin <msapin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#              #
-#    Updated: 2023/06/14 14:09:01 by thmeyer          ###   ########.fr        #
+#    Updated: 2023/06/19 18:29:06 by msapin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,8 @@ endif
 
 CFLAGS 		= 	-Wall -Wextra -Werror
 
+OFLAG		=	-O3
+
 RM 			= 	rm -rf
 
 AR 			= 	ar
@@ -69,6 +71,7 @@ OBJS_DIRS	=	$(OBJ_PARSING_PATH) $(OBJ_EXECUTING_PATH)
 SRC_PARSING_FILES		=	parse_map.c	display_error.c	display_error_utils.c	\
 							display_error_texture.c	init_map.c					\
 							init_map_utils.c	init_texture.c	\
+							parse_xpm.c
 
 SRC_EXECUTING_FILES		=	main.c	init_mlx.c	rendering.c	camera.c	color.c\
 							texture.c	render_3d.c
@@ -91,10 +94,10 @@ OBJS_EXECUTING		=	$(addprefix $(OBJ_EXECUTING_PATH),		\
 OBJS	=	$(OBJS_PARSING)	$(OBJS_EXECUTING)	
 
 $(OBJ_PARSING_PATH)%.o: $(SRC_PARSING_PATH)%.c $(MAKEFILE) $(HEADER)
-	$(CC) $(CFLAGS) -I$(MLX_DIR) -I$(LIBFT_DIR) -o $@ -c $<
+	$(CC) $(CFLAGS) $(OFLAG) -I$(MLX_DIR) -I$(LIBFT_DIR) -o $@ -c $<
 
 $(OBJ_EXECUTING_PATH)%.o: $(SRC_EXECUTING_PATH)%.c $(MAKEFILE) $(HEADER)
-	$(CC) $(CFLAGS) -I$(MLX_DIR) -I$(LIBFT_DIR) -o $@ -c $<
+	$(CC) $(CFLAGS) $(OFLAG) -I$(MLX_DIR) -I$(LIBFT_DIR) -o $@ -c $<
 
 
 # ##################################### #

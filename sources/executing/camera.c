@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   camera.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 10:29:51 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/06/15 14:32:31 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/19 12:11:42 by msapin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 #include "../../includes/thomas.h"
 
-static double	get_radian(double angle)
+double	get_radian(double angle)
 {
 	return (angle * M_PI / 180);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rendering.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:43:13 by msapin            #+#    #+#             */
-/*   Updated: 2023/06/17 22:44:16 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/19 12:32:44 by msapin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ double	distance_to_wall(t_cub *cub, t_vector coef, int sign, int ray)
 {
 	t_vector	tmp;
 	double		distance;
+	(void)ray;
 
 	tmp.x = cub->p->pos.start.x;
 	tmp.y = cub->p->pos.start.y + (double)GRID_MINI / 2;
@@ -68,13 +69,14 @@ void	calcul_distance(t_cub *cub)
 	cub->p->pos.dist.sw = distance_to_wall(cub, cub->p->pos.coef_nesw, -1, 0);
 }
 
-void	render_minimap(t_cub *cub)
+int	render_minimap(t_cub *cub)
 {
 	generate_minimap(cub);
 	calcul_coef(cub);
 	generate_player(cub);
 	generate_3d(cub);
 	display_images(cub);
+	return (0);
 }
 
 void	move_player(t_cub *cub, t_vector coef, int sign)
@@ -98,7 +100,7 @@ void	move_player(t_cub *cub, t_vector coef, int sign)
 			cub->p->pos.start.y -= tmp_coef.y;
 		}
 	}
-	render_minimap(cub);
+	// render_minimap(cub);
 }
 
 int	put_pixel(t_data *data, int x, int y, int color)
