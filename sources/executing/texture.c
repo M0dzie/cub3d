@@ -6,7 +6,7 @@
 /*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:19:40 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/06/22 15:59:12 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/22 17:47:48 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ int	get_pixel(t_xpm tex, int x, int y)
 	char	*pixel_color;
 	int		color;
 
+	// if (x < 0 || x > tex.width || y < 0 || y > tex.height)
+	// 	return (0);
 	pixel_color = tex.addr + y * tex.line_length + x * (tex.bits_per_pixel / 8);
 	color = *(unsigned int *)pixel_color;
 	return (color);

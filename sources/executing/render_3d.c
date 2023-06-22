@@ -6,7 +6,7 @@
 /*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:41:02 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/06/22 16:00:52 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/22 17:54:31 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,87 +42,63 @@ static int	check_side_wall(t_cub *cub, int x)
 	return (0);
 }
 
-static void	draw_wall(t_cub *cub, int x, int line, int max)
+static void	draw_wall(t_cub *cub, int column, int line, int max)
 {
-	int	side;
+	int			side;
+	double		wall_height;
+	t_vector	mod;
 
-	side = check_side_wall(cub, x);
+	(void) max;
+	(void) line;
+	side = check_side_wall(cub, column);
+	if (line == 0)
+		wall_height = max;
+	else
+		wall_height = max - line;
+	mod.x = fmod(cub->p->ray[column]->wall.x, GRID_MINI);
+	mod.y = fmod(cub->p->ray[column]->wall.y, GRID_MINI);
 	while (line < max)
 	{
 		if (side == 1)
-			put_pixel(&cub->imgs->back, x, line, 0xBB33FF); // purple NORTH
+			// put_pixel(&cub->imgs->back, column, line, get_pixel(cub->north, mod.x, line));
+			put_pixel(&cub->imgs->back, column, line, get_pixel(cub->north, mod.x, line));
+			// put_pixel(&cub->imgs->back, column, line, 0xBB33FF); // purple NORTH
 		if (side == 2)
-			put_pixel(&cub->imgs->back, x, line, 0xFFB533); // yellow SOUTH
+			put_pixel(&cub->imgs->back, column, line, get_pixel(cub->north, mod.x, line));
+			// put_pixel(&cub->imgs->back, column, line, 0xFFB533); // yellow SOUTH
 		if (side == 3)
-			put_pixel(&cub->imgs->back, x, line, 0x3336FF); // blue WEST
+			// put_pixel(&cub->imgs->back, column, line, get_pixel(cub->north, mod.x, line));
+			put_pixel(&cub->imgs->back, column, line, 0x3336FF); // blue WEST
 		if (side == 4)
-			put_pixel(&cub->imgs->back, x, line, 0xFF33AC); // pink EAST
+			// put_pixel(&cub->imgs->back, column, line, get_pixel(cub->north, mod.y * cub->north.width, line));
+			put_pixel(&cub->imgs->back, column, line, 0xFF33AC); // pink EAST
 		line++;
 	}
 }
-
-// static void	draw_wall(t_cub *cub, int x, int line, int max)
-// {
-// 	int			side;
-// 	// double		wall_height;
-// 	t_vector	mod;
-
-// 	(void) max;
-// 	(void) line;
-// 	side = check_side_wall(cub, x);
-// 	// if (line == 0)
-// 	// 	wall_height = max;
-// 	// else
-// 	// 	wall_height = max - line;
-// 	mod.x = fmod(cub->p->ray[x]->wall.x, GRID_MINI);
-// 	mod.y = fmod(cub->p->ray[x]->wall.y, GRID_MINI);
-// 	// put_pixel(&cub->imgs->back, x, line, get_pixel(cub->north, mod.x * cub->north.width, line));
-// 	// while (line < max)
-// 	// {
-// 	// 	if (side == 1)
-// 	// 		put_pixel(&cub->imgs->back, x, line, 0xBB33FF); // purple NORTH
-// 	// 	if (side == 2)
-// 	// 		put_pixel(&cub->imgs->back, x, line, 0xFFB533); // yellow SOUTH
-// 	// 	if (side == 3)
-// 	// 		put_pixel(&cub->imgs->back, x, line, 0x3336FF); // blue WEST
-// 	// 	if (side == 4)
-// 	// 		put_pixel(&cub->imgs->back, x, line, 0xFF33AC); // pink EAST
-// 	// 	line++;
-// 	// }
-// 	for (int i = WIN_WIDTH / 2 - cub->north.width / 2; i < WIN_WIDTH / 2 + cub->north.width / 2; i++)
-// 	{
-// 		int j = WIN_HEIGHT / 2 - cub->north.height / 2;
-// 		while (j < WIN_HEIGHT / 2 + cub->north.height / 2)
-// 		{
-// 			put_pixel(&cub->imgs->back, i, j, get_pixel(cub->north, i, j));
-// 			// put_pixel(&cub->imgs->back, i, j, get_pixel(cub->north, \
-// 			// fmod(i, GRID_MINI) * cub->north.width, fmod(j, GRID_MINI) * cub->north.height));
-// 			j++;
-// 		}
-// 	}
-// }
 
 void	generate_3d(t_cub *cub)
 {
 	double	wall_height;
 	double	distance;
 	double	margin;
-	int		x;
+	int		ray;
 
 	if (cub->imgs->back.img)
 		mlx_destroy_image(cub->mlx, cub->imgs->back.img);
 	cub->imgs->back.img = mlx_new_image(cub->mlx, WIN_WIDTH, WIN_HEIGHT);
-	cub->imgs->back.addr = mlx_get_data_addr(cub->imgs->back.img, &cub->imgs->back.bits_per_pixel, &cub->imgs->back.line_length, &cub->imgs->back.endian);
-	x = -1;
+	cub->imgs->back.addr = mlx_get_data_addr(cub->imgs->back.img, \
+	&cub->imgs->back.bits_per_pixel, &cub->imgs->back.line_length, \
+	&cub->imgs->back.endian);
+	ray = -1;
 	put_floor_and_ceiling(cub);
-	while (cub->p->ray[++x])
+	while (cub->p->ray[++ray])
 	{
-		distance = fix_fisheye(cub, x);
+		distance = fix_fisheye(cub, ray);
 		wall_height = WIN_HEIGHT / distance * 1.5;
 		margin = (WIN_HEIGHT - wall_height) / 2;
 		if (margin > 0 && margin < WIN_HEIGHT)
-			draw_wall(cub, x, margin, margin + wall_height - 1);
+			draw_wall(cub, ray, margin, margin + wall_height - 1);
 		else
-			draw_wall(cub, x, 0, WIN_HEIGHT);
+			draw_wall(cub, ray, 0, WIN_HEIGHT);
 	}
 }
