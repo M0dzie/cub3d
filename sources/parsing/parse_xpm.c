@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_xpm.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:36:13 by msapin            #+#    #+#             */
-/*   Updated: 2023/06/22 12:32:52 by msapin           ###   ########.fr       */
+/*   Updated: 2023/06/22 16:04:21 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,11 @@ int	parse_xpm(t_cub *cub)
 	cub->west.tex = mlx_xpm_file_to_image(cub->mlx, cub->west.path, &cub->west.width, &cub->west.height);
 	cub->east.tex = mlx_xpm_file_to_image(cub->mlx, cub->east.path, &cub->east.width, &cub->east.height);
 	// mlx_put_image_to_window(cub->mlx, cub->win, cub->north.tex, 0, 0);
-	// if (!cub->north.tex || !cub->south.tex || !cub->west.tex || !cub->east.tex)
-	// 	return (display_error_xpm(cub), -1);
+	if (!cub->north.tex || !cub->south.tex || !cub->west.tex || !cub->east.tex)
+		return (display_error_xpm(cub), -1);
+	cub->north.addr = mlx_get_data_addr(cub->north.tex, &cub->north.bits_per_pixel, &cub->north.line_length, &cub->north.endian);
+	cub->north.addr = mlx_get_data_addr(cub->south.tex, &cub->north.bits_per_pixel, &cub->north.line_length, &cub->north.endian);
+	cub->north.addr = mlx_get_data_addr(cub->west.tex, &cub->north.bits_per_pixel, &cub->north.line_length, &cub->north.endian);
+	cub->north.addr = mlx_get_data_addr(cub->east.tex, &cub->north.bits_per_pixel, &cub->north.line_length, &cub->north.endian);
 	return (0);
 }

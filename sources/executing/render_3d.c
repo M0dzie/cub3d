@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_3d.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:41:02 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/06/22 12:37:29 by msapin           ###   ########.fr       */
+/*   Updated: 2023/06/22 16:00:52 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,32 +42,65 @@ static int	check_side_wall(t_cub *cub, int x)
 	return (0);
 }
 
-static void	draw_wall(t_cub *cub, int x, int y, int max)
+static void	draw_wall(t_cub *cub, int x, int line, int max)
 {
-	// if (check_side_wall(cub, x) == 1)
-	// 	printf("NORTH\n");
-	// if (check_side_wall(cub, x) == 2)
-	// 	printf("SOUTH\n");
-	// if (check_side_wall(cub, x) == 3)
-	// 	printf("WEST\n");
-	// if (check_side_wall(cub, x) == 4)
-	// 	printf("EAST\n");
 	int	side;
 
 	side = check_side_wall(cub, x);
-	while (y < max)
+	while (line < max)
 	{
 		if (side == 1)
-			put_pixel(&cub->imgs->back, x, y, 0xBB33FF); // purple NORTH
+			put_pixel(&cub->imgs->back, x, line, 0xBB33FF); // purple NORTH
 		if (side == 2)
-			put_pixel(&cub->imgs->back, x, y, 0xFFB533); // yellow SOUTH
+			put_pixel(&cub->imgs->back, x, line, 0xFFB533); // yellow SOUTH
 		if (side == 3)
-			put_pixel(&cub->imgs->back, x, y, 0x3336FF); // blue WEST
+			put_pixel(&cub->imgs->back, x, line, 0x3336FF); // blue WEST
 		if (side == 4)
-			put_pixel(&cub->imgs->back, x, y, 0xFF33AC); // pink EAST
-		y++;
+			put_pixel(&cub->imgs->back, x, line, 0xFF33AC); // pink EAST
+		line++;
 	}
 }
+
+// static void	draw_wall(t_cub *cub, int x, int line, int max)
+// {
+// 	int			side;
+// 	// double		wall_height;
+// 	t_vector	mod;
+
+// 	(void) max;
+// 	(void) line;
+// 	side = check_side_wall(cub, x);
+// 	// if (line == 0)
+// 	// 	wall_height = max;
+// 	// else
+// 	// 	wall_height = max - line;
+// 	mod.x = fmod(cub->p->ray[x]->wall.x, GRID_MINI);
+// 	mod.y = fmod(cub->p->ray[x]->wall.y, GRID_MINI);
+// 	// put_pixel(&cub->imgs->back, x, line, get_pixel(cub->north, mod.x * cub->north.width, line));
+// 	// while (line < max)
+// 	// {
+// 	// 	if (side == 1)
+// 	// 		put_pixel(&cub->imgs->back, x, line, 0xBB33FF); // purple NORTH
+// 	// 	if (side == 2)
+// 	// 		put_pixel(&cub->imgs->back, x, line, 0xFFB533); // yellow SOUTH
+// 	// 	if (side == 3)
+// 	// 		put_pixel(&cub->imgs->back, x, line, 0x3336FF); // blue WEST
+// 	// 	if (side == 4)
+// 	// 		put_pixel(&cub->imgs->back, x, line, 0xFF33AC); // pink EAST
+// 	// 	line++;
+// 	// }
+// 	for (int i = WIN_WIDTH / 2 - cub->north.width / 2; i < WIN_WIDTH / 2 + cub->north.width / 2; i++)
+// 	{
+// 		int j = WIN_HEIGHT / 2 - cub->north.height / 2;
+// 		while (j < WIN_HEIGHT / 2 + cub->north.height / 2)
+// 		{
+// 			put_pixel(&cub->imgs->back, i, j, get_pixel(cub->north, i, j));
+// 			// put_pixel(&cub->imgs->back, i, j, get_pixel(cub->north, \
+// 			// fmod(i, GRID_MINI) * cub->north.width, fmod(j, GRID_MINI) * cub->north.height));
+// 			j++;
+// 		}
+// 	}
+// }
 
 void	generate_3d(t_cub *cub)
 {
