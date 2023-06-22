@@ -6,7 +6,7 @@
 /*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/06/19 17:44:38 by msapin           ###   ########.fr       */
+/*   Updated: 2023/06/22 15:17:43 by msapin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,14 @@
 
 void	destroy_xpm(t_cub *cub)
 {
-	(void)cub;
-	
+	if (cub->imgs)
+	{
+		if (cub->imgs->minimap.img)
+			mlx_destroy_image(cub->mlx, cub->imgs->minimap.img);
+		if (cub->imgs->back.img)
+			mlx_destroy_image(cub->mlx, cub->imgs->back.img);
+		free(cub->imgs);
+	}
 }
 
 void	free_path(t_cub *cub)
@@ -29,9 +35,33 @@ void	free_path(t_cub *cub)
 		free(cub->west.path);
 	if (cub->east.path)
 		free(cub->east.path);
+	if (cub->north.tex)
+		mlx_destroy_image(cub->mlx, cub->north.tex);
+	if (cub->south.tex)
+		mlx_destroy_image(cub->mlx, cub->south.tex);
+	if (cub->west.tex)
+		mlx_destroy_image(cub->mlx, cub->west.tex);
+	if (cub->east.tex)
+		mlx_destroy_image(cub->mlx, cub->east.tex);
 }
 
-void	free_cub(t_cub *cub)
+void	free_player(t_cub *cub)
+{
+	int	i;
+
+	i = -1;
+	if (cub->p)
+	{
+		while (++i < WIN_WIDTH)
+		{
+			free(cub->p->ray[i]);
+		}
+		free(cub->p->ray);
+		free(cub->p);
+	}
+}
+
+int	exit_cub(t_cub *cub)
 {
 	if (cub->rgb_floor)
 		free(cub->rgb_floor);
@@ -48,7 +78,14 @@ void	free_cub(t_cub *cub)
 		free(cub->map);
 	}
 	destroy_xpm(cub);
-	free(cub);
+	free_player(cub);
+	if (cub->mlx)
+	{
+		mlx_destroy_window(cub->mlx, cub->win);
+		mlx_destroy_display(cub->mlx);
+		free(cub->mlx);
+	}
+	return (free(cub), exit(0), 0);
 }
 
 int	main(int argc, char **argv)
@@ -63,5 +100,5 @@ int	main(int argc, char **argv)
 	if (parsing_map(cub, argv) != 0)
 		return (-1);
 	init_mlx(cub);
-	return (free_cub(cub), 0);
+	return (0);
 }

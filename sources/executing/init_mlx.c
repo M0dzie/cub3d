@@ -6,18 +6,12 @@
 /*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:11:26 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/06/19 18:25:42 by msapin           ###   ########.fr       */
+/*   Updated: 2023/06/22 15:40:39 by msapin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 // #include "../../includes/thomas.h"
-
-static int	ft_exit(void)
-{
-	exit(0);
-	return (1);
-}
 
 double	get_angle(double angle, int rotation)
 {
@@ -29,15 +23,10 @@ double	get_angle(double angle, int rotation)
 	return (angle);
 }
 
-void	set_angle(t_cub *cub, int sign)
-{
-	cub->p->pos.angle = get_angle(cub->p->pos.angle, SPEED_ANGLE * sign);
-}
-
 static int	check_keycode(int keycode, t_cub *cub)
 {
 	if (keycode == ESC)
-		ft_exit();
+		exit_cub(cub);
 	if (keycode == W)
 		move_player(cub, cub->p->pos.coef_ns, 1);
 	if (keycode == S)
@@ -48,38 +37,28 @@ static int	check_keycode(int keycode, t_cub *cub)
 		move_player(cub, cub->p->pos.coef_we, -1);
 	if (keycode == L_ARROW)
 	{
-		set_angle(cub, -1);
+		cub->p->pos.angle = get_angle(cub->p->pos.angle, -SPEED_ANGLE);
 		move_player(cub, cub->p->pos.coef_ns, 0);
 	}
 	if (keycode == R_ARROW)
 	{
-		set_angle(cub, 1);
+		cub->p->pos.angle = get_angle(cub->p->pos.angle, SPEED_ANGLE);
 		move_player(cub, cub->p->pos.coef_ns, 0);
 	}
-	// printf("player angle: %d%%\n", cub->p->pos.angle);
-	if (keycode == M)
-	{
-		if (cub->imgs->show_mini)
-		{
-			mlx_put_image_to_window(cub->mlx, cub->win, cub->imgs->back.img, 0, 0);
-			cub->imgs->show_mini = 0;
-		}
-		else
-		{
-			cub->imgs->show_mini = 1;
-			render_minimap(cub);
-		}
-	}
+	// if (keycode == M)
+	// {
+	// 	if (cub->imgs->show_mini)
+	// 	{
+	// 		mlx_put_image_to_window(cub->mlx, cub->win, cub->imgs->back.img, 0, 0);
+	// 		cub->imgs->show_mini = 0;
+	// 	}
+	// 	else
+	// 	{
+	// 		cub->imgs->show_mini = 1;
+	// 		render_cub3d(cub);
+	// 	}
+	// }
 	return (1);
-}
-
-void	display_images(t_cub *cub)
-{
-	mlx_put_image_to_window(cub->mlx, cub->win, cub->imgs->back.img, 0, 0);
-	if (cub->imgs->show_mini)
-	{
-		mlx_put_image_to_window(cub->mlx, cub->win, cub->imgs->minimap.img, (WIN_WIDTH / 2) - (cub->map->width * GRID_MINI / 2), (WIN_HEIGHT / 2) - (cub->map->height * GRID_MINI / 2));
-	}
 }
 
 int	init_mlx(t_cub *cub)
@@ -87,23 +66,16 @@ int	init_mlx(t_cub *cub)
 	cub->mlx = mlx_init();
 	cub->win = mlx_new_window(cub->mlx, WIN_WIDTH, WIN_HEIGHT, "cub3d");
 	cub->imgs = malloc(sizeof(t_imgs));
-	cub->imgs->show_mini = 0;
-
-	generate_minimap(cub);
-	calcul_coef(cub);
-	generate_player(cub);
-
+	if (!cub->imgs)
+		return (-1);
+	cub->imgs->minimap.img = NULL;
+	cub->imgs->back.img = NULL;
 	if (parse_xpm(cub) != 0)
 		return (-1);
-
-	(void)check_keycode;
-
-	generate_3d(cub);
-	display_images(cub);
-
+	render_cub3d(cub);
 	mlx_hook(cub->win, 2, 1l << 0, check_keycode, cub);
-	mlx_hook(cub->win, 17, 1l << 0, ft_exit, cub);
-	mlx_loop_hook(cub->mlx, render_minimap, cub);
+	mlx_hook(cub->win, 17, 1l << 0, exit_cub, cub);
+	mlx_loop_hook(cub->mlx, render_cub3d, cub);
 	mlx_loop(cub->mlx);
 	return (0);
 }

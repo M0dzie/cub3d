@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_3d.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:41:02 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/06/17 22:24:33 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/22 12:37:29 by msapin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	generate_3d(t_cub *cub)
 	while (cub->p->ray[++x])
 	{
 		distance = fix_fisheye(cub, x);
-		wall_height = WIN_HEIGHT / distance;
+		wall_height = WIN_HEIGHT / distance * 1.5;
 		margin = (WIN_HEIGHT - wall_height) / 2;
 		if (margin > 0 && margin < WIN_HEIGHT)
 			draw_wall(cub, x, margin, margin + wall_height - 1);

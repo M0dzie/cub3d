@@ -6,7 +6,7 @@
 /*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/06/19 18:14:01 by msapin           ###   ########.fr       */
+/*   Updated: 2023/06/22 15:43:44 by msapin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <math.h>
 
 # ifndef GRID_MINI
-#  define GRID_MINI 30
+#  define GRID_MINI 128
 # endif
 
 # ifndef GRID_MAP
@@ -30,10 +30,10 @@
 // # define WIN_WIDTH 1280.0
 // # define WIN_HEIGHT 720.0
 
-# define SPEED_MINI 2.0
+# define SPEED_MINI 8.0
 # define SPEED_ANGLE 2.0
 
-# define FOV 66.0
+# define FOV 60.0
 
 # ifndef COLORS
 #  define WALL_COLOR 0x00202020
@@ -140,10 +140,10 @@ typedef struct s_player
 
 typedef struct s_imgs
 {
-	int		show_mini;
+	// int		show_mini;
 	t_data	minimap;
 	t_data	back;
-	t_data	p;
+	// t_data	p;
 }			t_imgs;
 
 typedef struct s_xpm
@@ -180,6 +180,7 @@ int		calcul_coef(t_cub *cub);
 int		check_border(t_cub *cub);
 int		display_error(char *name, int num_error);
 int		display_error_texture(t_cub *cub);
+int		exit_cub(t_cub *cub);
 int		init_color(t_cub *cub);
 int		init_file(t_cub *cub, char *file_name);
 int		init_map(t_cub *cub, char **argv);
@@ -198,7 +199,6 @@ double	get_radian(double angle);
 
 void	draw_player_body(t_cub *cub);
 void	display_images(t_cub *cub);
-void	free_cub(t_cub *cub);
 void	generate_minimap(t_cub *cub);
 void	generate_player(t_cub *cub);
 void	generate_3d(t_cub *cub);
@@ -208,6 +208,6 @@ void	init_side_wall(t_cub *cub, t_data *minimap, int ray);;
 void	move_player(t_cub *cub, t_vector coef, int sign);
 void	save_texture(int *fd, char *path, char **path_save);
 
-int		render_minimap(t_cub *cub);
+int		render_cub3d(t_cub *cub);
 
 #endif

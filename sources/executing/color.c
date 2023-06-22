@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   color.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
+/*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 18:43:40 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/06/14 15:26:27 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/22 15:40:55 by msapin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ static char	*rgb_to_hexa(int *rgb, char *base)
 	char	*green;
 	char	*blue;
 	char	*hexa;
+	char	*tmp;
 
 	red = int_to_hexa(rgb[0], base, 1);
 	green = int_to_hexa(rgb[1], base, 0);
@@ -52,11 +53,9 @@ static char	*rgb_to_hexa(int *rgb, char *base)
 	if (!red || !green || !blue)
 		return (free(red), free(green), free(blue), \
 		display_error("red, blue, green", 4), NULL);
-	hexa = ft_calloc(9, sizeof(char));
-	if (!hexa)
-		return (display_error("hexa", 4), NULL);
-	hexa = ft_strjoin(red, green);
-	hexa = ft_strjoin(hexa, blue);
+	tmp = ft_strjoin(red, green);
+	hexa = ft_strjoin(tmp, blue);
+	free(tmp);
 	if (!hexa)
 		return (display_error("hexa", 4), NULL);
 	return (free(red), free(green), free(blue), hexa);
@@ -71,6 +70,7 @@ static int	hexa_to_int(const char *rgb)
 
 	i = 1;
 	result = 0;
+	digit_value = 0;
 	power = 5;
 	while (rgb[++i])
 	{
