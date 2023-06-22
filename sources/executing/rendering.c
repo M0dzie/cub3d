@@ -6,7 +6,7 @@
 /*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:43:13 by msapin            #+#    #+#             */
-/*   Updated: 2023/06/19 12:32:44 by msapin           ###   ########.fr       */
+/*   Updated: 2023/06/22 15:41:43 by msapin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,13 +69,13 @@ void	calcul_distance(t_cub *cub)
 	cub->p->pos.dist.sw = distance_to_wall(cub, cub->p->pos.coef_nesw, -1, 0);
 }
 
-int	render_minimap(t_cub *cub)
+int	render_cub3d(t_cub *cub)
 {
 	generate_minimap(cub);
 	calcul_coef(cub);
-	generate_player(cub);
 	generate_3d(cub);
-	display_images(cub);
+	if (cub->imgs->back.img)
+		mlx_put_image_to_window(cub->mlx, cub->win, cub->imgs->back.img, 0, 0);
 	return (0);
 }
 
@@ -100,7 +100,6 @@ void	move_player(t_cub *cub, t_vector coef, int sign)
 			cub->p->pos.start.y -= tmp_coef.y;
 		}
 	}
-	// render_minimap(cub);
 }
 
 int	put_pixel(t_data *data, int x, int y, int color)
@@ -171,98 +170,19 @@ void	generate_minimap(t_cub *cub)
 	cub->imgs->minimap.img = mlx_new_image(cub->mlx, cub->map->width * GRID_MINI, cub->map->height * GRID_MINI);
 	cub->imgs->minimap.addr = mlx_get_data_addr(cub->imgs->minimap.img, &cub->imgs->minimap.bits_per_pixel, &cub->imgs->minimap.line_length, &cub->imgs->minimap.endian);
 	y = -1;
-	while (++y < (cub->map->height))
+	while (cub->map->array[++y])
 	{
 		x = -1;
-		while (++x < (cub->map->width))
+		while (cub->map->array[y][++x])
 		{
 			c = cub->map->array[y][x];
-			if (c == '1')
-				put_miniwall(cub->imgs->minimap, x * GRID_MINI, y * GRID_MINI);
-			else if (c == '0' || c == 'N' || c == 'S' || c == 'E' || c == 'W')
-				put_minifloor(cub->imgs->minimap, x * GRID_MINI, y * GRID_MINI);
+			if (c)
+			{
+				if (c == '1')
+					put_miniwall(cub->imgs->minimap, x * GRID_MINI, y * GRID_MINI);
+				else if (c == '0' || c == 'N' || c == 'S' || c == 'E' || c == 'W')
+					put_minifloor(cub->imgs->minimap, x * GRID_MINI, y * GRID_MINI);
+			}
 		}
 	}
-}
-
-void	draw_player_body(t_cub *cub)
-{
-	int			angle;
-	int			i;
-	t_vector	start;
-	t_vector	coef;
-
-	angle = -1;
-	while (++angle < 360)
-	{
-		start.x = cub->p->pos.start.x;
-		start.y = cub->p->pos.start.y;
-		coef.x = sin(angle * M_PI / 180);
-		coef.y = -cos(angle * M_PI / 180);
-		i = -1;
-		while (++i < GRID_MINI / 3)
-		{
-			if (start.x > 0 && start.y > 0)
-				put_pixel(&cub->imgs->minimap, start.x + GRID_MINI / 2, start.y + GRID_MINI / 2, 0x0082180e);
-			else
-				break ;
-			start.x += coef.x;
-			start.y += coef.y;
-		}
-	}
-}
-
-void	draw_until_wall(t_cub *cub, t_ray *ray, t_vector coef, int sign)
-{
-	t_vector	tmp;
-
-	tmp.x = ray->start.x;
-	tmp.y = ray->start.y + (double)GRID_MINI / 2;
-	while (1)
-	{
-		if (tmp.x > 0 && tmp.y > 0)
-		{
-			if (!put_pixel(&cub->imgs->minimap, tmp.x + GRID_MINI / 2, tmp.y - 1, 0x00ff1500))
-				break ;
-		}
-		else
-			break ;
-		tmp.x += (coef.x) * sign;
-		tmp.y += (coef.y) * sign;
-	}
-}
-
-void	draw_ray(t_cub *cub, t_vector coef, int sign)
-{
-	t_vector	tmp;
-
-	tmp.x = cub->p->pos.start.x;
-	tmp.y = cub->p->pos.start.y + (double)GRID_MINI / 2;
-	while (1)
-	{
-		if (tmp.x > 0 && tmp.y > 0)
-		{
-			if (!put_pixel(&cub->imgs->minimap, tmp.x + GRID_MINI / 2, tmp.y - 1, 0x00ff1500))
-				break ;
-		}
-		else
-			break ;
-		tmp.x += (coef.x) * sign;
-		tmp.y += (coef.y) * sign;
-	}
-}
-
-void	draw_fov(t_cub *cub)
-{
-	int	i;
-
-	i = -1;
-	while (++i < WIN_WIDTH)
-		draw_ray(cub, cub->p->ray[i]->coef_ns, 1);
-}
-
-void	generate_player(t_cub *cub)
-{
-	draw_player_body(cub);
-	draw_fov(cub);
 }
