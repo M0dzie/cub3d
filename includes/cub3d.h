@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/06/22 15:43:44 by msapin           ###   ########.fr       */
+/*   Updated: 2023/06/22 15:59:28 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,10 @@ typedef struct s_xpm
 	int		fd;
 	int		width;
 	int		height;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+	char	*addr;
 	char	*path;
 	void	*tex;
 }			t_xpm;
@@ -181,6 +185,7 @@ int		check_border(t_cub *cub);
 int		display_error(char *name, int num_error);
 int		display_error_texture(t_cub *cub);
 int		exit_cub(t_cub *cub);
+int		get_pixel(t_xpm tex, int x, int y);
 int		init_color(t_cub *cub);
 int		init_file(t_cub *cub, char *file_name);
 int		init_map(t_cub *cub, char **argv);
