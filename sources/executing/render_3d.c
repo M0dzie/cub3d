@@ -6,7 +6,7 @@
 /*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:41:02 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/06/23 14:53:11 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/23 15:31:34 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,35 +52,40 @@ double	get_percent_face(double face)
 
 static void	draw_wall(t_cub *cub, int column, int line, double wall_height)
 {
+	int			y;
 	int			side;
 	t_vector	mod;
 	t_vector	percent;
 
 	(void) percent;
 	(void) mod;
+	y = 0; // c'est le point 0 de la texture, pour que je cherche le pixel depuis le tout debut
 	if (line != 0)
-		wall_height = wall_height + line - 1;
+		wall_height = wall_height + line; // pour retablir la bonne hauteur du mur avec la boucle while
 	side = check_side_wall(cub, column);
+	// mod.x = fmod(cub->p->ray[column]->wall.x, wall_height);
+	// mod.y = fmod(cub->p->ray[column]->wall.y, wall_height);
 	mod.x = fmod(cub->p->ray[column]->wall.x, GRID_MINI);
 	mod.y = fmod(cub->p->ray[column]->wall.y, GRID_MINI);
-	percent.x = get_percent_face(cub->p->ray[column]->wall.x);
+	percent.x = get_percent_face(cub->p->ray[column]->wall.x); // ca c'est des calculs pour la methode de nico (a voir lundi)
 	percent.y = get_percent_face(cub->p->ray[column]->wall.y);
-	while (line < wall_height)
+	while (y + line < wall_height)
 	{
 		if (side == 1)
-			// put_pixel(&cub->imgs->back, column, line, get_pixel(cub->north, percent.x, line, wall_height));
-			// put_pixel(&cub->imgs->back, column, line, get_pixel(cub->north, mod.x, line));
-			put_pixel(&cub->imgs->back, column, line, 0xBB33FF); // purple NORTH
+			put_pixel(&cub->imgs->back, column, y + line, get_pixel(cub->north, mod.x, y));
+			// put_pixel(&cub->imgs->back, column, y + line, get_pixel(cub->north, percent.x, line, wall_height));
+			// put_pixel(&cub->imgs->back, column, y + line, 0xBB33FF); // purple NORTH
 		if (side == 2)
-			// put_pixel(&cub->imgs->back, column, line, get_pixel(cub->north, mod.x, line));
-			put_pixel(&cub->imgs->back, column, line, 0xFFB533); // yellow SOUTH
+			// put_pixel(&cub->imgs->back, column, y + line, get_pixel(cub->north, mod.x, ine));
+			put_pixel(&cub->imgs->back, column, y + line, 0xFFB533); // yellow SOUTH
 		if (side == 3)
-			// put_pixel(&cub->imgs->back, column, line, get_pixel(cub->north, mod.x, line));
-			put_pixel(&cub->imgs->back, column, line, 0x3336FF); // blue WEST
+			// put_pixel(&cub->imgs->back, column, y + line, get_pixel(cub->north, mod.x, line));
+			put_pixel(&cub->imgs->back, column, y + line, 0x3336FF); // blue WEST
 		if (side == 4)
-			// put_pixel(&cub->imgs->back, column, line, get_pixel(cub->north, mod.y * cub->north.width, line));
-			put_pixel(&cub->imgs->back, column, line, 0xFF33AC); // pink EAST
-		line++;
+			// put_pixel(&cub->imgs->back, column, y + line, get_pixel(cub->north, mod.y * cub->north.width, line));
+			put_pixel(&cub->imgs->back, column, y + line, 0xFF33AC); // pink EAST
+		y++;
+		// line++;
 	}
 }
 
