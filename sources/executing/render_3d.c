@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_3d.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
+/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:41:02 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/06/22 17:54:31 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/23 14:53:11 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,30 +42,38 @@ static int	check_side_wall(t_cub *cub, int x)
 	return (0);
 }
 
-static void	draw_wall(t_cub *cub, int column, int line, int max)
+double	get_percent_face(double face)
+{
+	double	res;
+
+	res = face - (int)face;
+	return (res);
+}
+
+static void	draw_wall(t_cub *cub, int column, int line, double wall_height)
 {
 	int			side;
-	double		wall_height;
 	t_vector	mod;
+	t_vector	percent;
 
-	(void) max;
-	(void) line;
+	(void) percent;
+	(void) mod;
+	if (line != 0)
+		wall_height = wall_height + line - 1;
 	side = check_side_wall(cub, column);
-	if (line == 0)
-		wall_height = max;
-	else
-		wall_height = max - line;
 	mod.x = fmod(cub->p->ray[column]->wall.x, GRID_MINI);
 	mod.y = fmod(cub->p->ray[column]->wall.y, GRID_MINI);
-	while (line < max)
+	percent.x = get_percent_face(cub->p->ray[column]->wall.x);
+	percent.y = get_percent_face(cub->p->ray[column]->wall.y);
+	while (line < wall_height)
 	{
 		if (side == 1)
+			// put_pixel(&cub->imgs->back, column, line, get_pixel(cub->north, percent.x, line, wall_height));
 			// put_pixel(&cub->imgs->back, column, line, get_pixel(cub->north, mod.x, line));
-			put_pixel(&cub->imgs->back, column, line, get_pixel(cub->north, mod.x, line));
-			// put_pixel(&cub->imgs->back, column, line, 0xBB33FF); // purple NORTH
+			put_pixel(&cub->imgs->back, column, line, 0xBB33FF); // purple NORTH
 		if (side == 2)
-			put_pixel(&cub->imgs->back, column, line, get_pixel(cub->north, mod.x, line));
-			// put_pixel(&cub->imgs->back, column, line, 0xFFB533); // yellow SOUTH
+			// put_pixel(&cub->imgs->back, column, line, get_pixel(cub->north, mod.x, line));
+			put_pixel(&cub->imgs->back, column, line, 0xFFB533); // yellow SOUTH
 		if (side == 3)
 			// put_pixel(&cub->imgs->back, column, line, get_pixel(cub->north, mod.x, line));
 			put_pixel(&cub->imgs->back, column, line, 0x3336FF); // blue WEST
@@ -97,7 +105,7 @@ void	generate_3d(t_cub *cub)
 		wall_height = WIN_HEIGHT / distance * 1.5;
 		margin = (WIN_HEIGHT - wall_height) / 2;
 		if (margin > 0 && margin < WIN_HEIGHT)
-			draw_wall(cub, ray, margin, margin + wall_height - 1);
+			draw_wall(cub, ray, margin, wall_height);
 		else
 			draw_wall(cub, ray, 0, WIN_HEIGHT);
 	}

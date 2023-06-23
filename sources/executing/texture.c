@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   texture.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
+/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:19:40 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/06/22 17:47:48 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/23 14:52:22 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 #include "../../includes/thomas.h"
-#include "../../includes/mlx_linux/mlx_int.h"
+// #include "../../includes/mlx_linux/mlx_int.h"
+// #include "../../includes/mlx/mlx_int.h"
 
 void	init_side_wall(t_cub *cub, t_data *minimap, int ray)
 {
@@ -35,3 +36,14 @@ int	get_pixel(t_xpm tex, int x, int y)
 	color = *(unsigned int *)pixel_color;
 	return (color);
 }
+
+// int	get_pixel(t_xpm tex, double percent_face, int line, double wall_height)
+// {
+// 	int		pixel;
+// 	int		x;
+// 	int		y;
+
+// 	x = percent_face * tex.width;
+//     y = (tex.height * wall_height) / line * tex.width;
+//     pixel = x + y;
+// }
