@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:19:40 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/06/23 15:11:19 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/21 21:50:29 by mehdisapin       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ int	get_pixel(t_xpm tex, int x, int y)
 	char	*pixel_color;
 	int		color;
 
-	// if (x < 0 || x > tex.width || y < 0 || y > tex.height)
-	// 	return (0);
+	if (x < 0 || x > tex.width || y < 0 || y > tex.height)
+		return (0);
 	pixel_color = tex.addr + y * tex.line_length + x * (tex.bits_per_pixel / 8);
 	color = *(unsigned int *)pixel_color;
 	return (color);

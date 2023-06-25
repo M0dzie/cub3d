@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rendering.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:43:13 by msapin            #+#    #+#             */
-/*   Updated: 2023/06/22 15:41:43 by msapin           ###   ########.fr       */
+/*   Updated: 2023/06/25 23:53:52 by mehdisapin       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,9 @@ int	render_cub3d(t_cub *cub)
 {
 	generate_minimap(cub);
 	calcul_coef(cub);
+	// calc(cub);
 	generate_3d(cub);
-	if (cub->imgs->back.img)
-		mlx_put_image_to_window(cub->mlx, cub->win, cub->imgs->back.img, 0, 0);
+	mlx_put_image_to_window(cub->mlx, cub->win, cub->imgs->game.img, 0, 0);
 	return (0);
 }
 
@@ -98,6 +98,8 @@ void	move_player(t_cub *cub, t_vector coef, int sign)
 		{
 			cub->p->pos.start.x -= tmp_coef.x;
 			cub->p->pos.start.y -= tmp_coef.y;
+			// cub->p->pos_3d.x -= tmp_coef.x / 10;
+			// cub->p->pos_3d.y -= tmp_coef.y / 10;
 		}
 	}
 }
@@ -165,10 +167,10 @@ void	generate_minimap(t_cub *cub)
 	int		x;
 	char	c;
 
-	if (cub->imgs->minimap.img)
-		mlx_destroy_image(cub->mlx, cub->imgs->minimap.img);
-	cub->imgs->minimap.img = mlx_new_image(cub->mlx, cub->map->width * GRID_MINI, cub->map->height * GRID_MINI);
-	cub->imgs->minimap.addr = mlx_get_data_addr(cub->imgs->minimap.img, &cub->imgs->minimap.bits_per_pixel, &cub->imgs->minimap.line_length, &cub->imgs->minimap.endian);
+	// if (cub->imgs->minimap.img)
+	// 	mlx_destroy_image(cub->mlx, cub->imgs->minimap.img);
+	// cub->imgs->minimap.img = mlx_new_image(cub->mlx, cub->map->width * GRID_MINI, cub->map->height * GRID_MINI);
+	// cub->imgs->minimap.addr = mlx_get_data_addr(cub->imgs->minimap.img, &cub->imgs->minimap.bits_per_pixel, &cub->imgs->minimap.line_length, &cub->imgs->minimap.endian);
 	y = -1;
 	while (cub->map->array[++y])
 	{

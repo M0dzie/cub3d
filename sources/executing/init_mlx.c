@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_mlx.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:11:26 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/06/22 15:40:39 by msapin           ###   ########.fr       */
+/*   Updated: 2023/06/26 00:14:00 by mehdisapin       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,33 @@ static int	check_keycode(int keycode, t_cub *cub)
 	if (keycode == L_ARROW)
 	{
 		cub->p->pos.angle = get_angle(cub->p->pos.angle, -SPEED_ANGLE);
+
+		double rotSpeed = 0.1;
+		double oldDirX = cub->p->dir.x;
+		cub->p->dir.x = cub->p->dir.x * cos(rotSpeed) - cub->p->dir.y * sin(rotSpeed);
+		cub->p->dir.y = oldDirX * sin(rotSpeed) + cub->p->dir.y * cos(rotSpeed);
+		double oldPlaneX = cub->p->fov.x;
+		cub->p->fov.x = cub->p->fov.x * cos(rotSpeed) - cub->p->fov.y * sin(rotSpeed);
+		cub->p->fov.y = oldPlaneX * sin(rotSpeed) + cub->p->fov.y * cos(rotSpeed);
+
 		move_player(cub, cub->p->pos.coef_ns, 0);
 	}
 	if (keycode == R_ARROW)
 	{
 		cub->p->pos.angle = get_angle(cub->p->pos.angle, SPEED_ANGLE);
+
+		double rotSpeed = 0.1;
+		double oldDirX = cub->p->dir.x;
+		cub->p->dir.x = cub->p->dir.x * cos(-rotSpeed) - cub->p->dir.y * sin(-rotSpeed);
+		cub->p->dir.y = oldDirX * sin(-rotSpeed) + cub->p->dir.y * cos(-rotSpeed);
+		double oldPlaneX = cub->p->fov.x;
+		cub->p->fov.x = cub->p->fov.x * cos(-rotSpeed) - cub->p->fov.y * sin(-rotSpeed);
+		cub->p->fov.y = oldPlaneX * sin(-rotSpeed) + cub->p->fov.y * cos(-rotSpeed);
+
 		move_player(cub, cub->p->pos.coef_ns, 0);
 	}
+	printf("dirX %f  dirY %f  ", cub->p->dir.x, cub->p->dir.y);
+	printf("planeX %f  planeY %f\n", cub->p->fov.x, cub->p->fov.y);
 	// if (keycode == M)
 	// {
 	// 	if (cub->imgs->show_mini)
@@ -61,6 +81,20 @@ static int	check_keycode(int keycode, t_cub *cub)
 	return (1);
 }
 
+void	init_image(t_cub *cub)
+{
+	cub->imgs->game.img = mlx_new_image(cub->mlx, WIN_WIDTH, WIN_HEIGHT);
+	cub->imgs->game.addr = mlx_get_data_addr(cub->imgs->game.img, \
+	&cub->imgs->game.bits_per_pixel, &cub->imgs->game.line_length, \
+	&cub->imgs->game.endian);
+	
+	cub->imgs->minimap.img = mlx_new_image(cub->mlx, cub->map->width * \
+	GRID_MINI, cub->map->height * GRID_MINI);
+	cub->imgs->minimap.addr = mlx_get_data_addr(cub->imgs->minimap.img, \
+	&cub->imgs->minimap.bits_per_pixel, &cub->imgs->minimap.line_length, \
+	&cub->imgs->minimap.endian);
+}
+
 int	init_mlx(t_cub *cub)
 {
 	cub->mlx = mlx_init();
@@ -68,11 +102,10 @@ int	init_mlx(t_cub *cub)
 	cub->imgs = malloc(sizeof(t_imgs));
 	if (!cub->imgs)
 		return (-1);
-	cub->imgs->minimap.img = NULL;
-	cub->imgs->back.img = NULL;
 	if (parse_xpm(cub) != 0)
-		return (-1);
-	render_cub3d(cub);
+		return (exit_cub(cub), -1);
+	init_image(cub);
+	// render_cub3d(cub); // to delete
 	mlx_hook(cub->win, 2, 1l << 0, check_keycode, cub);
 	mlx_hook(cub->win, 17, 1l << 0, exit_cub, cub);
 	mlx_loop_hook(cub->mlx, render_cub3d, cub);

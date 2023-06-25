@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/06/22 15:17:43 by msapin           ###   ########.fr       */
+/*   Updated: 2023/06/25 11:20:27 by mehdisapin       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,10 @@ void	destroy_xpm(t_cub *cub)
 	{
 		if (cub->imgs->minimap.img)
 			mlx_destroy_image(cub->mlx, cub->imgs->minimap.img);
-		if (cub->imgs->back.img)
-			mlx_destroy_image(cub->mlx, cub->imgs->back.img);
+		// if (cub->imgs->back.img)
+		// 	mlx_destroy_image(cub->mlx, cub->imgs->back.img);
+		if (cub->imgs->game.img)
+			mlx_destroy_image(cub->mlx, cub->imgs->game.img);
 		free(cub->imgs);
 	}
 }
