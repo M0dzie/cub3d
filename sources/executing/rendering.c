@@ -6,7 +6,7 @@
 /*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:43:13 by msapin            #+#    #+#             */
-/*   Updated: 2023/06/28 14:05:59 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/28 14:24:40 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ int	render_cub3d(t_cub *cub)
 	generate_minimap(cub);
 	calcul_coef(cub);
 	init_raycasting(cub);
+	render_texture(cub);
 	mlx_put_image_to_window(cub->mlx, cub->win, cub->imgs->game.img, 0, 0);
 	return (0);
 }

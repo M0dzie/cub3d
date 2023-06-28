@@ -6,7 +6,7 @@
 /*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:41:02 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/06/28 14:05:34 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/28 14:24:46 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ t_vector step)
 void	init_raycasting(t_cub *cub)
 {
 	int			ray;
-	double		distance;
 	t_vector	step;
 
 	ray = -1;
@@ -94,61 +93,8 @@ void	init_raycasting(t_cub *cub)
 		cub->p->ray[ray]->next_inter.y = fabs(1 / cub->p->ray[ray]->dir.y);
 		step.x = define_move(cub->p, cub->p->ray[ray], cub->map, 1);
 		step.y = define_move(cub->p, cub->p->ray[ray], cub->map, 0);
-		distance = distance_from_wall(cub->p, cub->p->ray[ray], cub->map, step);
-// 	}
-// }
-
-		int wall_height = (int)(WIN_HEIGHT / distance);
-		
-
-		int drawStart = -wall_height / 2 + WIN_HEIGHT / 2;
-		if(drawStart < 0)
-			drawStart = 0;
-		int drawEnd = wall_height / 2 + WIN_HEIGHT / 2;
-		if(drawEnd >= WIN_HEIGHT)
-			drawEnd = WIN_HEIGHT - 1;
-
-		double wall;
-		if (cub->p->ray[ray]->side == 0)
-			wall = cub->p->pos_3d.y + distance * cub->p->ray[ray]->dir.y;
-		else
-			wall = cub->p->pos_3d.x + distance * cub->p->ray[ray]->dir.x;
-		wall -= floor(wall);
-
-		// x coordinate on the texture
-		int texX = (int)(wall * (double)cub->north.width);
-		if (cub->p->ray[ray]->side == 0 && cub->p->ray[ray]->dir.x > 0)
-			texX = cub->north.width - texX - 1;
-		if (cub->p->ray[ray]->side == 1 && cub->p->ray[ray]->dir.y < 0)
-			texX = cub->north.width - texX - 1;
-
-		// How much to increase the texture coordinate perscreen pixel
-		double step = 1.0 * cub->north.height / wall_height;
-
-		// Starting texture coordinate
-		double texPos = (drawStart - WIN_HEIGHT / 2 + wall_height / 2) * step;
-
-		for (int y = drawStart; y < drawEnd; y++)
-		{
-			// Cast the texture coordinate to integer, and mask with (texHeight - 1) in case of overflow
-			int texY = (int)texPos & (cub->north.height - 1);
-			texPos += step;
-
-			// define which texture
-			int color = cub->north.px[cub->north.height * texY + texX];
-
-			put_pixel(&cub->imgs->game, (int)WIN_WIDTH - ray, y, color);
-		}
-		if (drawEnd < 0)
-			drawEnd = WIN_HEIGHT; //becomes < 0 when the integer overflows
-
-		//draw the floor from drawEnd to the bottom of the screen
-		int i = drawEnd;
-		while (++i < WIN_HEIGHT)
-		{
-			put_pixel(&cub->imgs->game, (int)WIN_WIDTH - ray, i, cub->floor);
-			put_pixel(&cub->imgs->game, (int)WIN_WIDTH - ray, (int)WIN_HEIGHT - i, cub->roof);
-		}
+		cub->p->ray[ray]->dist = distance_from_wall(cub->p, cub->p->ray[ray], \
+		cub->map, step);
 	}
 }
 

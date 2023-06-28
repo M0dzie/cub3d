@@ -3,17 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   texture.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
+/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:19:40 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/06/21 21:50:29 by mehdisapin       ###   ########.fr       */
+/*   Updated: 2023/06/28 14:19:30 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 #include "../../includes/thomas.h"
-// #include "../../includes/mlx_linux/mlx_int.h"
-// #include "../../includes/mlx/mlx_int.h"
 
 void	init_side_wall(t_cub *cub, t_data *minimap, int ray)
 {
@@ -37,24 +35,63 @@ int	get_pixel(t_xpm tex, int x, int y)
 	return (color);
 }
 
-// int	get_pixel(t_xpm tex, double percent_face, int line, double wall_height)
-// {
-// 	int		pixel;
-// 	int		x;
-// 	int		y;
+void	render_texture(t_cub *cub)
+{
+	int	ray;
 
-// 	x = percent_face * tex.width;
-//     y = (tex.height * wall_height) / line * tex.width;
-//     pixel = x + y;
-// 	printf("x = %d\ny = %d\n", x, y);
-// 	return (pixel);
-// }
+	ray = -1;
+	while (cub->p->ray[++ray])
+	{
+		int wall_height = (int)(WIN_HEIGHT / cub->p->ray[ray]->dist);
+		
 
-/* 
-	- la deuxieme fonction get_pixel et le prototype qu'utilise ethan et nico avec des uint32, 
-	il me semble tu peux trouver l'idee dans les tutos mais en vrai je verrai avec eux lundi 
+		int drawStart = -wall_height / 2 + WIN_HEIGHT / 2;
+		if(drawStart < 0)
+			drawStart = 0;
+		int drawEnd = wall_height / 2 + WIN_HEIGHT / 2;
+		if(drawEnd >= WIN_HEIGHT)
+			drawEnd = WIN_HEIGHT - 1;
 
-	- Pour les deux couleurs qu'on voit sur les murs NORD et SUD c'est dû a la creation des murs dans la minimap
-	avec les couleurs differentes pour les faces. A voir si on peut ne pas afficher le premier et dernier pixel pour les cacher ?
-	j'ai pas reussi mais a voir lundi
-*/
+		double wall;
+		if (cub->p->ray[ray]->side == 0)
+			wall = cub->p->pos_3d.y + cub->p->ray[ray]->dist * cub->p->ray[ray]->dir.y;
+		else
+			wall = cub->p->pos_3d.x + cub->p->ray[ray]->dist * cub->p->ray[ray]->dir.x;
+		wall -= floor(wall);
+
+		// x coordinate on the texture
+		int texX = (int)(wall * (double)cub->north.width);
+		if (cub->p->ray[ray]->side == 0 && cub->p->ray[ray]->dir.x > 0)
+			texX = cub->north.width - texX - 1;
+		if (cub->p->ray[ray]->side == 1 && cub->p->ray[ray]->dir.y < 0)
+			texX = cub->north.width - texX - 1;
+
+		// How much to increase the texture coordinate perscreen pixel
+		double step = 1.0 * cub->north.height / wall_height;
+
+		// Starting texture coordinate
+		double texPos = (drawStart - WIN_HEIGHT / 2 + wall_height / 2) * step;
+
+		for (int y = drawStart; y < drawEnd; y++)
+		{
+			// Cast the texture coordinate to integer, and mask with (texHeight - 1) in case of overflow
+			int texY = (int)texPos & (cub->north.height - 1);
+			texPos += step;
+
+			// define which texture
+			int color = cub->north.px[cub->north.height * texY + texX];
+
+			put_pixel(&cub->imgs->game, (int)WIN_WIDTH - ray, y, color);
+		}
+		if (drawEnd < 0)
+			drawEnd = WIN_HEIGHT; //becomes < 0 when the integer overflows
+
+		//draw the floor from drawEnd to the bottom of the screen
+		int i = drawEnd;
+		while (++i < WIN_HEIGHT)
+		{
+			put_pixel(&cub->imgs->game, (int)WIN_WIDTH - ray, i, cub->floor);
+			put_pixel(&cub->imgs->game, (int)WIN_WIDTH - ray, (int)WIN_HEIGHT - i, cub->roof);
+		}
+	}
+}
