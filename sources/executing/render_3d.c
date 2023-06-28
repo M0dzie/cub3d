@@ -6,7 +6,7 @@
 /*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:41:02 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/06/28 13:27:56 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/28 13:56:04 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,12 +72,35 @@ static int	define_move(t_player *p, t_ray_map *ray, t_map *map, int x)
 	return (move);
 }
 
+static double	distance_from_wall(t_player *p, t_ray_map *ray, t_map *map, t_vector step)
+{
+	while (1)
+	{
+		if (ray->dist_next_inter.x < ray->dist_next_inter.y)
+		{
+			ray->dist_next_inter.x += ray->next_inter.x;
+			map->map_x += step.x;
+			ray->side = 0;
+		}
+		else
+		{
+			ray->dist_next_inter.y += ray->next_inter.y;
+			map->map_y += step.y;
+			ray->side = 1;
+		}
+		if (map->array[map->map_y][map->map_x] == '1')
+			break ;
+	}
+	if (ray->side == 0)
+		return ((map->map_x - p->pos_3d.x + (1 - step.x) / 2) / ray->dir.x);
+	return ((map->map_y - p->pos_3d.y + (1 - step.y) / 2) / ray->dir.y);
+}
+
 void	generate_3d(t_cub *cub)
 {
-	int		ray;
-	int		step_x;
-	int		step_y;
-	double	distance;
+	int			ray;
+	double		distance;
+	t_vector	step;
 
 	ray = -1;
 	define_pos_and_dir(cub);
@@ -87,37 +110,12 @@ void	generate_3d(t_cub *cub)
 		cub->map->map_y = floor(cub->p->pos_3d.y);
 		cub->p->ray[ray]->next_inter.x = fabs(1 / cub->p->ray[ray]->dir.x);
 		cub->p->ray[ray]->next_inter.y = fabs(1 / cub->p->ray[ray]->dir.y);
-		int hit = 0; //was there a wall hit?
-		int side; //was a NS or a EW wall hit?
-		step_x = define_move(cub->p, cub->p->ray[ray], cub->map, 1);
-		step_y = define_move(cub->p, cub->p->ray[ray], cub->map, 0);
-
-		while (hit == 0)
-		{
-			//jump to next map square, OR in x-direction, OR in y-direction
-			if (cub->p->ray[ray]->dist_next_inter.x < cub->p->ray[ray]->dist_next_inter.y)
-			{
-				cub->p->ray[ray]->dist_next_inter.x += cub->p->ray[ray]->next_inter.x;
-				cub->map->map_x += step_x;
-				side = 0;
-			}
-			else
-			{
-				cub->p->ray[ray]->dist_next_inter.y += cub->p->ray[ray]->next_inter.y;
-				cub->map->map_y += step_y;
-				side = 1;
-			}
-			if (cub->map->array[cub->map->map_y][cub->map->map_x] == '1') 
-				hit = 1;
-		}
-		if (side == 0)
-			distance = (cub->map->map_x - cub->p->pos_3d.x + (1 - step_x) / 2) / cub->p->ray[ray]->dir.x;
-		else
-			distance = (cub->map->map_y - cub->p->pos_3d.y + (1 - step_y) / 2) / cub->p->ray[ray]->dir.y;
+		step.x = define_move(cub->p, cub->p->ray[ray], cub->map, 1);
+		step.y = define_move(cub->p, cub->p->ray[ray], cub->map, 0);
+		distance = distance_from_wall(cub->p, cub->p->ray[ray], cub->map, step);
 
 		int wall_height = (int)(WIN_HEIGHT / distance);
 		
-		(void)side;
 
 		int drawStart = -wall_height / 2 + WIN_HEIGHT / 2;
 		if(drawStart < 0)
@@ -127,7 +125,7 @@ void	generate_3d(t_cub *cub)
 			drawEnd = WIN_HEIGHT - 1;
 
 		double wall;
-		if (side == 0)
+		if (cub->p->ray[ray]->side == 0)
 			wall = cub->p->pos_3d.y + distance * cub->p->ray[ray]->dir.y;
 		else
 			wall = cub->p->pos_3d.x + distance * cub->p->ray[ray]->dir.x;
@@ -135,9 +133,9 @@ void	generate_3d(t_cub *cub)
 
 		// x coordinate on the texture
 		int texX = (int)(wall * (double)cub->north.width);
-		if (side == 0 && cub->p->ray[ray]->dir.x > 0)
+		if (cub->p->ray[ray]->side == 0 && cub->p->ray[ray]->dir.x > 0)
 			texX = cub->north.width - texX - 1;
-		if (side == 1 && cub->p->ray[ray]->dir.y < 0)
+		if (cub->p->ray[ray]->side == 1 && cub->p->ray[ray]->dir.y < 0)
 			texX = cub->north.width - texX - 1;
 
 		// How much to increase the texture coordinate perscreen pixel

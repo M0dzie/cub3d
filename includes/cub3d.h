@@ -6,7 +6,7 @@
 /*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/06/28 13:22:50 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/28 13:49:15 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ typedef struct s_dist
 
 typedef struct s_ray_map
 {
+	int				side;
 	double			coef;
 	double			dist;
 	double			angle;
@@ -123,7 +124,6 @@ typedef struct s_ray_map
 	t_vector		coef_ns;
 	t_vector		next_inter;
 	t_vector		dist_next_inter;
-	unsigned int	side;
 }				t_ray_map;
 
 typedef struct s_ray
