@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/06/26 13:41:24 by msapin           ###   ########.fr       */
+/*   Updated: 2023/06/28 13:22:50 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,11 @@ typedef struct s_data
 
 typedef struct s_map
 {
-	char	**array;
+	int		map_x;
+	int		map_y;
 	int		width;
 	int		height;
+	char	**array;
 
 	// tests
 	int		min_x;
@@ -111,15 +113,16 @@ typedef struct s_dist
 
 typedef struct s_ray_map
 {
-	t_vector		coef_ns;
-	t_vector		wall;
-	// t_vector	coef_we;
-	t_vector	pos;
-	t_vector	dir;
-	double		coef;
-	double		dist;
-	t_vector	delta;
+	double			coef;
+	double			dist;
 	double			angle;
+	// t_vector	coef_we;
+	t_vector		pos;
+	t_vector		dir;
+	t_vector		wall;
+	t_vector		coef_ns;
+	t_vector		next_inter;
+	t_vector		dist_next_inter;
 	unsigned int	side;
 }				t_ray_map;
 
@@ -137,20 +140,20 @@ typedef struct s_ray
 
 typedef struct s_player
 {
-	t_ray_map	**ray;
 	t_ray		pos;
 	double		coef;
 	t_vector	dir;
 	t_vector	fov;
 	t_vector	pos_3d;
+	t_ray_map	**ray;
 }				t_player;
 
 typedef struct s_imgs
 {
 	// int		show_mini;
-	t_data	minimap;
 	t_data	back;
 	t_data	game;
+	t_data	minimap;
 	// t_data	p;
 }			t_imgs;
 

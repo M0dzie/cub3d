@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rendering.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:43:13 by msapin            #+#    #+#             */
-/*   Updated: 2023/06/26 13:40:46 by msapin           ###   ########.fr       */
+/*   Updated: 2023/06/28 09:42:14 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,7 @@ double	distance_to_wall(t_cub *cub, t_vector coef, int sign, int ray)
 	if (!ray)
 		distance -= GRID_MINI / 3;
 	else
-	{
 		cub->p->ray[ray - 1]->wall = tmp;
-		init_side_wall(cub, &cub->imgs->minimap, ray - 1);
-	}
 	return (distance);
 }
 
