@@ -6,7 +6,7 @@
 /*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:41:02 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/06/28 13:25:45 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/28 13:27:56 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,16 +90,7 @@ void	generate_3d(t_cub *cub)
 		int hit = 0; //was there a wall hit?
 		int side; //was a NS or a EW wall hit?
 		step_x = define_move(cub->p, cub->p->ray[ray], cub->map, 1);
-		if (cub->p->ray[ray]->dir.y < 0)
-		{
-			step_y = -1;
-			cub->p->ray[ray]->dist_next_inter.y = (cub->p->pos_3d.y - cub->map->map_y) * cub->p->ray[ray]->next_inter.y;
-		}
-		else
-		{
-			step_y = 1;
-			cub->p->ray[ray]->dist_next_inter.y = (cub->map->map_y + 1.0 - cub->p->pos_3d.y) * cub->p->ray[ray]->next_inter.y;
-		}
+		step_y = define_move(cub->p, cub->p->ray[ray], cub->map, 0);
 
 		while (hit == 0)
 		{
