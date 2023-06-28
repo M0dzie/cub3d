@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
+/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:41:02 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/06/28 14:24:46 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/28 23:05:33 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,34 +54,34 @@ static int	define_move(t_player *p, t_ray_map *ray, t_map *map, int x)
 }
 
 static double	distance_from_wall(t_player *p, t_ray_map *ray, t_map *map, \
-t_vector step)
+t_vector move)
 {
 	while (1)
 	{
 		if (ray->dist_next_inter.x < ray->dist_next_inter.y)
 		{
 			ray->dist_next_inter.x += ray->next_inter.x;
-			map->map_x += step.x;
+			map->map_x += move.x;
 			ray->side = 0;
 		}
 		else
 		{
 			ray->dist_next_inter.y += ray->next_inter.y;
-			map->map_y += step.y;
+			map->map_y += move.y;
 			ray->side = 1;
 		}
 		if (map->array[map->map_y][map->map_x] == '1')
 			break ;
 	}
 	if (ray->side == 0)
-		return ((map->map_x - p->pos_3d.x + (1 - step.x) / 2) / ray->dir.x);
-	return ((map->map_y - p->pos_3d.y + (1 - step.y) / 2) / ray->dir.y);
+		return ((map->map_x - p->pos_3d.x + (1 - move.x) / 2) / ray->dir.x);
+	return ((map->map_y - p->pos_3d.y + (1 - move.y) / 2) / ray->dir.y);
 }
 
 void	init_raycasting(t_cub *cub)
 {
 	int			ray;
-	t_vector	step;
+	t_vector	move;
 
 	ray = -1;
 	define_pos_and_dir(cub);
@@ -91,10 +91,11 @@ void	init_raycasting(t_cub *cub)
 		cub->map->map_y = floor(cub->p->pos_3d.y);
 		cub->p->ray[ray]->next_inter.x = fabs(1 / cub->p->ray[ray]->dir.x);
 		cub->p->ray[ray]->next_inter.y = fabs(1 / cub->p->ray[ray]->dir.y);
-		step.x = define_move(cub->p, cub->p->ray[ray], cub->map, 1);
-		step.y = define_move(cub->p, cub->p->ray[ray], cub->map, 0);
+		move.x = define_move(cub->p, cub->p->ray[ray], cub->map, 1);
+		move.y = define_move(cub->p, cub->p->ray[ray], cub->map, 0);
 		cub->p->ray[ray]->dist = distance_from_wall(cub->p, cub->p->ray[ray], \
-		cub->map, step);
+		cub->map, move);
+		cub->p->ray[ray]->wall_height = (int)(WIN_HEIGHT / cub->p->ray[ray]->dist);
 	}
 }
 

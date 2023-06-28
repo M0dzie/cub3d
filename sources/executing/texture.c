@@ -6,22 +6,64 @@
 /*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:19:40 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/06/28 22:53:17 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/29 01:23:45 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 #include "../../includes/thomas.h"
 
-static void	render_floor_and_ceiling(t_cub *cub, int wall_height, int ray)
+static void	init_floor_and_ceiling(t_ray_map *ray, int *ground, int *ceiling)
+{
+	*ceiling = -ray->wall_height / 2 + WIN_HEIGHT / 2;
+	if (*ceiling < 0)
+		*ceiling = 0;
+	*ground = ray->wall_height / 2 + WIN_HEIGHT / 2;
+	if (*ground >= WIN_HEIGHT)
+		*ground = WIN_HEIGHT;
+}
+
+static void	init_wall_texture(t_cub *cub, t_ray_map *ray, int *ceiling, double *wall)
+{
+	if (ray->side == 0)
+		*wall = cub->p->pos_3d.y + ray->dist * ray->dir.y;
+	else
+		*wall = cub->p->pos_3d.x + ray->dist * ray->dir.x;
+	*wall -= floor(*wall);
+	ray->tex.tex_x = (int)(*wall * (double)cub->north.width);
+	if (ray->side == 0 && ray->dir.x > 0)
+		ray->tex.tex_x = cub->north.width - ray->tex.tex_x - 1;
+	if (ray->side == 1 && ray->dir.y < 0)
+		ray->tex.tex_x = cub->north.width - ray->tex.tex_x - 1;
+	ray->tex.step = 1.0 * cub->north.height / ray->wall_height;
+	ray->tex.tex_pos = (*ceiling - WIN_HEIGHT / 2 + ray->wall_height / 2) * ray->tex.step;
+}
+
+static void	render_wall(t_cub *cub, t_ray_map *ray, int n_ray)
+{
+	int		ground;
+	int		ceiling;
+	double	wall;
+
+	init_floor_and_ceiling(ray, &ground, &ceiling);
+	init_wall_texture(cub, ray, &ceiling, &wall);
+	while (ceiling < ground)
+	{
+		ray->tex.tex_y = (int)ray->tex.tex_pos & (cub->north.height - 1);
+		ray->tex.tex_pos += ray->tex.step;
+		ray->tex.color = cub->north.px[cub->north.height * ray->tex.tex_y + ray->tex.tex_x];
+		put_pixel(&cub->imgs->game, (int)WIN_WIDTH - n_ray, ceiling, ray->tex.color);
+		ceiling++;
+	}
+}
+
+static void	render_floor_and_ceiling(t_cub *cub, int ray)
 {
 	int	ground;
 
-	ground = wall_height / 2 + WIN_HEIGHT / 2;
-	if (ground >= WIN_HEIGHT)
+	ground = cub->p->ray[ray]->wall_height / 2 + WIN_HEIGHT / 2;
+	if (ground >= WIN_HEIGHT || ground < 0)
 		ground = WIN_HEIGHT - 1;
-	if (ground < 0)
-		ground = WIN_HEIGHT;
 	while (++ground < WIN_HEIGHT)
 	{
 		put_pixel(&cub->imgs->game, (int)WIN_WIDTH - ray, ground, cub->floor);
@@ -32,53 +74,11 @@ static void	render_floor_and_ceiling(t_cub *cub, int wall_height, int ray)
 void	render_texture(t_cub *cub)
 {
 	int	ray;
-	int	ground;
-	int	ceiling;
-	int	wall_height;
 
 	ray = -1;
-	// put_floor_and_ceiling(cub);
 	while (cub->p->ray[++ray])
 	{
-		wall_height = (int)(WIN_HEIGHT / cub->p->ray[ray]->dist);
-		ceiling = -wall_height / 2 + WIN_HEIGHT / 2;
-		if (ceiling < 0)
-			ceiling = 0;
-		ground = wall_height / 2 + WIN_HEIGHT / 2;
-		if (ground >= WIN_HEIGHT)
-			ground = WIN_HEIGHT - 1;
-
-		double wall;
-		if (cub->p->ray[ray]->side == 0)
-			wall = cub->p->pos_3d.y + cub->p->ray[ray]->dist * cub->p->ray[ray]->dir.y;
-		else
-			wall = cub->p->pos_3d.x + cub->p->ray[ray]->dist * cub->p->ray[ray]->dir.x;
-		wall -= floor(wall);
-
-		// x coordinate on the texture
-		int texX = (int)(wall * (double)cub->north.width);
-		if (cub->p->ray[ray]->side == 0 && cub->p->ray[ray]->dir.x > 0)
-			texX = cub->north.width - texX - 1;
-		if (cub->p->ray[ray]->side == 1 && cub->p->ray[ray]->dir.y < 0)
-			texX = cub->north.width - texX - 1;
-
-		// How much to increase the texture coordinate perscreen pixel
-		double step = 1.0 * cub->north.height / wall_height;
-
-		// Starting texture coordinate
-		double texPos = (ceiling - WIN_HEIGHT / 2 + wall_height / 2) * step;
-
-		for (int y = ceiling; y < ground; y++)
-		{
-			// Cast the texture coordinate to integer, and mask with (texHeight - 1) in case of overflow
-			int texY = (int)texPos & (cub->north.height - 1);
-			texPos += step;
-
-			// define which texture
-			int color = cub->north.px[cub->north.height * texY + texX];
-
-			put_pixel(&cub->imgs->game, (int)WIN_WIDTH - ray, y, color);
-		}
-		render_floor_and_ceiling(cub, wall_height, ray);
+		render_wall(cub, cub->p->ray[ray], ray);
+		render_floor_and_ceiling(cub, ray);
 	}
 }

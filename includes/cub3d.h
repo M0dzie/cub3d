@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
+/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/06/28 14:27:25 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/29 01:27:04 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,9 +111,19 @@ typedef struct s_dist
 	int	sw;
 }		t_dist;
 
+typedef struct s_tex_data
+{
+	int		tex_x;
+	int		tex_y;
+	int		color;
+	double	tex_pos;
+	double	step;
+}				t_tex_data;
+
 typedef struct s_ray_map
 {
 	int				side;
+	int				wall_height;
 	double			coef;
 	double			dist;
 	double			angle;
@@ -124,6 +134,7 @@ typedef struct s_ray_map
 	t_vector		coef_ns;
 	t_vector		next_inter;
 	t_vector		dist_next_inter;
+	t_tex_data		tex;
 }				t_ray_map;
 
 typedef struct s_ray
