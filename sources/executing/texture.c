@@ -3,48 +3,50 @@
 /*                                                        :::      ::::::::   */
 /*   texture.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
+/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:19:40 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/06/28 14:42:28 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/28 22:53:17 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 #include "../../includes/thomas.h"
 
-static void	put_floor_and_ceiling(t_cub *cub)
+static void	render_floor_and_ceiling(t_cub *cub, int wall_height, int ray)
 {
-	int	x;
-	int	y;
+	int	ground;
 
-	x = -1;
-	while (cub->p->ray[++x])
+	ground = wall_height / 2 + WIN_HEIGHT / 2;
+	if (ground >= WIN_HEIGHT)
+		ground = WIN_HEIGHT - 1;
+	if (ground < 0)
+		ground = WIN_HEIGHT;
+	while (++ground < WIN_HEIGHT)
 	{
-		y = -1;
-		while (++y < WIN_HEIGHT / 2)
-			put_pixel(&cub->imgs->back, x, y, cub->roof);
-		while (++y < WIN_HEIGHT)
-			put_pixel(&cub->imgs->back, x, y, cub->floor);
+		put_pixel(&cub->imgs->game, (int)WIN_WIDTH - ray, ground, cub->floor);
+		put_pixel(&cub->imgs->game, (int)WIN_WIDTH - ray, (int)WIN_HEIGHT - ground, cub->roof);
 	}
 }
 
 void	render_texture(t_cub *cub)
 {
 	int	ray;
+	int	ground;
+	int	ceiling;
+	int	wall_height;
 
 	ray = -1;
-	put_floor_and_ceiling(cub);
+	// put_floor_and_ceiling(cub);
 	while (cub->p->ray[++ray])
 	{
-		int wall_height = (int)(WIN_HEIGHT / cub->p->ray[ray]->dist);
-
-		int drawStart = -wall_height / 2 + WIN_HEIGHT / 2;
-		if(drawStart < 0)
-			drawStart = 0;
-		int drawEnd = wall_height / 2 + WIN_HEIGHT / 2;
-		if(drawEnd >= WIN_HEIGHT)
-			drawEnd = WIN_HEIGHT - 1;
+		wall_height = (int)(WIN_HEIGHT / cub->p->ray[ray]->dist);
+		ceiling = -wall_height / 2 + WIN_HEIGHT / 2;
+		if (ceiling < 0)
+			ceiling = 0;
+		ground = wall_height / 2 + WIN_HEIGHT / 2;
+		if (ground >= WIN_HEIGHT)
+			ground = WIN_HEIGHT - 1;
 
 		double wall;
 		if (cub->p->ray[ray]->side == 0)
@@ -64,9 +66,9 @@ void	render_texture(t_cub *cub)
 		double step = 1.0 * cub->north.height / wall_height;
 
 		// Starting texture coordinate
-		double texPos = (drawStart - WIN_HEIGHT / 2 + wall_height / 2) * step;
+		double texPos = (ceiling - WIN_HEIGHT / 2 + wall_height / 2) * step;
 
-		for (int y = drawStart; y < drawEnd; y++)
+		for (int y = ceiling; y < ground; y++)
 		{
 			// Cast the texture coordinate to integer, and mask with (texHeight - 1) in case of overflow
 			int texY = (int)texPos & (cub->north.height - 1);
@@ -77,7 +79,6 @@ void	render_texture(t_cub *cub)
 
 			put_pixel(&cub->imgs->game, (int)WIN_WIDTH - ray, y, color);
 		}
-		if (drawEnd < 0)
-			drawEnd = WIN_HEIGHT; //becomes < 0 when the integer overflows
+		render_floor_and_ceiling(cub, wall_height, ray);
 	}
 }
