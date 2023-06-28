@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render_3d.c                                        :+:      :+:    :+:   */
+/*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:41:02 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/06/28 13:56:04 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/28 14:05:34 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,25 +29,6 @@ static void	define_pos_and_dir(t_cub *cub)
 		cub->p->ray[ray]->coef;
 	}
 }
-
-// static double	find_next_inter(t_ray_map *ray, t_vector tmp, double mid_angle, \
-// int vert)
-// {
-// 	double		distance;
-// 	t_vector	inter;
-
-// 	distance = .0;
-// 	if (vert == 1)
-// 	{
-// 		if (ray->angle > mid_angle)
-// 			inter.x = tmp.x + 1;
-// 		else if (ray->angle < mid_angle)
-// 			inter.x = tmp.x - 0.000000001;
-// 		else
-// 			inter.x = 0;
-// 	}
-// 	return (distance);
-// }
 
 static int	define_move(t_player *p, t_ray_map *ray, t_map *map, int x)
 {
@@ -72,7 +53,8 @@ static int	define_move(t_player *p, t_ray_map *ray, t_map *map, int x)
 	return (move);
 }
 
-static double	distance_from_wall(t_player *p, t_ray_map *ray, t_map *map, t_vector step)
+static double	distance_from_wall(t_player *p, t_ray_map *ray, t_map *map, \
+t_vector step)
 {
 	while (1)
 	{
@@ -96,7 +78,7 @@ static double	distance_from_wall(t_player *p, t_ray_map *ray, t_map *map, t_vect
 	return ((map->map_y - p->pos_3d.y + (1 - step.y) / 2) / ray->dir.y);
 }
 
-void	generate_3d(t_cub *cub)
+void	init_raycasting(t_cub *cub)
 {
 	int			ray;
 	double		distance;
@@ -113,6 +95,8 @@ void	generate_3d(t_cub *cub)
 		step.x = define_move(cub->p, cub->p->ray[ray], cub->map, 1);
 		step.y = define_move(cub->p, cub->p->ray[ray], cub->map, 0);
 		distance = distance_from_wall(cub->p, cub->p->ray[ray], cub->map, step);
+// 	}
+// }
 
 		int wall_height = (int)(WIN_HEIGHT / distance);
 		
@@ -167,3 +151,22 @@ void	generate_3d(t_cub *cub)
 		}
 	}
 }
+
+// static double	find_next_inter(t_ray_map *ray, t_vector tmp, double mid_angle, \
+// int vert)
+// {
+// 	double		distance;
+// 	t_vector	inter;
+
+// 	distance = .0;
+// 	if (vert == 1)
+// 	{
+// 		if (ray->angle > mid_angle)
+// 			inter.x = tmp.x + 1;
+// 		else if (ray->angle < mid_angle)
+// 			inter.x = tmp.x - 0.000000001;
+// 		else
+// 			inter.x = 0;
+// 	}
+// 	return (distance);
+// }
