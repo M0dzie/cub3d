@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_xpm.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:36:13 by msapin            #+#    #+#             */
-/*   Updated: 2023/06/26 13:54:48 by msapin           ###   ########.fr       */
+/*   Updated: 2023/06/29 14:57:27 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,12 @@ int	init_xpm(t_cub *cub, t_xpm *wall)
 	int	j;
 	int	nb_px;
 
-	wall->tex = mlx_xpm_file_to_image(cub->mlx, wall->path, &wall->width, &wall->height);
-	wall->data = (int *)mlx_get_data_addr(wall->tex, &wall->bits_per_pixel, &wall->line_length, &wall->endian);
+	wall->tex = mlx_xpm_file_to_image(cub->mlx, wall->path, &wall->width, \
+	&wall->height);
 	if (!wall->tex)
 		return (display_error_xpm(cub), -1);
+	wall->data = (int *)mlx_get_data_addr(wall->tex, &wall->bits_per_pixel, \
+	&wall->line_length, &wall->endian);
 	wall->px = ft_calloc(wall->width * wall->height + 1, sizeof(int));
 	if (!wall->px)
 		return (-1);
@@ -54,7 +56,8 @@ int	init_xpm(t_cub *cub, t_xpm *wall)
 	{
 		j = -1;
 		while (++j < wall->width)
-			wall->px[wall->width * i + (wall->width - j)] = wall->data[wall->width * i + j];
+			wall->px[wall->width * i + (wall->width - j)] = \
+			wall->data[wall->width * i + j];
 	}
 	mlx_destroy_image(cub->mlx, wall->tex);
 	return (0);
@@ -62,7 +65,8 @@ int	init_xpm(t_cub *cub, t_xpm *wall)
 
 int	parse_xpm(t_cub *cub)
 {
-	if (init_xpm(cub, &cub->north) != 0 || init_xpm(cub, &cub->south) != 0 || init_xpm(cub, &cub->west) != 0 || init_xpm(cub, &cub->east) != 0)
+	if (init_xpm(cub, &cub->north) != 0 || init_xpm(cub, &cub->south) != 0 \
+	|| init_xpm(cub, &cub->west) != 0 || init_xpm(cub, &cub->east) != 0)
 		return (-1);
 	return (0);
 }
