@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:41:02 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/06/28 23:05:33 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/29 14:10:36 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,8 @@ void	init_raycasting(t_cub *cub)
 		move.y = define_move(cub->p, cub->p->ray[ray], cub->map, 0);
 		cub->p->ray[ray]->dist = distance_from_wall(cub->p, cub->p->ray[ray], \
 		cub->map, move);
-		cub->p->ray[ray]->wall_height = (int)(WIN_HEIGHT / cub->p->ray[ray]->dist);
+		cub->p->ray[ray]->wall_height = (int)(WIN_HEIGHT / \
+		cub->p->ray[ray]->dist);
 	}
 }
 

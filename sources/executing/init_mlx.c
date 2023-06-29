@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_mlx.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:11:26 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/06/26 13:41:03 by msapin           ###   ########.fr       */
+/*   Updated: 2023/06/29 15:08:04 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ void	init_image(t_cub *cub)
 	cub->imgs->game.addr = mlx_get_data_addr(cub->imgs->game.img, \
 	&cub->imgs->game.bits_per_pixel, &cub->imgs->game.line_length, \
 	&cub->imgs->game.endian);
-	
 	cub->imgs->minimap.img = mlx_new_image(cub->mlx, cub->map->width * \
 	GRID_MINI, cub->map->height * GRID_MINI);
 	cub->imgs->minimap.addr = mlx_get_data_addr(cub->imgs->minimap.img, \
