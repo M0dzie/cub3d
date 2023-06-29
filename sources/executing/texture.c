@@ -6,7 +6,7 @@
 /*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:19:40 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/06/29 14:10:17 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/29 15:50:38 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,27 @@ static void	init_floor_and_ceiling(t_ray_map *ray, int *ground, int *ceiling)
 static void	init_wall_texture(t_cub *cub, t_ray_map *ray, int *ceiling, \
 double *wall)
 {
+	t_xpm	wall_side;
+
 	if (ray->side == 0)
+		wall_side = cub->south;
+	if (ray->side == 1)
+		wall_side = cub->north;
+	if (ray->side == 2)
+		wall_side = cub->east;
+	if (ray->side == 3)
+		wall_side = cub->west;
+	if (ray->side == 0 || ray->side == 1)
 		*wall = cub->p->pos_3d.y + ray->dist * ray->dir.y;
 	else
 		*wall = cub->p->pos_3d.x + ray->dist * ray->dir.x;
 	*wall -= floor(*wall);
-	ray->tex.tex_x = (int)(*wall * (double)cub->north.width);
-	if (ray->side == 0 && ray->dir.x > 0)
-		ray->tex.tex_x = cub->north.width - ray->tex.tex_x - 1;
-	if (ray->side == 1 && ray->dir.y < 0)
-		ray->tex.tex_x = cub->north.width - ray->tex.tex_x - 1;
-	ray->tex.step = 1.0 * cub->north.height / ray->wall_height;
+	ray->tex.tex_x = (int)(*wall * (double)wall_side.width);
+	// if (ray->side == 0 && ray->dir.x > 0)
+	// 	ray->tex.tex_x = wall_side.width - ray->tex.tex_x - 1;
+	// if (ray->side == 1 && ray->dir.y < 0)
+	// 	ray->tex.tex_x = wall_side.width - ray->tex.tex_x - 1;
+	ray->tex.step = 1.0 * wall_side.height / ray->wall_height;
 	ray->tex.tex_pos = (*ceiling - WIN_HEIGHT / 2 + ray->wall_height / 2) * \
 	ray->tex.step;
 }
@@ -46,14 +56,23 @@ static void	render_wall(t_cub *cub, t_ray_map *ray, int n_ray)
 	int		ground;
 	int		ceiling;
 	double	wall;
+	t_xpm	wall_side;
 
 	init_floor_and_ceiling(ray, &ground, &ceiling);
 	init_wall_texture(cub, ray, &ceiling, &wall);
+	if (ray->side == 0)
+		wall_side = cub->south;
+	if (ray->side == 1)
+		wall_side = cub->north;
+	if (ray->side == 2)
+		wall_side = cub->east;
+	if (ray->side == 3)
+		wall_side = cub->west;
 	while (ceiling < ground)
 	{
-		ray->tex.tex_y = (int)ray->tex.tex_pos & (cub->north.height - 1);
+		ray->tex.tex_y = (int)ray->tex.tex_pos & (wall_side.height - 1);
 		ray->tex.tex_pos += ray->tex.step;
-		ray->tex.color = cub->north.px[cub->north.height * ray->tex.tex_y + \
+		ray->tex.color = wall_side.px[wall_side.height * ray->tex.tex_y + \
 		ray->tex.tex_x];
 		put_pixel(&cub->imgs->game, (int)WIN_WIDTH - n_ray, ceiling, \
 		ray->tex.color);

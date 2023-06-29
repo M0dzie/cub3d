@@ -6,7 +6,7 @@
 /*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:41:02 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/06/29 14:10:36 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/29 15:35:33 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,18 +62,18 @@ t_vector move)
 		{
 			ray->dist_next_inter.x += ray->next_inter.x;
 			map->map_x += move.x;
-			ray->side = 0;
+			ray->side = (move.x > 0);
 		}
 		else
 		{
 			ray->dist_next_inter.y += ray->next_inter.y;
 			map->map_y += move.y;
-			ray->side = 1;
+			ray->side = (move.y > 0) + 2;
 		}
 		if (map->array[map->map_y][map->map_x] == '1')
 			break ;
 	}
-	if (ray->side == 0)
+	if (ray->side == 0 || ray->side == 1)
 		return ((map->map_x - p->pos_3d.x + (1 - move.x) / 2) / ray->dir.x);
 	return ((map->map_y - p->pos_3d.y + (1 - move.y) / 2) / ray->dir.y);
 }
