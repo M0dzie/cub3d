@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
+/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:41:02 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/06/29 15:35:33 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/04 21:29:02 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,12 @@ void	init_raycasting(t_cub *cub)
 	{
 		cub->map->map_x = floor(cub->p->pos_3d.x);
 		cub->map->map_y = floor(cub->p->pos_3d.y);
-		cub->p->ray[ray]->next_inter.x = fabs(1 / cub->p->ray[ray]->dir.x);
-		cub->p->ray[ray]->next_inter.y = fabs(1 / cub->p->ray[ray]->dir.y);
+		cub->p->ray[ray]->next_inter.x = 1 / cub->p->ray[ray]->dir.x;
+		if (cub->p->ray[ray]->next_inter.x < 0)
+			cub->p->ray[ray]->next_inter.x *= -1;
+		cub->p->ray[ray]->next_inter.y = 1 / cub->p->ray[ray]->dir.y;
+		if (cub->p->ray[ray]->next_inter.y < 0)
+			cub->p->ray[ray]->next_inter.y *= -1;
 		move.x = define_move(cub->p, cub->p->ray[ray], cub->map, 1);
 		move.y = define_move(cub->p, cub->p->ray[ray], cub->map, 0);
 		cub->p->ray[ray]->dist = distance_from_wall(cub->p, cub->p->ray[ray], \
@@ -99,22 +103,3 @@ void	init_raycasting(t_cub *cub)
 		cub->p->ray[ray]->dist);
 	}
 }
-
-// static double	find_next_inter(t_ray_map *ray, t_vector tmp, double mid_angle, \
-// int vert)
-// {
-// 	double		distance;
-// 	t_vector	inter;
-
-// 	distance = .0;
-// 	if (vert == 1)
-// 	{
-// 		if (ray->angle > mid_angle)
-// 			inter.x = tmp.x + 1;
-// 		else if (ray->angle < mid_angle)
-// 			inter.x = tmp.x - 0.000000001;
-// 		else
-// 			inter.x = 0;
-// 	}
-// 	return (distance);
-// }
