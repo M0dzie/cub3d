@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_mlx.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
+/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:11:26 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/06/29 15:31:40 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/04 21:52:06 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,13 @@ double	get_angle(double angle, int rotation)
 
 static int	check_keycode(int keycode, t_cub *cub)
 {
+	double	rot_speed;
+	double	old_dir_x;
+	double	old_fov_x;
+
+	rot_speed = 0.1;
+	old_dir_x = cub->p->dir.x;
+	old_fov_x = cub->p->fov.x;
 	if (keycode == ESC)
 		exit_cub(cub);
 	if (keycode == W)
@@ -39,13 +46,10 @@ static int	check_keycode(int keycode, t_cub *cub)
 	{
 		cub->p->pos.angle = get_angle(cub->p->pos.angle, -SPEED_ANGLE);
 
-		double rotSpeed = 0.1;
-		double oldDirX = cub->p->dir.x;
-		cub->p->dir.x = cub->p->dir.x * cos(rotSpeed) - cub->p->dir.y * sin(rotSpeed);
-		cub->p->dir.y = oldDirX * sin(rotSpeed) + cub->p->dir.y * cos(rotSpeed);
-		double oldPlaneX = cub->p->fov.x;
-		cub->p->fov.x = cub->p->fov.x * cos(rotSpeed) - cub->p->fov.y * sin(rotSpeed);
-		cub->p->fov.y = oldPlaneX * sin(rotSpeed) + cub->p->fov.y * cos(rotSpeed);
+		cub->p->dir.x = cub->p->dir.x * cos(-rot_speed) - cub->p->dir.y * sin(-rot_speed);
+		cub->p->dir.y = old_dir_x * sin(-rot_speed) + cub->p->dir.y * cos(-rot_speed);
+		cub->p->fov.x = cub->p->fov.x * cos(-rot_speed) - cub->p->fov.y * sin(-rot_speed);
+		cub->p->fov.y = old_fov_x * sin(-rot_speed) + cub->p->fov.y * cos(-rot_speed);
 
 		move_player(cub, cub->p->pos.coef_ns, 0);
 	}
@@ -53,13 +57,10 @@ static int	check_keycode(int keycode, t_cub *cub)
 	{
 		cub->p->pos.angle = get_angle(cub->p->pos.angle, SPEED_ANGLE);
 
-		double rotSpeed = 0.1;
-		double oldDirX = cub->p->dir.x;
-		cub->p->dir.x = cub->p->dir.x * cos(-rotSpeed) - cub->p->dir.y * sin(-rotSpeed);
-		cub->p->dir.y = oldDirX * sin(-rotSpeed) + cub->p->dir.y * cos(-rotSpeed);
-		double oldPlaneX = cub->p->fov.x;
-		cub->p->fov.x = cub->p->fov.x * cos(-rotSpeed) - cub->p->fov.y * sin(-rotSpeed);
-		cub->p->fov.y = oldPlaneX * sin(-rotSpeed) + cub->p->fov.y * cos(-rotSpeed);
+		cub->p->dir.x = cub->p->dir.x * cos(rot_speed) - cub->p->dir.y * sin(rot_speed);
+		cub->p->dir.y = old_dir_x * sin(rot_speed) + cub->p->dir.y * cos(rot_speed);
+		cub->p->fov.x = cub->p->fov.x * cos(rot_speed) - cub->p->fov.y * sin(rot_speed);
+		cub->p->fov.y = old_fov_x * sin(rot_speed) + cub->p->fov.y * cos(rot_speed);
 
 		move_player(cub, cub->p->pos.coef_ns, 0);
 	}
