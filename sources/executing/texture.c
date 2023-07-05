@@ -6,7 +6,7 @@
 /*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:19:40 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/07/05 16:32:09 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/05 16:38:29 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,13 @@ double *wall)
 	t_xpm	wall_side;
 
 	if (ray->side == 0)
-		wall_side = cub->south;
-	if (ray->side == 1)
-		wall_side = cub->north;
-	if (ray->side == 2)
-		wall_side = cub->east;
-	if (ray->side == 3)
 		wall_side = cub->west;
+	if (ray->side == 1)
+		wall_side = cub->east;
+	if (ray->side == 2)
+		wall_side = cub->south;
+	if (ray->side == 3)
+		wall_side = cub->north;
 	if (ray->side == 0 || ray->side == 1)
 		*wall = cub->p->pos_3d.y + ray->dist * ray->dir.y;
 	else
@@ -44,7 +44,7 @@ double *wall)
 	ray->tex.tex_x = (int)(*wall * (double)wall_side.width);
 	if ((ray->side == 0 || ray->side == 1) && ray->dir.x > 0)
 		ray->tex.tex_x = wall_side.width - ray->tex.tex_x - 1;
-	if ((ray->side == 1 || ray->side == 2) && ray->dir.y < 0)
+	if ((ray->side == 2 || ray->side == 3) && ray->dir.y < 0)
 		ray->tex.tex_x = wall_side.width - ray->tex.tex_x - 1;
 	ray->tex.step = 1.0 * wall_side.height / ray->wall_height;
 	ray->tex.tex_pos = (*ceiling - WIN_HEIGHT / 2 + ray->wall_height / 2) * \
@@ -61,13 +61,13 @@ static void	render_wall(t_cub *cub, t_ray_map *ray, int n_ray)
 	init_floor_and_ceiling(ray, &ground, &ceiling);
 	init_wall_texture(cub, ray, &ceiling, &wall);
 	if (ray->side == 0)
-		wall_side = cub->south;
-	if (ray->side == 1)
-		wall_side = cub->north;
-	if (ray->side == 2)
-		wall_side = cub->east;
-	if (ray->side == 3)
 		wall_side = cub->west;
+	if (ray->side == 1)
+		wall_side = cub->east;
+	if (ray->side == 2)
+		wall_side = cub->south;
+	if (ray->side == 3)
+		wall_side = cub->north;
 	while (ceiling < ground)
 	{
 		ray->tex.tex_y = (int)ray->tex.tex_pos & (wall_side.height - 1);
