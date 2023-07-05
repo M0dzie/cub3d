@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/06/22 15:41:09 by msapin           ###   ########.fr       */
+/*   Updated: 2023/06/25 23:54:51 by mehdisapin       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,38 @@ int	malloc_player(t_cub *cub)
 	return (0);
 }
 
+void	init_pos(t_cub *cub, char side)
+{
+	if (side == 'N')
+	{
+		cub->p->dir.x = 0.0;
+		cub->p->dir.y = -1.0;
+		cub->p->fov.x = 0.0;
+		cub->p->fov.y = -0.66;
+	}
+	else if (side == 'S')
+	{
+		cub->p->dir.x = 0.0;
+		cub->p->dir.y = 1.0;
+		cub->p->fov.x = 0.0;
+		cub->p->fov.y = 0.66;
+	}
+	else if (side == 'W')
+	{
+		cub->p->dir.x = -1.0;
+		cub->p->dir.y = 0.0;
+		cub->p->fov.x = 0.66;
+		cub->p->fov.y = 0.0;
+	}
+	else if (side == 'E')
+	{
+		cub->p->dir.x = 1.0;
+		cub->p->dir.y = 0.0;
+		cub->p->fov.x = -0.66;
+		cub->p->fov.y = 0.0;
+	}
+}
+
 int	init_player(t_cub *cub)
 {
 	int		i;
@@ -136,6 +168,9 @@ int	init_player(t_cub *cub)
 				parse_player_angle(cub, c);
 				cub->p->pos.start.x = j * GRID_MINI;
 				cub->p->pos.start.y = i * GRID_MINI;
+				// cub->p->pos_3d.x = j + 0.5;
+				// cub->p->pos_3d.y = i + 0.5;
+				init_pos(cub, c);
 			}
 		}
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_xpm.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
+/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:36:13 by msapin            #+#    #+#             */
-/*   Updated: 2023/06/22 16:04:21 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/04 22:14:20 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,18 +32,41 @@ void	display_error_xpm(t_cub *cub)
 		ft_putendl_fd(cub->east.path, 2);
 }
 
+int	init_xpm(t_cub *cub, t_xpm *wall)
+{
+	int	i;
+	int	j;
+	int	nb_px;
+
+	wall->tex = mlx_xpm_file_to_image(cub->mlx, wall->path, &wall->width, \
+	&wall->height);
+	if (!wall->tex)
+		return (display_error_xpm(cub), -1);
+	wall->data = (int *)mlx_get_data_addr(wall->tex, &wall->bits_per_pixel, \
+	&wall->line_length, &wall->endian);
+	wall->px = ft_calloc(wall->width * wall->height + 1, sizeof(int));
+	if (!wall->px)
+		return (-1);
+	i = -1;
+	nb_px = wall->width * wall->height;
+	while (++i < nb_px)
+		wall->px[i] = 0;
+	i = -1;
+	while (++i < wall->height)
+	{
+		j = -1;
+		while (++j < wall->width)
+			wall->px[wall->width * i + (wall->width - j)] = \
+			wall->data[wall->width * i + j];
+	}
+	mlx_destroy_image(cub->mlx, wall->tex);
+	return (0);
+}
+
 int	parse_xpm(t_cub *cub)
 {
-	cub->north.tex = mlx_xpm_file_to_image(cub->mlx, cub->north.path, &cub->north.width, &cub->north.height);
-	cub->south.tex = mlx_xpm_file_to_image(cub->mlx, cub->south.path, &cub->south.width, &cub->south.height);
-	cub->west.tex = mlx_xpm_file_to_image(cub->mlx, cub->west.path, &cub->west.width, &cub->west.height);
-	cub->east.tex = mlx_xpm_file_to_image(cub->mlx, cub->east.path, &cub->east.width, &cub->east.height);
-	// mlx_put_image_to_window(cub->mlx, cub->win, cub->north.tex, 0, 0);
-	if (!cub->north.tex || !cub->south.tex || !cub->west.tex || !cub->east.tex)
-		return (display_error_xpm(cub), -1);
-	cub->north.addr = mlx_get_data_addr(cub->north.tex, &cub->north.bits_per_pixel, &cub->north.line_length, &cub->north.endian);
-	cub->north.addr = mlx_get_data_addr(cub->south.tex, &cub->north.bits_per_pixel, &cub->north.line_length, &cub->north.endian);
-	cub->north.addr = mlx_get_data_addr(cub->west.tex, &cub->north.bits_per_pixel, &cub->north.line_length, &cub->north.endian);
-	cub->north.addr = mlx_get_data_addr(cub->east.tex, &cub->north.bits_per_pixel, &cub->north.line_length, &cub->north.endian);
+	if (init_xpm(cub, &cub->north) != 0 || init_xpm(cub, &cub->south) != 0 \
+	|| init_xpm(cub, &cub->west) != 0 || init_xpm(cub, &cub->east) != 0)
+		return (-1);
 	return (0);
 }

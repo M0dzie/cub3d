@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rendering.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:43:13 by msapin            #+#    #+#             */
-/*   Updated: 2023/06/22 15:41:43 by msapin           ###   ########.fr       */
+/*   Updated: 2023/06/28 14:27:04 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ double	distance_to_wall(t_cub *cub, t_vector coef, int sign, int ray)
 {
 	t_vector	tmp;
 	double		distance;
-	(void)ray;
 
 	tmp.x = cub->p->pos.start.x;
 	tmp.y = cub->p->pos.start.y + (double)GRID_MINI / 2;
@@ -50,10 +49,7 @@ double	distance_to_wall(t_cub *cub, t_vector coef, int sign, int ray)
 	if (!ray)
 		distance -= GRID_MINI / 3;
 	else
-	{
 		cub->p->ray[ray - 1]->wall = tmp;
-		init_side_wall(cub, &cub->imgs->minimap, ray - 1);
-	}
 	return (distance);
 }
 
@@ -73,9 +69,9 @@ int	render_cub3d(t_cub *cub)
 {
 	generate_minimap(cub);
 	calcul_coef(cub);
-	generate_3d(cub);
-	if (cub->imgs->back.img)
-		mlx_put_image_to_window(cub->mlx, cub->win, cub->imgs->back.img, 0, 0);
+	init_raycasting(cub);
+	render_texture(cub);
+	mlx_put_image_to_window(cub->mlx, cub->win, cub->imgs->game.img, 0, 0);
 	return (0);
 }
 
@@ -98,6 +94,8 @@ void	move_player(t_cub *cub, t_vector coef, int sign)
 		{
 			cub->p->pos.start.x -= tmp_coef.x;
 			cub->p->pos.start.y -= tmp_coef.y;
+			// cub->p->pos_3d.x -= tmp_coef.x / 10;
+			// cub->p->pos_3d.y -= tmp_coef.y / 10;
 		}
 	}
 }
@@ -165,10 +163,10 @@ void	generate_minimap(t_cub *cub)
 	int		x;
 	char	c;
 
-	if (cub->imgs->minimap.img)
-		mlx_destroy_image(cub->mlx, cub->imgs->minimap.img);
-	cub->imgs->minimap.img = mlx_new_image(cub->mlx, cub->map->width * GRID_MINI, cub->map->height * GRID_MINI);
-	cub->imgs->minimap.addr = mlx_get_data_addr(cub->imgs->minimap.img, &cub->imgs->minimap.bits_per_pixel, &cub->imgs->minimap.line_length, &cub->imgs->minimap.endian);
+	// if (cub->imgs->minimap.img)
+	// 	mlx_destroy_image(cub->mlx, cub->imgs->minimap.img);
+	// cub->imgs->minimap.img = mlx_new_image(cub->mlx, cub->map->width * GRID_MINI, cub->map->height * GRID_MINI);
+	// cub->imgs->minimap.addr = mlx_get_data_addr(cub->imgs->minimap.img, &cub->imgs->minimap.bits_per_pixel, &cub->imgs->minimap.line_length, &cub->imgs->minimap.endian);
 	y = -1;
 	while (cub->map->array[++y])
 	{

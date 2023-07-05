@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   color.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 18:43:40 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/06/22 15:40:55 by msapin           ###   ########.fr       */
+/*   Updated: 2023/07/04 22:17:54 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,9 +95,7 @@ int	init_color(t_cub *cub)
 	floor = rgb_to_hexa(cub->rgb_floor, "0123456789ABCDEF");
 	cub->roof = hexa_to_int(roof);
 	cub->floor = hexa_to_int(floor);
-	// printf("roof_hexa = %s and roof_int = %d\n", roof, cub->roof);
-	// printf("floor_hexa = %s and floor_int = %d\n", floor, cub->floor);
-	if (cub->roof > 0 && cub->floor > 0)
+	if (cub->roof >= 0 && cub->floor >= 0)
 		success = 1;
 	return (free(roof), free(floor), success);
 }

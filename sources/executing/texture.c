@@ -6,55 +6,103 @@
 /*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:19:40 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/06/23 15:11:19 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/05 16:38:29 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 #include "../../includes/thomas.h"
-// #include "../../includes/mlx_linux/mlx_int.h"
-// #include "../../includes/mlx/mlx_int.h"
 
-void	init_side_wall(t_cub *cub, t_data *minimap, int ray)
+static void	init_floor_and_ceiling(t_ray_map *ray, int *ground, int *ceiling)
 {
-	char	*dst;
-
-	dst = minimap->addr + (((int)cub->p->ray[ray]->wall.y - 1) * \
-	minimap->line_length + ((int)cub->p->ray[ray]->wall.x + (GRID_MINI / 2)) \
-	* (minimap->bits_per_pixel / 8));
-	cub->p->ray[ray]->side = *(unsigned int *)dst;
+	*ceiling = -ray->wall_height / 2 + WIN_HEIGHT / 2;
+	if (*ceiling < 0)
+		*ceiling = 0;
+	*ground = ray->wall_height / 2 + WIN_HEIGHT / 2;
+	if (*ground >= WIN_HEIGHT)
+		*ground = WIN_HEIGHT;
 }
 
-int	get_pixel(t_xpm tex, int x, int y)
+static void	init_wall_texture(t_cub *cub, t_ray_map *ray, int *ceiling, \
+double *wall)
 {
-	char	*pixel_color;
-	int		color;
+	t_xpm	wall_side;
 
-	// if (x < 0 || x > tex.width || y < 0 || y > tex.height)
-	// 	return (0);
-	pixel_color = tex.addr + y * tex.line_length + x * (tex.bits_per_pixel / 8);
-	color = *(unsigned int *)pixel_color;
-	return (color);
+	if (ray->side == 0)
+		wall_side = cub->west;
+	if (ray->side == 1)
+		wall_side = cub->east;
+	if (ray->side == 2)
+		wall_side = cub->south;
+	if (ray->side == 3)
+		wall_side = cub->north;
+	if (ray->side == 0 || ray->side == 1)
+		*wall = cub->p->pos_3d.y + ray->dist * ray->dir.y;
+	else
+		*wall = cub->p->pos_3d.x + ray->dist * ray->dir.x;
+	*wall -= floor(*wall);
+	ray->tex.tex_x = (int)(*wall * (double)wall_side.width);
+	if ((ray->side == 0 || ray->side == 1) && ray->dir.x > 0)
+		ray->tex.tex_x = wall_side.width - ray->tex.tex_x - 1;
+	if ((ray->side == 2 || ray->side == 3) && ray->dir.y < 0)
+		ray->tex.tex_x = wall_side.width - ray->tex.tex_x - 1;
+	ray->tex.step = 1.0 * wall_side.height / ray->wall_height;
+	ray->tex.tex_pos = (*ceiling - WIN_HEIGHT / 2 + ray->wall_height / 2) * \
+	ray->tex.step;
 }
 
-// int	get_pixel(t_xpm tex, double percent_face, int line, double wall_height)
-// {
-// 	int		pixel;
-// 	int		x;
-// 	int		y;
+static void	render_wall(t_cub *cub, t_ray_map *ray, int n_ray)
+{
+	int		ground;
+	int		ceiling;
+	double	wall;
+	t_xpm	wall_side;
 
-// 	x = percent_face * tex.width;
-//     y = (tex.height * wall_height) / line * tex.width;
-//     pixel = x + y;
-// 	printf("x = %d\ny = %d\n", x, y);
-// 	return (pixel);
-// }
+	init_floor_and_ceiling(ray, &ground, &ceiling);
+	init_wall_texture(cub, ray, &ceiling, &wall);
+	if (ray->side == 0)
+		wall_side = cub->west;
+	if (ray->side == 1)
+		wall_side = cub->east;
+	if (ray->side == 2)
+		wall_side = cub->south;
+	if (ray->side == 3)
+		wall_side = cub->north;
+	while (ceiling < ground)
+	{
+		ray->tex.tex_y = (int)ray->tex.tex_pos & (wall_side.height - 1);
+		ray->tex.tex_pos += ray->tex.step;
+		ray->tex.color = wall_side.px[wall_side.height * ray->tex.tex_y + \
+		ray->tex.tex_x];
+		put_pixel(&cub->imgs->game, (int)WIN_WIDTH - n_ray, ceiling, \
+		ray->tex.color);
+		ceiling++;
+	}
+}
 
-/* 
-	- la deuxieme fonction get_pixel et le prototype qu'utilise ethan et nico avec des uint32, 
-	il me semble tu peux trouver l'idee dans les tutos mais en vrai je verrai avec eux lundi 
+static void	render_floor_and_ceiling(t_cub *cub, int ray)
+{
+	int	ground;
 
-	- Pour les deux couleurs qu'on voit sur les murs NORD et SUD c'est dû a la creation des murs dans la minimap
-	avec les couleurs differentes pour les faces. A voir si on peut ne pas afficher le premier et dernier pixel pour les cacher ?
-	j'ai pas reussi mais a voir lundi
-*/
+	ground = cub->p->ray[ray]->wall_height / 2 + WIN_HEIGHT / 2;
+	if (ground >= WIN_HEIGHT || ground < 0)
+		ground = WIN_HEIGHT - 1;
+	while (++ground < WIN_HEIGHT)
+	{
+		put_pixel(&cub->imgs->game, (int)WIN_WIDTH - ray, ground, cub->floor);
+		put_pixel(&cub->imgs->game, (int)WIN_WIDTH - ray, (int)WIN_HEIGHT - \
+		ground, cub->roof);
+	}
+}
+
+void	render_texture(t_cub *cub)
+{
+	int	ray;
+
+	ray = -1;
+	while (cub->p->ray[++ray])
+	{
+		render_wall(cub, cub->p->ray[ray], ray);
+		render_floor_and_ceiling(cub, ray);
+	}
+}

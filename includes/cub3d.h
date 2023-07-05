@@ -6,7 +6,7 @@
 /*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/06/22 15:59:28 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/06/29 15:08:06 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@
 #  define GRID_MINI 128
 # endif
 
-# ifndef GRID_MAP
-#  define GRID_MAP 100
-# endif
+// # ifndef GRID_MAP
+// #  define GRID_MAP 100
+// # endif
 
 # define WIN_WIDTH 1980.0
 # define WIN_HEIGHT 1080.0
@@ -33,7 +33,7 @@
 # define SPEED_MINI 8.0
 # define SPEED_ANGLE 2.0
 
-# define FOV 60.0
+# define FOV 90.0
 
 # ifndef COLORS
 #  define WALL_COLOR 0x00202020
@@ -81,13 +81,16 @@ typedef struct s_data
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
+	int		*data;
 }			t_data;
 
 typedef struct s_map
 {
-	char	**array;
+	int		map_x;
+	int		map_y;
 	int		width;
 	int		height;
+	char	**array;
 
 	// tests
 	int		min_x;
@@ -108,15 +111,30 @@ typedef struct s_dist
 	int	sw;
 }		t_dist;
 
+typedef struct s_tex_data
+{
+	int		tex_x;
+	int		tex_y;
+	int		color;
+	double	tex_pos;
+	double	step;
+}				t_tex_data;
+
 typedef struct s_ray_map
 {
-	t_vector		coef_ns;
-	t_vector		wall;
-	// t_vector	coef_we;
-	// t_vector	start;
-	double		dist;
+	int				side;
+	int				wall_height;
+	double			coef;
+	double			dist;
 	double			angle;
-	unsigned int	side;
+	// t_vector	coef_we;
+	t_vector		pos;
+	t_vector		dir;
+	t_vector		wall;
+	t_vector		coef_ns;
+	t_vector		next_inter;
+	t_vector		dist_next_inter;
+	t_tex_data		tex;
 }				t_ray_map;
 
 typedef struct s_ray
@@ -133,16 +151,20 @@ typedef struct s_ray
 
 typedef struct s_player
 {
-	t_ray_map	**ray;
 	t_ray		pos;
 	double		coef;
+	t_vector	dir;
+	t_vector	fov;
+	t_vector	pos_3d;
+	t_ray_map	**ray;
 }				t_player;
 
 typedef struct s_imgs
 {
 	// int		show_mini;
-	t_data	minimap;
 	t_data	back;
+	t_data	game;
+	t_data	minimap;
 	// t_data	p;
 }			t_imgs;
 
@@ -155,8 +177,10 @@ typedef struct s_xpm
 	int		line_length;
 	int		endian;
 	char	*addr;
+	int		*data;
 	char	*path;
 	void	*tex;
+	int		*px;
 }			t_xpm;
 
 typedef struct s_cub
@@ -206,11 +230,10 @@ void	draw_player_body(t_cub *cub);
 void	display_images(t_cub *cub);
 void	generate_minimap(t_cub *cub);
 void	generate_player(t_cub *cub);
-void	generate_3d(t_cub *cub);
 void	init_camera(t_cub *cub);
 void	init_raycasting(t_cub *cub);
-void	init_side_wall(t_cub *cub, t_data *minimap, int ray);;
 void	move_player(t_cub *cub, t_vector coef, int sign);
+void	render_texture(t_cub *cub);
 void	save_texture(int *fd, char *path, char **path_save);
 
 int		render_cub3d(t_cub *cub);
