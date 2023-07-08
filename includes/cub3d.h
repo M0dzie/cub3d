@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
+/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/06/29 15:08:06 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/08 17:50:59 by mehdisapin       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,22 +18,29 @@
 # include <math.h>
 
 # ifndef GRID_MINI
-#  define GRID_MINI 128
+#  define GRID_MINI 32
 # endif
 
 // # ifndef GRID_MAP
 // #  define GRID_MAP 100
 // # endif
 
-# define WIN_WIDTH 1980.0
-# define WIN_HEIGHT 1080.0
-// # define WIN_WIDTH 1280.0
-// # define WIN_HEIGHT 720.0
+// # define WIN_WIDTH 1980.0
+// # define WIN_HEIGHT 1080.0
+# define WIN_WIDTH 1280.0
+# define WIN_HEIGHT 720.0
 
-# define SPEED_MINI 8.0
-# define SPEED_ANGLE 2.0
+// # define SPEED_MINI 8.0
+# define SPEED_MINI 3.0
+// # define SPEED_ANGLE 2.0
+
+# define SPEED_PLAYER 0.1
+# define SPEED_ANGLE 0.1
 
 # define FOV 90.0
+
+# define NS 1
+# define EW 2
 
 # ifndef COLORS
 #  define WALL_COLOR 0x00202020
@@ -161,7 +168,7 @@ typedef struct s_player
 
 typedef struct s_imgs
 {
-	// int		show_mini;
+	int		show_mini;
 	t_data	back;
 	t_data	game;
 	t_data	minimap;
@@ -198,6 +205,8 @@ typedef struct s_cub
 	char			**file_split;
 	void			*mlx;
 	void			*win;
+	double			cos_angle;
+	double			sin_angle;
 	t_imgs			*imgs;
 	struct s_map	*map;
 	struct s_player	*p;
@@ -232,7 +241,7 @@ void	generate_minimap(t_cub *cub);
 void	generate_player(t_cub *cub);
 void	init_camera(t_cub *cub);
 void	init_raycasting(t_cub *cub);
-void	move_player(t_cub *cub, t_vector coef, int sign);
+void	move_player(t_cub *cub, t_vector coef, int direction, int sign);
 void	render_texture(t_cub *cub);
 void	save_texture(int *fd, char *path, char **path_save);
 
