@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:19:40 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/07/05 16:38:29 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/05 20:33:09 by mehdisapin       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ double *wall)
 {
 	t_xpm	wall_side;
 
+	wall_side = cub->west;
 	if (ray->side == 0)
 		wall_side = cub->west;
 	if (ray->side == 1)
@@ -58,6 +59,7 @@ static void	render_wall(t_cub *cub, t_ray_map *ray, int n_ray)
 	double	wall;
 	t_xpm	wall_side;
 
+	wall_side = cub->west;
 	init_floor_and_ceiling(ray, &ground, &ceiling);
 	init_wall_texture(cub, ray, &ceiling, &wall);
 	if (ray->side == 0)
