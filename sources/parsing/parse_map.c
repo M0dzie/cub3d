@@ -6,7 +6,7 @@
 /*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/07/08 18:23:54 by mehdisapin       ###   ########.fr       */
+/*   Updated: 2023/07/10 19:45:13 by mehdisapin       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,33 +121,39 @@ void	init_pos(t_cub *cub, char side)
 	cub->sin_angle = sin(SPEED_ANGLE);
 	if (side == 'N')
 	{
-		cub->p->dir.x = -1.0;
-		cub->p->dir.y = 0.0;
-		cub->p->fov.x = 0.0;
-		cub->p->fov.y = 0.66;
-	}
-	else if (side == 'S')
-	{
-		cub->p->dir.x = 1.0;
-		cub->p->dir.y = 0.0;
-		cub->p->fov.x = 0.0;
-		cub->p->fov.y = -0.66;
-	}
-	else if (side == 'W')
-	{
 		cub->p->dir.x = 0.0;
 		cub->p->dir.y = -1.0;
+		cub->p->dir_ew.x = -1.0;
+		cub->p->dir_ew.y = 0.0;
 		cub->p->fov.x = -0.66;
 		cub->p->fov.y = 0.0;
 	}
-	else if (side == 'E')
+	else if (side == 'S')
 	{
 		cub->p->dir.x = 0.0;
 		cub->p->dir.y = 1.0;
-		// cub->p->pos.coef_we.x = 1.0;
-		// cub->p->pos.coef_we.y = 0.0;
+		cub->p->dir_ew.x = 1.0;
+		cub->p->dir_ew.y = 0.0;
 		cub->p->fov.x = 0.66;
 		cub->p->fov.y = 0.0;
+	}
+	else if (side == 'W')
+	{
+		cub->p->dir.x = -1.0;
+		cub->p->dir.y = 0.0;
+		cub->p->dir_ew.x = 0.0;
+		cub->p->dir_ew.y = 1.0;
+		cub->p->fov.x = 0.0;
+		cub->p->fov.y = 0.66;
+	}
+	else if (side == 'E')
+	{
+		cub->p->dir.x = 1.0;
+		cub->p->dir.y = 0.0;
+		cub->p->dir_ew.x = 0.0;
+		cub->p->dir_ew.y = -1.0;
+		cub->p->fov.x = 0.0;
+		cub->p->fov.y = -0.66;
 	}
 }
 
