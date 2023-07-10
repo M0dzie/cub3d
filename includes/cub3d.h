@@ -6,7 +6,7 @@
 /*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/07/08 17:50:59 by mehdisapin       ###   ########.fr       */
+/*   Updated: 2023/07/10 18:13:35 by mehdisapin       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,6 @@
 # define SPEED_ANGLE 0.1
 
 # define FOV 90.0
-
-# define NS 1
-# define EW 2
 
 # ifndef COLORS
 #  define WALL_COLOR 0x00202020
@@ -161,6 +158,7 @@ typedef struct s_player
 	t_ray		pos;
 	double		coef;
 	t_vector	dir;
+	t_vector	dir_ew;
 	t_vector	fov;
 	t_vector	pos_3d;
 	t_ray_map	**ray;
@@ -241,8 +239,9 @@ void	generate_minimap(t_cub *cub);
 void	generate_player(t_cub *cub);
 void	init_camera(t_cub *cub);
 void	init_raycasting(t_cub *cub);
-void	move_player(t_cub *cub, t_vector coef, int direction, int sign);
+void	move_player(t_cub *cub, t_vector coef, int sign);
 void	render_texture(t_cub *cub);
+void	rotate_player(t_cub *cub, int sign);
 void	save_texture(int *fd, char *path, char **path_save);
 
 int		render_cub3d(t_cub *cub);
