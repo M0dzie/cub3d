@@ -6,7 +6,7 @@
 /*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:43:13 by msapin            #+#    #+#             */
-/*   Updated: 2023/07/08 18:37:41 by mehdisapin       ###   ########.fr       */
+/*   Updated: 2023/07/10 19:43:00 by mehdisapin       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,56 +71,8 @@ int	render_cub3d(t_cub *cub)
 	calcul_coef(cub);
 	init_raycasting(cub);
 	render_texture(cub);
-	// mlx_put_image_to_window(cub->mlx, cub->win, cub->imgs->game.img, 0, 0);
-	mlx_put_image_to_window(cub->mlx, cub->win, cub->imgs->minimap.img, 0, 0);
+	mlx_put_image_to_window(cub->mlx, cub->win, cub->imgs->game.img, 0, 0);
 	return (0);
-}
-
-void	move_player(t_cub *cub, t_vector coef, int direction, int sign)
-{
-	// t_vector	tmp_coef;
-	t_vector	tmp_gap;
-	// (void)tmp_coef;
-	(void)coef;
-	(void)direction;
-
-	calcul_coef(cub);
-	// tmp_coef.x = (coef.x * SPEED_MINI) * sign;
-	// tmp_coef.y = (coef.y * SPEED_MINI) * sign;
-	tmp_gap.x = (coef.x * SPEED_PLAYER) * sign;
-	tmp_gap.y = (coef.y * SPEED_PLAYER) * sign;
-
-	// if (direction == NS)
-	// {
-	// 	tmp_gap.x = (cub->p->dir.x * SPEED_PLAYER) * sign;	// found better name like shift or gap
-	// 	tmp_gap.y = (cub->p->dir.y * SPEED_PLAYER) * sign;
-	// }
-	// else
-	// {
-	// 	tmp_gap.y = (cub->p->dir.x * SPEED_PLAYER) * sign;	// found better name like shift or gap
-	// 	tmp_gap.x = (cub->p->dir.y * SPEED_PLAYER) * sign;
-	// }
-	if (sign)
-	{
-		// cub->p->pos.start.x += tmp_coef.y;
-		// cub->p->pos.start.y += tmp_coef.x;
-		cub->p->pos_3d.x += tmp_gap.x;
-		cub->p->pos_3d.y += tmp_gap.y;
-		calcul_distance(cub);
-		// printf("%d  %d  %d\n%d  	%d\n%d  %d  %d\n", cub->p->pos.dist.nw, cub->p->pos.dist.n, cub->p->pos.dist.ne, cub->p->pos.dist.w, cub->p->pos.dist.e, cub->p->pos.dist.sw, cub->p->pos.dist.s, cub->p->pos.dist.se);
-		if (cub->p->pos.dist.n < 0 || cub->p->pos.dist.s < 0 \
-		|| cub->p->pos.dist.w < 0 || cub->p->pos.dist.e < 0 \
-		|| cub->p->pos.dist.nw < 0 || cub->p->pos.dist.se < 0 \
-		|| cub->p->pos.dist.ne < 0 || cub->p->pos.dist.sw < 0)
-		{
-			// cub->p->pos.start.x -= tmp_coef.y;
-			// cub->p->pos.start.y -= tmp_coef.x;
-			cub->p->pos_3d.x -= tmp_gap.x;
-			cub->p->pos_3d.y -= tmp_gap.y;
-			// cub->p->pos_3d.x -= tmp_coef.x / 10;
-			// cub->p->pos_3d.y -= tmp_coef.y / 10;
-		}
-	}
 }
 
 int	put_pixel(t_data *data, int x, int y, int color)

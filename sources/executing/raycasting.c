@@ -6,7 +6,7 @@
 /*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:41:02 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/07/08 17:14:05 by mehdisapin       ###   ########.fr       */
+/*   Updated: 2023/07/10 19:38:01 by mehdisapin       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ static void	define_pos_and_dir(t_cub *cub)
 		// cub->p->pos_3d.x = cub->p->pos.start.x / GRID_MINI + 0.5;
 		// cub->p->pos_3d.y = cub->p->pos.start.y / GRID_MINI + 0.5;
 		cub->p->ray[ray]->coef = ray * 2 / WIN_WIDTH - 1;
-		cub->p->ray[ray]->dir.x = cub->p->dir.x + cub->p->fov.y * \
+		cub->p->ray[ray]->dir.x = cub->p->dir.x + cub->p->fov.x * \
 		cub->p->ray[ray]->coef;
-		cub->p->ray[ray]->dir.y = cub->p->dir.y + cub->p->fov.x * \
+		cub->p->ray[ray]->dir.y = cub->p->dir.y + cub->p->fov.y * \
 		cub->p->ray[ray]->coef;
 	}
 }
