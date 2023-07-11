@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+         #
+#    By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#              #
-#    Updated: 2023/06/29 01:13:45 by thmeyer          ###   ########.fr        #
+#    Updated: 2023/07/10 17:21:55 by mehdisapin       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,7 +74,7 @@ SRC_PARSING_FILES		=	parse_map.c	display_error.c	display_error_utils.c	\
 							parse_xpm.c
 
 SRC_EXECUTING_FILES		=	main.c	init_mlx.c	rendering.c	camera.c	color.c\
-							texture.c	raycasting.c
+							texture.c	raycasting.c	movement.c
 
 SRCS_PARSING		=	$(addprefix $(SRC_PARSING_PATH), $(SRC_PARSING_FILES))
 SRCS_EXECUTING		=	$(addprefix $(SRC_EXECUTING_PATH), $(SRC_EXECUTING_FILES))

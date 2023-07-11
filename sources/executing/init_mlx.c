@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_mlx.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:11:26 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/07/04 21:52:06 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/10 19:44:42 by mehdisapin       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,65 +23,6 @@ double	get_angle(double angle, int rotation)
 	return (angle);
 }
 
-static int	check_keycode(int keycode, t_cub *cub)
-{
-	double	rot_speed;
-	double	old_dir_x;
-	double	old_fov_x;
-
-	rot_speed = 0.1;
-	old_dir_x = cub->p->dir.x;
-	old_fov_x = cub->p->fov.x;
-	if (keycode == ESC)
-		exit_cub(cub);
-	if (keycode == W)
-		move_player(cub, cub->p->pos.coef_ns, 1);
-	if (keycode == S)
-		move_player(cub, cub->p->pos.coef_ns, -1);
-	if (keycode == A)
-		move_player(cub, cub->p->pos.coef_we, 1);
-	if (keycode == D)
-		move_player(cub, cub->p->pos.coef_we, -1);
-	if (keycode == L_ARROW)
-	{
-		cub->p->pos.angle = get_angle(cub->p->pos.angle, -SPEED_ANGLE);
-
-		cub->p->dir.x = cub->p->dir.x * cos(-rot_speed) - cub->p->dir.y * sin(-rot_speed);
-		cub->p->dir.y = old_dir_x * sin(-rot_speed) + cub->p->dir.y * cos(-rot_speed);
-		cub->p->fov.x = cub->p->fov.x * cos(-rot_speed) - cub->p->fov.y * sin(-rot_speed);
-		cub->p->fov.y = old_fov_x * sin(-rot_speed) + cub->p->fov.y * cos(-rot_speed);
-
-		move_player(cub, cub->p->pos.coef_ns, 0);
-	}
-	if (keycode == R_ARROW)
-	{
-		cub->p->pos.angle = get_angle(cub->p->pos.angle, SPEED_ANGLE);
-
-		cub->p->dir.x = cub->p->dir.x * cos(rot_speed) - cub->p->dir.y * sin(rot_speed);
-		cub->p->dir.y = old_dir_x * sin(rot_speed) + cub->p->dir.y * cos(rot_speed);
-		cub->p->fov.x = cub->p->fov.x * cos(rot_speed) - cub->p->fov.y * sin(rot_speed);
-		cub->p->fov.y = old_fov_x * sin(rot_speed) + cub->p->fov.y * cos(rot_speed);
-
-		move_player(cub, cub->p->pos.coef_ns, 0);
-	}
-	// printf("dirX %f  dirY %f  ", cub->p->dir.x, cub->p->dir.y);
-	// printf("planeX %f  planeY %f\n", cub->p->fov.x, cub->p->fov.y);
-	// if (keycode == M)
-	// {
-	// 	if (cub->imgs->show_mini)
-	// 	{
-	// 		mlx_put_image_to_window(cub->mlx, cub->win, cub->imgs->back.img, 0, 0);
-	// 		cub->imgs->show_mini = 0;
-	// 	}
-	// 	else
-	// 	{
-	// 		cub->imgs->show_mini = 1;
-	// 		render_cub3d(cub);
-	// 	}
-	// }
-	return (1);
-}
-
 void	init_image(t_cub *cub)
 {
 	cub->imgs->game.img = mlx_new_image(cub->mlx, WIN_WIDTH, WIN_HEIGHT);
@@ -95,19 +36,38 @@ void	init_image(t_cub *cub)
 	&cub->imgs->minimap.endian);
 }
 
+int	check_keycode(int key, t_cub *cub)
+{
+	if (key == W)
+		move_player(cub, cub->p->dir, 1);
+	if (key == S)
+		move_player(cub, cub->p->dir, -1);
+	if (key == D)
+		move_player(cub, cub->p->dir_ew, -1);
+	if (key == A)
+		move_player(cub, cub->p->dir_ew, 1);
+	if (key == R_ARROW)
+		rotate_player(cub, 1);
+	if (key == L_ARROW)
+		rotate_player(cub, -1);
+	if (key == ESC)
+		exit(0);
+	return (0);
+}
+
 int	init_mlx(t_cub *cub)
 {
 	cub->mlx = mlx_init();
-	cub->win = mlx_new_window(cub->mlx, WIN_WIDTH, WIN_HEIGHT, "cub3d");
 	cub->imgs = malloc(sizeof(t_imgs));
 	if (!cub->imgs)
 		return (-1);
 	if (parse_xpm(cub) != 0)
 		return (exit_cub(cub), -1);
 	init_image(cub);
-	mlx_hook(cub->win, 2, 1L << 0, check_keycode, cub);
-	mlx_hook(cub->win, 17, 1L << 0, exit_cub, cub);
-	mlx_loop_hook(cub->mlx, render_cub3d, cub);
+	cub->win = mlx_new_window(cub->mlx, WIN_WIDTH, WIN_HEIGHT, "cub3d");
+	mlx_hook(cub->win, 2, 1l << 0, check_keycode, cub);
+	mlx_hook(cub->win, 17, 1l << 0, exit_cub, cub);
+	mlx_loop_hook(cub->mlx, &render_cub3d, cub);
 	mlx_loop(cub->mlx);
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:19:40 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/07/05 16:38:29 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/11 09:57:48 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,11 @@ double *wall)
 {
 	t_xpm	wall_side;
 
+	wall_side = cub->west;
 	if (ray->side == 0)
-		wall_side = cub->west;
-	if (ray->side == 1)
 		wall_side = cub->east;
+	if (ray->side == 1)
+		wall_side = cub->west;
 	if (ray->side == 2)
 		wall_side = cub->south;
 	if (ray->side == 3)
@@ -58,17 +59,18 @@ static void	render_wall(t_cub *cub, t_ray_map *ray, int n_ray)
 	double	wall;
 	t_xpm	wall_side;
 
+	wall_side = cub->west;
 	init_floor_and_ceiling(ray, &ground, &ceiling);
 	init_wall_texture(cub, ray, &ceiling, &wall);
 	if (ray->side == 0)
-		wall_side = cub->west;
-	if (ray->side == 1)
 		wall_side = cub->east;
+	if (ray->side == 1)
+		wall_side = cub->west;
 	if (ray->side == 2)
 		wall_side = cub->south;
 	if (ray->side == 3)
 		wall_side = cub->north;
-	while (ceiling < ground)
+	while (++ceiling - 1 < ground)
 	{
 		ray->tex.tex_y = (int)ray->tex.tex_pos & (wall_side.height - 1);
 		ray->tex.tex_pos += ray->tex.step;
@@ -76,7 +78,6 @@ static void	render_wall(t_cub *cub, t_ray_map *ray, int n_ray)
 		ray->tex.tex_x];
 		put_pixel(&cub->imgs->game, (int)WIN_WIDTH - n_ray, ceiling, \
 		ray->tex.color);
-		ceiling++;
 	}
 }
 
