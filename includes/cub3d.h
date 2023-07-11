@@ -6,7 +6,7 @@
 /*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/07/11 11:13:42 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/11 11:34:14 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,31 +21,31 @@
 #  define GRID_MINI 32
 # endif
 
-# define WIN_WIDTH 1980.0
-# define WIN_HEIGHT 1080.0
-// # define WIN_WIDTH 1280.0
-// # define WIN_HEIGHT 720.0
+// # define WIN_WIDTH 1980.0
+// # define WIN_HEIGHT 1080.0
+# define WIN_WIDTH 1280.0
+# define WIN_HEIGHT 720.0
 
 # define SPEED_PLAYER 0.1
 # define SPEED_ANGLE 0.1
 
 # ifndef KEYS
-#  define ESC 65307
-#  define W 119
-#  define A 97
-#  define S 115
-#  define D 100
-#  define M 109
-#  define L_ARROW 65361
-#  define R_ARROW 65363
-// #  define ESC 53
-// #  define W 13
-// #  define A 0
-// #  define S 1
-// #  define D 2
-// #  define M 46
-// #  define L_ARROW 123
-// #  define R_ARROW 124
+// #  define ESC 65307
+// #  define W 119
+// #  define A 97
+// #  define S 115
+// #  define D 100
+// #  define M 109
+// #  define L_ARROW 65361
+// #  define R_ARROW 65363
+#  define ESC 53
+#  define W 13
+#  define A 0
+#  define S 1
+#  define D 2
+#  define M 46
+#  define L_ARROW 123
+#  define R_ARROW 124
 # endif
 
 typedef struct s_vector
@@ -116,7 +116,6 @@ typedef struct s_xpm
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
-	char	*addr;
 	int		*data;
 	char	*path;
 	void	*tex;
@@ -125,11 +124,6 @@ typedef struct s_xpm
 
 typedef struct s_cub
 {
-	t_xpm	north;
-	t_xpm	south;
-	t_xpm	west;
-	t_xpm	east;
-
 	int				floor;
 	int				roof;
 	int 			*rgb_floor;
@@ -140,33 +134,28 @@ typedef struct s_cub
 	void			*win;
 	double			cos_angle;
 	double			sin_angle;
+	t_xpm			north;
+	t_xpm			south;
+	t_xpm			west;
+	t_xpm			east;
 	t_imgs			*imgs;
 	struct s_map	*map;
 	struct s_player	*p;
 }					t_cub;
 
 int		are_rgb_valid(t_cub *cub);
-int		calcul_coef(t_cub *cub);
 int		check_border(t_cub *cub);
 int		display_error(char *name, int num_error);
 int		display_error_texture(t_cub *cub);
 int		exit_cub(t_cub *cub);
-int		get_pixel(t_xpm tex, int x, int y);
 int		init_color(t_cub *cub);
 int		init_file(t_cub *cub, char *file_name);
 int		init_map(t_cub *cub, char **argv);
+int		init_mlx(t_cub *cub);
 int		init_texture(t_cub *cub);
-int		is_wall(t_data *data, int x, int y);
 int		parsing_map(t_cub *cub, char **argv);
 int		parse_xpm(t_cub *cub);
 int		put_pixel(t_data *data, int x, int y, int color);
-
-int		init_mlx(t_cub *cub);
-
-double	distance_to_wall(t_cub *cub, t_vector coef, int sign, int ray);
-double	fix_fisheye(t_cub *cub, int i);
-double	get_angle(double angle, int rotation);
-double	get_radian(double angle);
 
 void	draw_player_body(t_cub *cub);
 void	display_images(t_cub *cub);
