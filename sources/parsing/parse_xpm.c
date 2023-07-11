@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_xpm.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:36:13 by msapin            #+#    #+#             */
-/*   Updated: 2023/07/11 10:45:50 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/11 12:02:16 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	save_texture(int *fd, char *path, char **path_save)
 		*path_save = ft_strdup(path);
 }
 
-void	display_error_xpm(t_cub *cub)
+static void	display_error_xpm(t_cub *cub)
 {
 	ft_putstr_fd("Error\ninvalid xpm file:\n\n", 2);
 	if (!cub->north.tex)
@@ -32,7 +32,7 @@ void	display_error_xpm(t_cub *cub)
 		ft_putendl_fd(cub->east.path, 2);
 }
 
-int	init_xpm(t_cub *cub, t_xpm *wall)
+static int	init_xpm(t_cub *cub, t_xpm *wall)
 {
 	int	i;
 	int	j;

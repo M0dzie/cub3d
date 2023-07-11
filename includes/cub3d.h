@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/07/11 11:34:14 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/11 11:53:20 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,31 +21,31 @@
 #  define GRID_MINI 32
 # endif
 
-// # define WIN_WIDTH 1980.0
-// # define WIN_HEIGHT 1080.0
-# define WIN_WIDTH 1280.0
-# define WIN_HEIGHT 720.0
+# define WIN_WIDTH 1980.0
+# define WIN_HEIGHT 1080.0
+// # define WIN_WIDTH 1280.0
+// # define WIN_HEIGHT 720.0
 
 # define SPEED_PLAYER 0.1
 # define SPEED_ANGLE 0.1
 
 # ifndef KEYS
-// #  define ESC 65307
-// #  define W 119
-// #  define A 97
-// #  define S 115
-// #  define D 100
-// #  define M 109
-// #  define L_ARROW 65361
-// #  define R_ARROW 65363
-#  define ESC 53
-#  define W 13
-#  define A 0
-#  define S 1
-#  define D 2
-#  define M 46
-#  define L_ARROW 123
-#  define R_ARROW 124
+#  define ESC 65307
+#  define W 119
+#  define A 97
+#  define S 115
+#  define D 100
+#  define M 109
+#  define L_ARROW 65361
+#  define R_ARROW 65363
+// #  define ESC 53
+// #  define W 13
+// #  define A 0
+// #  define S 1
+// #  define D 2
+// #  define M 46
+// #  define L_ARROW 123
+// #  define R_ARROW 124
 # endif
 
 typedef struct s_vector
@@ -105,7 +105,6 @@ typedef struct s_player
 typedef struct s_imgs
 {
 	t_data	game;
-	t_data	minimap;
 }			t_imgs;
 
 typedef struct s_xpm
@@ -126,8 +125,8 @@ typedef struct s_cub
 {
 	int				floor;
 	int				roof;
-	int 			*rgb_floor;
-	int 			*rgb_roof;
+	int				*rgb_floor;
+	int				*rgb_roof;
 	char			*file;
 	char			**file_split;
 	void			*mlx;
@@ -156,18 +155,12 @@ int		init_texture(t_cub *cub);
 int		parsing_map(t_cub *cub, char **argv);
 int		parse_xpm(t_cub *cub);
 int		put_pixel(t_data *data, int x, int y, int color);
+int		render_cub3d(t_cub *cub);
 
-void	draw_player_body(t_cub *cub);
-void	display_images(t_cub *cub);
-void	generate_minimap(t_cub *cub);
-void	generate_player(t_cub *cub);
-void	init_camera(t_cub *cub);
 void	init_raycasting(t_cub *cub);
 void	move_player(t_cub *cub, t_vector coef, int sign);
 void	render_texture(t_cub *cub);
 void	rotate_player(t_cub *cub, int sign);
 void	save_texture(int *fd, char *path, char **path_save);
-
-int		render_cub3d(t_cub *cub);
 
 #endif

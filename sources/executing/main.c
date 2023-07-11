@@ -3,29 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/07/11 11:14:25 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/11 11:56:41 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 #include "../../includes/thomas.h"
 
-void	destroy_xpm(t_cub *cub)
+static void	destroy_xpm(t_cub *cub)
 {
 	if (cub->imgs)
 	{
-		if (cub->imgs->minimap.img)
-			mlx_destroy_image(cub->mlx, cub->imgs->minimap.img);
 		if (cub->imgs->game.img)
 			mlx_destroy_image(cub->mlx, cub->imgs->game.img);
 		free(cub->imgs);
 	}
 }
 
-void	free_path(t_cub *cub)
+static void	free_path(t_cub *cub)
 {
 	if (cub->north.path)
 		free(cub->north.path);
@@ -37,7 +35,7 @@ void	free_path(t_cub *cub)
 		free(cub->east.path);
 }
 
-void	free_player(t_cub *cub)
+static void	free_player(t_cub *cub)
 {
 	int	i;
 

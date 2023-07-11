@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/07/11 11:01:50 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/11 12:01:47 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 #include "../../includes/thomas.h"
 
-char	*get_only_name(char *file_name)
+static char	*get_only_name(char *file_name)
 {
 	char	*tmp_name;
 	int		len_name;
@@ -57,7 +57,7 @@ static int	is_extension_valid(char *file_name, char *extension)
 	return (free(tmp_name), 0);
 }
 
-int	malloc_player(t_cub *cub)
+static int	malloc_player(t_cub *cub)
 {
 	int	i;
 
@@ -77,7 +77,7 @@ int	malloc_player(t_cub *cub)
 	return (0);
 }
 
-void	init_pos(t_cub *cub, char side)
+static void	init_pos(t_cub *cub, char side)
 {
 	cub->cos_angle = cos(SPEED_ANGLE);
 	cub->sin_angle = sin(SPEED_ANGLE);
@@ -119,7 +119,7 @@ void	init_pos(t_cub *cub, char side)
 	}
 }
 
-int	init_player(t_cub *cub)
+static int	init_player(t_cub *cub)
 {
 	int		i;
 	int		j;
@@ -145,7 +145,7 @@ int	init_player(t_cub *cub)
 	return (0);
 }
 
-void	init_var(t_cub *cub)
+static void	init_var(t_cub *cub)
 {
 	cub->mlx = NULL;
 	cub->win = NULL;
