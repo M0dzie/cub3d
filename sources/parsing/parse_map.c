@@ -6,7 +6,7 @@
 /*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/07/11 10:26:09 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/11 11:01:50 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,44 +57,6 @@ static int	is_extension_valid(char *file_name, char *extension)
 	return (free(tmp_name), 0);
 }
 
-int	calcul_coef(t_cub *cub)
-{
-	int		i;
-	double	tmp_angle;
-
-	cub->p->pos.coef_ns.x = sin(cub->p->pos.angle * M_PI / 180);
-	cub->p->pos.coef_ns.y = -cos(cub->p->pos.angle * M_PI / 180);
-	cub->p->pos.coef_we.x = sin((cub->p->pos.angle - 90) * M_PI / 180);
-	cub->p->pos.coef_we.y = -cos((cub->p->pos.angle - 90) * M_PI / 180);
-	cub->p->pos.coef_nwse.x = sin((cub->p->pos.angle - 45) * M_PI / 180);
-	cub->p->pos.coef_nwse.y = -cos((cub->p->pos.angle - 45) * M_PI / 180);
-	cub->p->pos.coef_nesw.x = sin((cub->p->pos.angle - 135) * M_PI / 180);
-	cub->p->pos.coef_nesw.y = -cos((cub->p->pos.angle - 135) * M_PI / 180);
-	tmp_angle = get_angle(cub->p->pos.angle - FOV / 2, 0);
-	i = -1;
-	while (++i < WIN_WIDTH)
-	{
-		cub->p->ray[i]->angle = get_angle(tmp_angle + ((i + 1) * cub->p->coef), \
-		0);
-		cub->p->ray[i]->coef_ns.x = sin(cub->p->ray[i]->angle * M_PI / 180);
-		cub->p->ray[i]->coef_ns.y = -cos(cub->p->ray[i]->angle * M_PI / 180);
-		distance_to_wall(cub, cub->p->ray[i]->coef_ns, 1, i + 1);
-	}
-	return (1);
-}
-
-void	parse_player_angle(t_cub *cub, char c)
-{
-	if (c == 'N')
-		cub->p->pos.angle = 0;
-	else if (c == 'S')
-		cub->p->pos.angle = 180;
-	else if (c == 'W')
-		cub->p->pos.angle = 270;
-	else if (c == 'E')
-		cub->p->pos.angle = 90;
-}
-
 int	malloc_player(t_cub *cub)
 {
 	int	i;
@@ -102,13 +64,13 @@ int	malloc_player(t_cub *cub)
 	cub->p = malloc(sizeof(t_player));
 	if (!cub->p)
 		return (display_error("cub->p", 4));
-	cub->p->ray = ft_calloc(WIN_WIDTH + 1, sizeof(t_ray_map *));
+	cub->p->ray = ft_calloc(WIN_WIDTH + 1, sizeof(t_ray *));
 	if (!cub->p->ray)
 		return (display_error("cub->p->ray", 4));
 	i = -1;
 	while (++i < WIN_WIDTH)
 	{
-		cub->p->ray[i] = malloc(sizeof(t_ray_map));
+		cub->p->ray[i] = malloc(sizeof(t_ray));
 		if (!cub->p->ray[i])
 			return (display_error("cub->p->ray[i]", 4));
 	}
@@ -165,7 +127,6 @@ int	init_player(t_cub *cub)
 
 	if (malloc_player(cub) != 0)
 		return (-1);
-	cub->p->coef = FOV / WIN_WIDTH;
 	i = -1;
 	while (cub->map->array[++i])
 	{
@@ -175,7 +136,6 @@ int	init_player(t_cub *cub)
 			c = cub->map->array[i][j];
 			if (c == 'N' || c == 'S' || c == 'W' || c == 'E')
 			{
-				parse_player_angle(cub, c);
 				cub->p->pos_3d.x = j + 0.5;
 				cub->p->pos_3d.y = i + 0.5;
 				init_pos(cub, c);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_xpm.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
+/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:36:13 by msapin            #+#    #+#             */
-/*   Updated: 2023/07/10 19:11:48 by mehdisapin       ###   ########.fr       */
+/*   Updated: 2023/07/11 10:45:50 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,6 @@ int	init_xpm(t_cub *cub, t_xpm *wall)
 		while (++j < wall->width)
 			wall->px[wall->width * i + (wall->width - j)] = \
 			wall->data[wall->width * i + j];
-			/*wall->px[wall->width * i + (j)] = \
-			wall->data[wall->width * i + j];*/
 	}
 	mlx_destroy_image(cub->mlx, wall->tex);
 	return (0);

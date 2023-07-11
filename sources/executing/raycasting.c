@@ -6,7 +6,7 @@
 /*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:41:02 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/07/11 10:26:02 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/11 11:01:50 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	define_pos_and_dir(t_cub *cub)
 	}
 }
 
-static int	define_move(t_player *p, t_ray_map *ray, t_map *map, int x)
+static int	define_move(t_player *p, t_ray *ray, t_map *map, int x)
 {
 	int	move;
 
@@ -51,7 +51,7 @@ static int	define_move(t_player *p, t_ray_map *ray, t_map *map, int x)
 	return (move);
 }
 
-static double	distance_from_wall(t_player *p, t_ray_map *ray, t_map *map, \
+static double	distance_from_wall(t_player *p, t_ray *ray, t_map *map, \
 t_vector move)
 {
 	while (1)
