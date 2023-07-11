@@ -6,7 +6,7 @@
 /*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:19:40 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/07/11 12:28:59 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/11 12:48:17 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ double *wall)
 	if (ray->side == 3)
 		wall_side = cub->north;
 	if (ray->side == 0 || ray->side == 1)
-		*wall = cub->p->pos_3d.y + ray->dist * ray->dir.y;
+		*wall = cub->p->pos.y + ray->dist * ray->dir.y;
 	else
-		*wall = cub->p->pos_3d.x + ray->dist * ray->dir.x;
+		*wall = cub->p->pos.x + ray->dist * ray->dir.x;
 	*wall -= floor(*wall);
 	ray->tex.tex_x = (int)(*wall * (double)wall_side.width);
 	if ((ray->side == 0 || ray->side == 1) && ray->dir.x > 0)

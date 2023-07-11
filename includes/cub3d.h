@@ -6,7 +6,7 @@
 /*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/07/11 12:22:54 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/11 12:48:17 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ typedef struct s_player
 	t_vector	dir;
 	t_vector	dir_ew;
 	t_vector	fov;
-	t_vector	pos_3d;
+	t_vector	pos;
 	t_ray		**ray;
 }				t_player;
 

@@ -6,7 +6,7 @@
 /*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:41:02 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/07/11 12:05:00 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/11 12:48:17 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,17 @@ static int	define_move(t_player *p, t_ray *ray, t_map *map, int x)
 	if (x == 1)
 	{
 		if (ray->dir.x < 0)
-			return (ray->dist_next_inter.x = (p->pos_3d.x - map->map_x) * \
+			return (ray->dist_next_inter.x = (p->pos.x - map->map_x) * \
 			ray->next_inter.x, move = -1);
 		else
-			return (ray->dist_next_inter.x = (map->map_x + 1.0 - p->pos_3d.x) * \
+			return (ray->dist_next_inter.x = (map->map_x + 1.0 - p->pos.x) * \
 			ray->next_inter.x, move = 1);
 	}
 	if (ray->dir.y < 0)
-		return (ray->dist_next_inter.y = (p->pos_3d.y - map->map_y) * \
+		return (ray->dist_next_inter.y = (p->pos.y - map->map_y) * \
 		ray->next_inter.y, move = -1);
 	else
-		return (ray->dist_next_inter.y = (map->map_y + 1.0 - p->pos_3d.y) * \
+		return (ray->dist_next_inter.y = (map->map_y + 1.0 - p->pos.y) * \
 		ray->next_inter.y, move = 1);
 	return (move);
 }
@@ -71,8 +71,8 @@ t_vector move)
 			break ;
 	}
 	if (ray->side == 0 || ray->side == 1)
-		return ((map->map_x - p->pos_3d.x + (1 - move.x) / 2) / ray->dir.x);
-	return ((map->map_y - p->pos_3d.y + (1 - move.y) / 2) / ray->dir.y);
+		return ((map->map_x - p->pos.x + (1 - move.x) / 2) / ray->dir.x);
+	return ((map->map_y - p->pos.y + (1 - move.y) / 2) / ray->dir.y);
 }
 
 void	init_raycasting(t_cub *cub)
@@ -84,8 +84,8 @@ void	init_raycasting(t_cub *cub)
 	define_pos_and_dir(cub);
 	while (cub->p->ray[++ray])
 	{
-		cub->map->map_x = floor(cub->p->pos_3d.x);
-		cub->map->map_y = floor(cub->p->pos_3d.y);
+		cub->map->map_x = floor(cub->p->pos.x);
+		cub->map->map_y = floor(cub->p->pos.y);
 		cub->p->ray[ray]->next_inter.x = 1 / cub->p->ray[ray]->dir.x;
 		if (cub->p->ray[ray]->next_inter.x < 0)
 			cub->p->ray[ray]->next_inter.x *= -1;
