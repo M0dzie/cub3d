@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   movement.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
+/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 17:20:20 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/07/11 13:27:47 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/11 21:16:44 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,18 @@ void	move_player(t_cub *cub, t_vector axis, int sign)
 	double		margin;
 	t_vector	tmp_move;
 
+	(void) margin;
 	margin = 0.1;
 	tmp_move.x = (axis.x * SPEED_PLAYER) * sign;
 	tmp_move.y = (axis.y * SPEED_PLAYER) * sign;
+	if (tmp_move.x < 0)
+		tmp_move.x -= margin;
+	else
+		tmp_move.x += margin;
+	if (tmp_move.y < 0)
+		tmp_move.y -= margin;
+	else
+		tmp_move.y += margin;
 	printf("axis.x = %lf and axis.y = %lf\n", axis.x, axis.y);
 	cub->p->pos.x += tmp_move.x;
 	cub->p->pos.y += tmp_move.y;
