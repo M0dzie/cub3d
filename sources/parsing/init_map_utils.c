@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   init_map_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
+/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 17:41:24 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/05/23 18:02:31 by mehdisapin       ###   ########.fr       */
+/*   Updated: 2023/07/11 12:00:03 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-int	is_surrounded(t_cub *cub, int y, int x)
+static int	is_surrounded(t_cub *cub, int y, int x)
 {
 	int	tmp_y;
 	int	tmp_x;

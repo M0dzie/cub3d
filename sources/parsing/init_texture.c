@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_texture.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 17:15:35 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/06/22 15:14:43 by msapin           ###   ########.fr       */
+/*   Updated: 2023/07/11 12:29:52 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	init_file(t_cub *cub, char *file_name)
 	return (close(fd_file), 0);
 }
 
-int	*rgb_to_int(char *rgb)
+static int	*rgb_to_int(char *rgb)
 {
 	int		*int_array;
 	char	**tmp_split;
@@ -75,17 +75,14 @@ static void	init_fds(t_cub *cub)
 	cub->south.fd = 0;
 	cub->west.fd = 0;
 	cub->east.fd = 0;
-
 	cub->north.path = NULL;
 	cub->south.path = NULL;
 	cub->west.path = NULL;
 	cub->east.path = NULL;
-
 	cub->north.tex = NULL;
 	cub->south.tex = NULL;
 	cub->west.tex = NULL;
 	cub->east.tex = NULL;
-
 	cub->rgb_floor = NULL;
 	cub->rgb_roof = NULL;
 	cub->map = NULL;

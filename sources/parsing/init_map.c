@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   init_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 17:15:32 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/05/30 19:45:58 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/11 12:00:32 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-int	are_char_valid(t_cub *cub)
+static int	are_char_valid(t_cub *cub)
 {
 	int		i;
 	int		j;
@@ -39,7 +39,7 @@ int	are_char_valid(t_cub *cub)
 	return (1);
 }
 
-int	get_map(t_cub *cub)
+static int	get_map(t_cub *cub)
 {
 	int		i;
 
@@ -54,7 +54,7 @@ int	get_map(t_cub *cub)
 	return (0);
 }
 
-void	get_map_dimension(t_cub *cub)
+static void	get_map_dimension(t_cub *cub)
 {
 	int	i;
 	int	tmp_width;

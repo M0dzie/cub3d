@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   movement.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
+/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 17:20:20 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/07/10 18:46:35 by mehdisapin       ###   ########.fr       */
+/*   Updated: 2023/07/11 12:29:19 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ void	move_player(t_cub *cub, t_vector axis, int sign)
 	tmp_move.y = (axis.y * SPEED_PLAYER) * sign;
 	cub->p->pos_3d.x += tmp_move.x;
 	cub->p->pos_3d.y += tmp_move.y;
-	if (cub->map->array[(int)(cub->p->pos_3d.y)][(int)(cub->p->pos_3d.x)] == '1')
+	if (cub->map->array[(int)(cub->p->pos_3d.y)][(int)(cub->p->pos_3d.x)] \
+	== '1')
 	{
 		cub->p->pos_3d.x -= tmp_move.x;
 		cub->p->pos_3d.y -= tmp_move.y;

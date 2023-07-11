@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   display_error_texture.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 17:17:04 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/06/19 17:00:18 by msapin           ###   ########.fr       */
+/*   Updated: 2023/07/11 11:59:13 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-void	display_path(t_cub *cub, char *id, char *str)
+static void	display_path(t_cub *cub, char *id, char *str)
 {
 	int		i;
 	char	**line_split;
@@ -30,7 +30,7 @@ void	display_path(t_cub *cub, char *id, char *str)
 	}
 }
 
-void	display_missing_texture(t_cub *cub)
+static void	display_missing_texture(t_cub *cub)
 {
 	ft_putstr_fd("missing texture line:\n\n", 2);
 	if (cub->north.fd == 0)
@@ -43,7 +43,7 @@ void	display_missing_texture(t_cub *cub)
 		ft_putstr_fd("east:   EA ./path_to_the_east_texture\n", 2);
 }
 
-void	display_invalid_texture(t_cub *cub)
+static void	display_invalid_texture(t_cub *cub)
 {
 	ft_putstr_fd("no such texture file:\n\n", 2);
 	if (cub->north.fd == -1)
@@ -56,7 +56,7 @@ void	display_invalid_texture(t_cub *cub)
 		display_path(cub, "EA", "east:   EA ");
 }
 
-void	display_invalid_rgb(t_cub *cub)
+static void	display_invalid_rgb(t_cub *cub)
 {
 	if (!cub->rgb_floor || !cub->rgb_roof)
 		ft_putstr_fd("missing rgb color:\n\n", 2);

@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   color.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 18:43:40 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/07/04 22:17:54 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/11 12:04:53 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
-#include "../../includes/thomas.h"
 
 static char	*int_to_hexa(int rgb, char *base, int red)
 {

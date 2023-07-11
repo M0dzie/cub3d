@@ -3,14 +3,59 @@
 /*                                                        :::      ::::::::   */
 /*   display_error.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
+/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 17:18:05 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/05/23 18:01:06 by mehdisapin       ###   ########.fr       */
+/*   Updated: 2023/07/11 12:25:51 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
+
+static int	display_error_rgb(int validity)
+{
+	if (validity > 0)
+		ft_putstr_fd("Error\ninvalid rgb format:\n\n", 2);
+	if (validity == 1)
+		ft_putstr_fd("expected: F 0,125,255    range [0->255]\n", 2);
+	else if (validity == 2)
+		ft_putstr_fd("expected: C 255,125,0    range [0->255]\n", 2);
+	else if (validity == 3)
+	{
+		ft_putstr_fd("expected: F 0,125,255    range [0->255]\n", 2);
+		ft_putstr_fd("          C 255,125,0    range [0->255]\n", 2);
+	}
+	if (validity > 0)
+		return (0);
+	return (-1);
+}
+
+int	are_rgb_valid(t_cub *cub)
+{
+	int	i;
+	int	validity;
+
+	i = -1;
+	validity = 0;
+	while (++i < 3 && cub->rgb_floor)
+	{
+		if (cub->rgb_floor[i] < 0 || cub->rgb_floor[i] > 255)
+		{
+			validity = 1;
+			break ;
+		}
+	}
+	i = -1;
+	while (++i < 3 && cub->rgb_roof)
+	{
+		if (!cub->rgb_roof || cub->rgb_roof[i] < 0 || cub->rgb_roof[i] > 255)
+		{
+			validity += 2;
+			break ;
+		}
+	}
+	return (display_error_rgb(validity));
+}
 
 int	display_error(char *name, int num_error)
 {
