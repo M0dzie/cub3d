@@ -6,7 +6,7 @@
 /*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/07/11 11:53:20 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/11 12:22:54 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,6 @@
 # include "mlx_linux/mlx.h"
 # include <stdio.h>
 # include <math.h>
-
-# ifndef GRID_MINI
-#  define GRID_MINI 32
-# endif
 
 # define WIN_WIDTH 1980.0
 # define WIN_HEIGHT 1080.0
@@ -151,6 +147,7 @@ int		init_color(t_cub *cub);
 int		init_file(t_cub *cub, char *file_name);
 int		init_map(t_cub *cub, char **argv);
 int		init_mlx(t_cub *cub);
+int		init_player(t_cub *cub);
 int		init_texture(t_cub *cub);
 int		parsing_map(t_cub *cub, char **argv);
 int		parse_xpm(t_cub *cub);
