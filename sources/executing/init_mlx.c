@@ -6,7 +6,7 @@
 /*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:11:26 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/07/11 11:56:18 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/11 12:04:18 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int	check_keycode(int key, t_cub *cub)
 	if (key == L_ARROW)
 		rotate_player(cub, -1);
 	if (key == ESC)
-		exit(0);
+		exit_cub(cub);
 	return (0);
 }
 

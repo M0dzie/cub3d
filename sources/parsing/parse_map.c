@@ -6,12 +6,11 @@
 /*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/07/11 12:01:47 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/11 12:05:18 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
-#include "../../includes/thomas.h"
 
 static char	*get_only_name(char *file_name)
 {
