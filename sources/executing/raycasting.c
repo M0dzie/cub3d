@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
+/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:41:02 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/07/11 10:16:20 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/11 10:26:02 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ static void	define_pos_and_dir(t_cub *cub)
 	int	ray;
 
 	ray = -1;
-		// cub->p->pos_3d.x = cub->p->pos.start.x / GRID_MINI + 0.5;
-		// cub->p->pos_3d.y = cub->p->pos.start.y / GRID_MINI + 0.5;
 	while (cub->p->ray[++ray])
 	{
 		cub->p->ray[ray]->coef = ray * 2 / WIN_WIDTH - 1;

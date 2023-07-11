@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
+/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/07/10 19:45:13 by mehdisapin       ###   ########.fr       */
+/*   Updated: 2023/07/11 10:26:09 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,10 +176,8 @@ int	init_player(t_cub *cub)
 			if (c == 'N' || c == 'S' || c == 'W' || c == 'E')
 			{
 				parse_player_angle(cub, c);
-				cub->p->pos.start.x = j * GRID_MINI;
-				cub->p->pos.start.y = i * GRID_MINI;
-				cub->p->pos_3d.x = i + 0.5;
-				cub->p->pos_3d.y = j + 0.5;
+				cub->p->pos_3d.x = j + 0.5;
+				cub->p->pos_3d.y = i + 0.5;
 				init_pos(cub, c);
 			}
 		}
