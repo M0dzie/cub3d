@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
+/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/07/10 18:13:35 by mehdisapin       ###   ########.fr       */
+/*   Updated: 2023/07/11 09:29:20 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@
 // #  define GRID_MAP 100
 // # endif
 
-// # define WIN_WIDTH 1980.0
-// # define WIN_HEIGHT 1080.0
-# define WIN_WIDTH 1280.0
-# define WIN_HEIGHT 720.0
+# define WIN_WIDTH 1980.0
+# define WIN_HEIGHT 1080.0
+// # define WIN_WIDTH 1280.0
+// # define WIN_HEIGHT 720.0
 
 // # define SPEED_MINI 8.0
 # define SPEED_MINI 3.0
