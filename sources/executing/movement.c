@@ -6,7 +6,7 @@
 /*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 17:20:20 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/07/11 12:48:17 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/11 13:27:47 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,13 @@ void	rotate_player(t_cub *cub, int sign)
 // add margin to not getting to close of a wall
 void	move_player(t_cub *cub, t_vector axis, int sign)
 {
+	double		margin;
 	t_vector	tmp_move;
 
+	margin = 0.1;
 	tmp_move.x = (axis.x * SPEED_PLAYER) * sign;
 	tmp_move.y = (axis.y * SPEED_PLAYER) * sign;
+	printf("axis.x = %lf and axis.y = %lf\n", axis.x, axis.y);
 	cub->p->pos.x += tmp_move.x;
 	cub->p->pos.y += tmp_move.y;
 	if (cub->map->array[(int)(cub->p->pos.y)][(int)(cub->p->pos.x)] \
