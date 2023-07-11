@@ -6,18 +6,11 @@
 /*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:36:13 by msapin            #+#    #+#             */
-/*   Updated: 2023/07/11 12:02:16 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/11 12:18:14 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
-
-void	save_texture(int *fd, char *path, char **path_save)
-{
-	*fd = open(path, O_RDONLY);
-	if (!*path_save)
-		*path_save = ft_strdup(path);
-}
 
 static void	display_error_xpm(t_cub *cub)
 {
@@ -32,10 +25,24 @@ static void	display_error_xpm(t_cub *cub)
 		ft_putendl_fd(cub->east.path, 2);
 }
 
-static int	init_xpm(t_cub *cub, t_xpm *wall)
+static void	init_pixel(t_xpm *wall)
 {
 	int	i;
 	int	j;
+
+	i = -1;
+	while (++i < wall->height)
+	{
+		j = -1;
+		while (++j < wall->width)
+			wall->px[wall->width * i + (wall->width - j)] = \
+			wall->data[wall->width * i + j];
+	}
+}
+
+static int	init_xpm(t_cub *cub, t_xpm *wall)
+{
+	int	i;
 	int	nb_px;
 
 	wall->tex = mlx_xpm_file_to_image(cub->mlx, wall->path, &wall->width, \
@@ -51,16 +58,16 @@ static int	init_xpm(t_cub *cub, t_xpm *wall)
 	nb_px = wall->width * wall->height;
 	while (++i < nb_px)
 		wall->px[i] = 0;
-	i = -1;
-	while (++i < wall->height)
-	{
-		j = -1;
-		while (++j < wall->width)
-			wall->px[wall->width * i + (wall->width - j)] = \
-			wall->data[wall->width * i + j];
-	}
+	init_pixel(wall);
 	mlx_destroy_image(cub->mlx, wall->tex);
 	return (0);
+}
+
+void	save_texture(int *fd, char *path, char **path_save)
+{
+	*fd = open(path, O_RDONLY);
+	if (!*path_save)
+		*path_save = ft_strdup(path);
 }
 
 int	parse_xpm(t_cub *cub)
