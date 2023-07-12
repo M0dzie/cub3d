@@ -6,7 +6,7 @@
 /*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:36:13 by msapin            #+#    #+#             */
-/*   Updated: 2023/07/11 12:18:14 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/12 19:48:10 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void	save_texture(int *fd, char *path, char **path_save)
 	*fd = open(path, O_RDONLY);
 	if (!*path_save)
 		*path_save = ft_strdup(path);
+	close(*fd);
 }
 
 int	parse_xpm(t_cub *cub)

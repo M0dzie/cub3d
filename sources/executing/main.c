@@ -6,7 +6,7 @@
 /*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/07/11 12:04:57 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/12 19:44:37 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,14 @@ static void	destroy_xpm(t_cub *cub)
 			mlx_destroy_image(cub->mlx, cub->imgs->game.img);
 		free(cub->imgs);
 	}
+	if (cub->north.px)
+		free(cub->north.px);
+	if (cub->south.px)
+		free(cub->south.px);
+	if (cub->east.px)
+		free(cub->east.px);
+	if (cub->west.px)
+		free(cub->west.px);
 }
 
 static void	free_path(t_cub *cub)
