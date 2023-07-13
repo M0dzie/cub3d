@@ -6,7 +6,7 @@
 /*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 12:19:52 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/07/11 12:29:38 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/11 12:48:17 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,8 @@ int	init_player(t_cub *cub)
 			c = cub->map->array[i][j];
 			if (c == 'N' || c == 'S' || c == 'W' || c == 'E')
 			{
-				cub->p->pos_3d.x = j + 0.5;
-				cub->p->pos_3d.y = i + 0.5;
+				cub->p->pos.x = j + 0.5;
+				cub->p->pos.y = i + 0.5;
 				init_pos(cub, c);
 			}
 		}

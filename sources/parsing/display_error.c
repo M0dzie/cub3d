@@ -6,7 +6,7 @@
 /*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 17:18:05 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/07/11 12:25:51 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/13 19:14:24 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	are_rgb_valid(t_cub *cub)
 
 int	display_error(char *name, int num_error)
 {
-	char	*err[14];
+	char	*err[15];
 
 	err[0] = ": wrong function call\n\nexpected:  ./cub3d   *.cub";
 	err[1] = ": wrong file extension\n\nexpected:   .cub file";
@@ -76,6 +76,7 @@ int	display_error(char *name, int num_error)
 char only";
 	err[12] = ": must have one starting point (N, S, E, W)";
 	err[13] = ": must be surrounded by wall";
+	err[14] = ": mlx couldn't init";
 	ft_putendl_fd("Error", 2);
 	ft_putstr_fd(name, 2);
 	ft_putendl_fd(err[num_error], 2);
