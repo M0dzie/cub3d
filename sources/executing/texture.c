@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
+/*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:19:40 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/07/11 12:48:17 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/17 13:16:10 by msapin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,14 @@ double *wall)
 	if (ray->side == 3)
 		wall_side = cub->north;
 	if (ray->side == 0 || ray->side == 1)
-		*wall = cub->p->pos.y + ray->dist * ray->dir.y;
+		*wall = cub->p->pos.y + ray->dist * ray->axis.y;
 	else
-		*wall = cub->p->pos.x + ray->dist * ray->dir.x;
+		*wall = cub->p->pos.x + ray->dist * ray->axis.x;
 	*wall -= floor(*wall);
 	ray->tex.tex_x = (int)(*wall * (double)wall_side.width);
-	if ((ray->side == 0 || ray->side == 1) && ray->dir.x > 0)
+	if ((ray->side == 0 || ray->side == 1) && ray->axis.x > 0)
 		ray->tex.tex_x = wall_side.width - ray->tex.tex_x - 1;
-	if ((ray->side == 2 || ray->side == 3) && ray->dir.y < 0)
+	if ((ray->side == 2 || ray->side == 3) && ray->axis.y < 0)
 		ray->tex.tex_x = wall_side.width - ray->tex.tex_x - 1;
 	ray->tex.step = 1.0 * wall_side.height / ray->wall_height;
 	ray->tex.tex_pos = (*ceiling - WIN_HEIGHT / 2 + ray->wall_height / 2) * \
@@ -75,7 +75,7 @@ static void	render_wall(t_cub *cub, t_ray *ray, int n_ray)
 		ray->tex.tex_pos += ray->tex.step;
 		ray->tex.color = wall_side.px[wall_side.height * ray->tex.tex_y + \
 		ray->tex.tex_x];
-		put_pixel(&cub->imgs->game, (int)WIN_WIDTH - n_ray, ceiling, \
+		put_pixel(&cub->game, (int)WIN_WIDTH - n_ray, ceiling, \
 		ray->tex.color);
 	}
 }
@@ -89,8 +89,8 @@ static void	render_floor_and_ceiling(t_cub *cub, int ray)
 		ground = WIN_HEIGHT - 1;
 	while (++ground < WIN_HEIGHT)
 	{
-		put_pixel(&cub->imgs->game, (int)WIN_WIDTH - ray, ground, cub->floor);
-		put_pixel(&cub->imgs->game, (int)WIN_WIDTH - ray, (int)WIN_HEIGHT - \
+		put_pixel(&cub->game, (int)WIN_WIDTH - ray, ground, cub->floor);
+		put_pixel(&cub->game, (int)WIN_WIDTH - ray, (int)WIN_HEIGHT - \
 		ground, cub->roof);
 	}
 }

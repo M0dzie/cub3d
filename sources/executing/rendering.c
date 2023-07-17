@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rendering.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
+/*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:43:13 by msapin            #+#    #+#             */
-/*   Updated: 2023/07/11 12:29:31 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/17 13:10:17 by msapin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	render_cub3d(t_cub *cub)
 {
 	init_raycasting(cub);
 	render_texture(cub);
-	mlx_put_image_to_window(cub->mlx, cub->win, cub->imgs->game.img, 0, 0);
+	mlx_put_image_to_window(cub->mlx, cub->win, cub->game.img, 0, 0);
 	return (0);
 }
 
