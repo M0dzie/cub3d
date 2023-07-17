@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
+/*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/07/17 11:42:25 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/17 15:16:38 by msapin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,29 +19,30 @@
 
 # define WIN_WIDTH 1980.0
 # define WIN_HEIGHT 1080.0
-// # define WIN_WIDTH 1280.0
-// # define WIN_HEIGHT 720.0
 
 # define SPEED_PLAYER 0.1
 # define SPEED_ANGLE 0.1
 
 # ifndef KEYS
-#  define ESC 65307
-#  define W 119
-#  define A 97
-#  define S 115
-#  define D 100
-#  define M 109
-#  define L_ARROW 65361
-#  define R_ARROW 65363
-// #  define ESC 53
-// #  define W 13
-// #  define A 0
-// #  define S 1
-// #  define D 2
-// #  define M 46
-// #  define L_ARROW 123
-// #  define R_ARROW 124
+	# if __linux__
+		#  define ESC 65307
+		#  define W 119
+		#  define A 97
+		#  define S 115
+		#  define D 100
+		#  define M 109
+		#  define L_ARROW 65361
+		#  define R_ARROW 65363
+	# elif __APPLE__
+		#  define ESC 53
+		#  define W 13
+		#  define A 0
+		#  define S 1
+		#  define D 2
+		#  define M 46
+		#  define L_ARROW 123
+		#  define R_ARROW 124
+	# endif
 # endif
 
 typedef struct s_vector
@@ -83,25 +84,20 @@ typedef struct s_ray
 	int				wall_height;
 	double			coef;
 	double			dist;
-	t_vector		dir;
-	t_vector		next_inter;
+	t_vector		axis;
 	t_vector		dist_next_inter;
+	t_vector		next_inter;
 	t_tex_data		tex;
 }					t_ray;
 
 typedef struct s_player
 {
-	t_vector	dir;
-	t_vector	dir_ew;
+	t_vector	axis;
+	t_vector	axis_side;
 	t_vector	fov;
 	t_vector	pos;
 	t_ray		**ray;
 }				t_player;
-
-typedef struct s_imgs
-{
-	t_data	game;
-}			t_imgs;
 
 typedef struct s_xpm
 {
@@ -133,7 +129,7 @@ typedef struct s_cub
 	t_xpm			south;
 	t_xpm			west;
 	t_xpm			east;
-	t_imgs			*imgs;
+	t_data			game;
 	struct s_map	*map;
 	struct s_player	*p;
 }					t_cub;
@@ -142,7 +138,7 @@ int		are_rgb_valid(t_cub *cub);
 int		check_border(t_cub *cub);
 int		display_error(char *name, int num_error);
 int		display_error_texture(t_cub *cub);
-int		exit_cub(t_cub *cub);
+int		exit_cub(t_cub *cub, int xpm);
 int		init_color(t_cub *cub);
 int		init_file(t_cub *cub, char *file_name);
 int		init_map(t_cub *cub, char **argv);
