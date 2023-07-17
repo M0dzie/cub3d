@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   movement.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
+/*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 17:20:20 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/07/17 11:46:17 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/17 13:27:08 by msapin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,15 @@ void	rotate_player(t_cub *cub, int sign)
 {
 	double	tmp;
 
-	tmp = cub->p->dir.x;
-	cub->p->dir.x = cub->p->dir.x * cub->cos_angle - cub->p->dir.y * \
+	tmp = cub->p->axis.x;
+	cub->p->axis.x = cub->p->axis.x * cub->cos_angle - cub->p->axis.y * \
 	(cub->sin_angle * sign);
-	cub->p->dir.y = cub->p->dir.y * cub->cos_angle + tmp * \
+	cub->p->axis.y = cub->p->axis.y * cub->cos_angle + tmp * \
 	(cub->sin_angle * sign);
-	tmp = cub->p->dir_ew.x;
-	cub->p->dir_ew.x = cub->p->dir_ew.x * cub->cos_angle - cub->p->dir_ew.y * \
-	(cub->sin_angle * sign);
-	cub->p->dir_ew.y = cub->p->dir_ew.y * cub->cos_angle + tmp * \
+	tmp = cub->p->axis_side.x;
+	cub->p->axis_side.x = cub->p->axis_side.x * cub->cos_angle - \
+	cub->p->axis_side.y * (cub->sin_angle * sign);
+	cub->p->axis_side.y = cub->p->axis_side.y * cub->cos_angle + tmp * \
 	(cub->sin_angle * sign);
 	tmp = cub->p->fov.x;
 	cub->p->fov.x = cub->p->fov.x * cub->cos_angle - cub->p->fov.y * \

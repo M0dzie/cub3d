@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
+/*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/07/12 19:44:37 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/17 17:37:36 by msapin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,15 @@
 
 static void	destroy_xpm(t_cub *cub)
 {
-	if (cub->imgs)
-	{
-		if (cub->imgs->game.img)
-			mlx_destroy_image(cub->mlx, cub->imgs->game.img);
-		free(cub->imgs);
-	}
+	if (cub->game.img)
+		mlx_destroy_image(cub->mlx, cub->game.img);
 	if (cub->north.px)
 		free(cub->north.px);
 	if (cub->south.px)
 		free(cub->south.px);
-	if (cub->east.px)
+	if (cub->east.path)
 		free(cub->east.px);
-	if (cub->west.px)
+	if (cub->west.path)
 		free(cub->west.px);
 }
 
@@ -50,15 +46,13 @@ static void	free_player(t_cub *cub)
 	if (cub->p)
 	{
 		while (++i < WIN_WIDTH)
-		{
 			free(cub->p->ray[i]);
-		}
 		free(cub->p->ray);
 		free(cub->p);
 	}
 }
 
-int	exit_cub(t_cub *cub)
+int	exit_cub(t_cub *cub, int xpm)
 {
 	if (cub->rgb_floor)
 		free(cub->rgb_floor);
@@ -67,18 +61,20 @@ int	exit_cub(t_cub *cub)
 	if (cub->file)
 		free(cub->file);
 	ft_arrfree(cub->file_split);
-	free_path(cub);
 	if (cub->map)
 	{
 		if (cub->map->array)
 			ft_arrfree(cub->map->array);
 		free(cub->map);
 	}
-	destroy_xpm(cub);
+	if (xpm)
+		destroy_xpm(cub);
+	free_path(cub);
 	free_player(cub);
 	if (cub->mlx)
 	{
-		mlx_destroy_window(cub->mlx, cub->win);
+		if (cub->win)
+			mlx_destroy_window(cub->mlx, cub->win);
 		mlx_destroy_display(cub->mlx);
 		free(cub->mlx);
 	}

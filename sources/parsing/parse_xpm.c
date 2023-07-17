@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_xpm.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
+/*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:36:13 by msapin            #+#    #+#             */
-/*   Updated: 2023/07/12 19:48:10 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/17 17:48:53 by msapin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static int	init_xpm(t_cub *cub, t_xpm *wall)
 	wall->tex = mlx_xpm_file_to_image(cub->mlx, wall->path, &wall->width, \
 	&wall->height);
 	if (!wall->tex)
-		return (display_error_xpm(cub), -1);
+		return (-1);
 	wall->data = (int *)mlx_get_data_addr(wall->tex, &wall->bits_per_pixel, \
 	&wall->line_length, &wall->endian);
 	wall->px = ft_calloc(wall->width * wall->height + 1, sizeof(int));
@@ -73,8 +73,18 @@ void	save_texture(int *fd, char *path, char **path_save)
 
 int	parse_xpm(t_cub *cub)
 {
-	if (init_xpm(cub, &cub->north) != 0 || init_xpm(cub, &cub->south) != 0 \
-	|| init_xpm(cub, &cub->west) != 0 || init_xpm(cub, &cub->east) != 0)
-		return (-1);
+	int	validity;
+
+	cub->north.px = NULL;
+	cub->south.px = NULL;
+	cub->west.px = NULL;
+	cub->east.px = NULL;
+	validity = 0;
+	validity += init_xpm(cub, &cub->north);
+	validity += init_xpm(cub, &cub->south);
+	validity += init_xpm(cub, &cub->west);
+	validity += init_xpm(cub, &cub->east);
+	if (validity != 0)
+		return (display_error_xpm(cub), -1);
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
+/*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/07/17 11:42:22 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/17 15:17:55 by msapin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ static void	init_var(t_cub *cub)
 {
 	cub->mlx = NULL;
 	cub->win = NULL;
-	cub->imgs = NULL;
 	cub->map = NULL;
 	cub->p = NULL;
 }
@@ -73,12 +72,12 @@ int	parsing_map(t_cub *cub, char **argv)
 	if (init_file(cub, argv[1]) != 0)
 		return (free(cub), -1);
 	if (init_texture(cub) != 0)
-		return (exit_cub(cub), -1);
+		return (exit_cub(cub, 0), -1);
 	if (init_map(cub, argv) != 0)
-		return (exit_cub(cub), -1);
+		return (exit_cub(cub, 0), -1);
 	if (init_player(cub) != 0)
-		return (exit_cub(cub), -1);
+		return (exit_cub(cub, 0), -1);
 	if (!init_color(cub))
-		return (exit_cub(cub), -1);
+		return (exit_cub(cub, 0), -1);
 	return (0);
 }

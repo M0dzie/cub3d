@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_player.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
+/*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 12:19:52 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/07/11 12:48:17 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/17 13:14:28 by msapin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,19 +36,19 @@ static void	init_west_and_east(t_cub *cub, char side)
 {
 	if (side == 'W')
 	{
-		cub->p->dir.x = -1.0;
-		cub->p->dir.y = 0.0;
-		cub->p->dir_ew.x = 0.0;
-		cub->p->dir_ew.y = 1.0;
+		cub->p->axis.x = -1.0;
+		cub->p->axis.y = 0.0;
+		cub->p->axis_side.x = 0.0;
+		cub->p->axis_side.y = 1.0;
 		cub->p->fov.x = 0.0;
 		cub->p->fov.y = 0.66;
 	}
 	else if (side == 'E')
 	{
-		cub->p->dir.x = 1.0;
-		cub->p->dir.y = 0.0;
-		cub->p->dir_ew.x = 0.0;
-		cub->p->dir_ew.y = -1.0;
+		cub->p->axis.x = 1.0;
+		cub->p->axis.y = 0.0;
+		cub->p->axis_side.x = 0.0;
+		cub->p->axis_side.y = -1.0;
 		cub->p->fov.x = 0.0;
 		cub->p->fov.y = -0.66;
 	}
@@ -60,19 +60,19 @@ static void	init_pos(t_cub *cub, char side)
 	cub->sin_angle = sin(SPEED_ANGLE);
 	if (side == 'N')
 	{
-		cub->p->dir.x = 0.0;
-		cub->p->dir.y = -1.0;
-		cub->p->dir_ew.x = -1.0;
-		cub->p->dir_ew.y = 0.0;
+		cub->p->axis.x = 0.0;
+		cub->p->axis.y = -1.0;
+		cub->p->axis_side.x = -1.0;
+		cub->p->axis_side.y = 0.0;
 		cub->p->fov.x = -0.66;
 		cub->p->fov.y = 0.0;
 	}
 	else if (side == 'S')
 	{
-		cub->p->dir.x = 0.0;
-		cub->p->dir.y = 1.0;
-		cub->p->dir_ew.x = 1.0;
-		cub->p->dir_ew.y = 0.0;
+		cub->p->axis.x = 0.0;
+		cub->p->axis.y = 1.0;
+		cub->p->axis_side.x = 1.0;
+		cub->p->axis_side.y = 0.0;
 		cub->p->fov.x = 0.66;
 		cub->p->fov.y = 0.0;
 	}
