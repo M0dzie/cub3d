@@ -6,7 +6,7 @@
 #    By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#              #
-#    Updated: 2023/07/11 12:26:18 by thmeyer          ###   ########.fr        #
+#    Updated: 2023/07/17 10:17:39 by thmeyer          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -69,7 +69,7 @@ OBJS_DIRS	=	$(OBJ_PARSING_PATH) $(OBJ_EXECUTING_PATH)
 # ##################################### #
 
 SRC_PARSING_FILES		=	parse_map.c	display_error.c	display_error_texture.c	\
-							init_map.c	init_map_utils.c	init_texture.c	parse_xpm.c	\
+							init_map.c	init_utils.c	init_texture.c	parse_xpm.c	\
 							init_player.c
 
 SRC_EXECUTING_FILES		=	main.c	init_mlx.c	rendering.c	color.c	texture.c \

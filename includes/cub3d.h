@@ -6,7 +6,7 @@
 /*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/07/11 12:48:17 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/17 11:42:25 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,7 @@ int		init_map(t_cub *cub, char **argv);
 int		init_mlx(t_cub *cub);
 int		init_player(t_cub *cub);
 int		init_texture(t_cub *cub);
+int		is_valid_number(char *rgb);
 int		parsing_map(t_cub *cub, char **argv);
 int		parse_xpm(t_cub *cub);
 int		put_pixel(t_data *data, int x, int y, int color);

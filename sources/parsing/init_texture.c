@@ -6,7 +6,7 @@
 /*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 17:15:35 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/07/11 12:29:52 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/17 10:49:20 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,18 @@ int	init_file(t_cub *cub, char *file_name)
 
 static int	*rgb_to_int(char *rgb)
 {
+	int		i;
+	int		nb_commas;
 	int		*int_array;
 	char	**tmp_split;
 
+	i = -1;
+	nb_commas = 0;
+	while (rgb[++i])
+		if (rgb[i] == ',')
+			nb_commas++;
+	if (nb_commas != 2 || !is_valid_number(rgb))
+		return (NULL);
 	tmp_split = ft_split(rgb, ',');
 	if (ft_arrlen(tmp_split) != 3)
 		return (ft_arrfree(tmp_split), NULL);
