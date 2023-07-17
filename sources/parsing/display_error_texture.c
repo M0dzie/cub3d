@@ -6,7 +6,7 @@
 /*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 17:17:04 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/07/11 11:59:13 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/17 10:33:05 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static void	display_invalid_texture(t_cub *cub)
 static void	display_invalid_rgb(t_cub *cub)
 {
 	if (!cub->rgb_floor || !cub->rgb_roof)
-		ft_putstr_fd("missing rgb color:\n\n", 2);
+		ft_putstr_fd("invalid rgb color:\n\n", 2);
 	if (!cub->rgb_floor)
 		ft_putstr_fd("floor:  F 0,125,255    range [0->255]\n", 2);
 	if (!cub->rgb_roof)

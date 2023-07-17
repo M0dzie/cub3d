@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_map_utils.c                                   :+:      :+:    :+:   */
+/*   init_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 17:41:24 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/07/11 12:00:03 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/17 10:55:26 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,19 @@ int	check_border(t_cub *cub)
 		}
 	}
 	return (0);
+}
+
+int	is_valid_number(char *rgb)
+{
+	int	i;
+
+	i = -1;
+	while (rgb[++i])
+	{
+		if (rgb[i] == ',')
+			i++;
+		if (!ft_isdigit(rgb[i]))
+			return (0);
+	}
+	return (1);
 }
