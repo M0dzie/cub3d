@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/07/17 15:16:38 by msapin           ###   ########.fr       */
+/*   Updated: 2023/07/18 18:51:23 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,25 +24,25 @@
 # define SPEED_ANGLE 0.1
 
 # ifndef KEYS
-	# if __linux__
-		#  define ESC 65307
-		#  define W 119
-		#  define A 97
-		#  define S 115
-		#  define D 100
-		#  define M 109
-		#  define L_ARROW 65361
-		#  define R_ARROW 65363
-	# elif __APPLE__
-		#  define ESC 53
-		#  define W 13
-		#  define A 0
-		#  define S 1
-		#  define D 2
-		#  define M 46
-		#  define L_ARROW 123
-		#  define R_ARROW 124
-	# endif
+#  if __linux__
+#   define ESC 65307
+#   define W 119
+#   define A 97
+#   define S 115
+#   define D 100
+#   define M 109
+#   define L_ARROW 65361
+#   define R_ARROW 65363
+#  elif __APPLE__
+#   define ESC 53
+#   define W 13
+#   define A 0
+#   define S 1
+#   define D 2
+#   define M 46
+#   define L_ARROW 123
+#   define R_ARROW 124
+#  endif
 # endif
 
 typedef struct s_vector
