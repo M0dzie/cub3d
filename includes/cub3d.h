@@ -6,7 +6,7 @@
 /*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/07/18 18:51:23 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/19 18:44:18 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,11 @@
 # define WIN_WIDTH 1980.0
 # define WIN_HEIGHT 1080.0
 
-# define SPEED_PLAYER 0.1
-# define SPEED_ANGLE 0.1
+# define SPEED_PLAYER 0.015
+# define SPEED_ANGLE 0.01
+
+# define TRUE 1
+# define FALSE 0
 
 # ifndef KEYS
 #  if __linux__
@@ -113,6 +116,16 @@ typedef struct s_xpm
 	int		*px;
 }			t_xpm;
 
+typedef struct s_key
+{
+	int		w;
+	int		s;
+	int		a;
+	int		d;
+	int		r_arrow;
+	int		l_arrow;
+}			t_key;
+
 typedef struct s_cub
 {
 	int				floor;
@@ -130,6 +143,7 @@ typedef struct s_cub
 	t_xpm			west;
 	t_xpm			east;
 	t_data			game;
+	t_key			key;
 	struct s_map	*map;
 	struct s_player	*p;
 }					t_cub;
