@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:19:40 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/07/17 13:16:10 by msapin           ###   ########.fr       */
+/*   Updated: 2023/07/19 18:56:07 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ double *wall)
 	*wall -= floor(*wall);
 	ray->tex.tex_x = (int)(*wall * (double)wall_side.width);
 	if ((ray->side == 0 || ray->side == 1) && ray->axis.x > 0)
-		ray->tex.tex_x = wall_side.width - ray->tex.tex_x - 1;
+		ray->tex.tex_x = wall_side.width - ray->tex.tex_x;
 	if ((ray->side == 2 || ray->side == 3) && ray->axis.y < 0)
-		ray->tex.tex_x = wall_side.width - ray->tex.tex_x - 1;
+		ray->tex.tex_x = wall_side.width - ray->tex.tex_x;
 	ray->tex.step = 1.0 * wall_side.height / ray->wall_height;
 	ray->tex.tex_pos = (*ceiling - WIN_HEIGHT / 2 + ray->wall_height / 2) * \
 	ray->tex.step;
