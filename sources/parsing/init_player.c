@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_player.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 12:19:52 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/07/17 13:14:28 by msapin           ###   ########.fr       */
+/*   Updated: 2023/07/19 18:26:27 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,16 @@ static void	init_pos(t_cub *cub, char side)
 		init_west_and_east(cub, side);
 }
 
+static void	init_key(t_cub *cub)
+{
+	cub->key.w = FALSE;
+	cub->key.s = FALSE;
+	cub->key.a = FALSE;
+	cub->key.d = FALSE;
+	cub->key.r_arrow = FALSE;
+	cub->key.l_arrow = FALSE;
+}
+
 int	init_player(t_cub *cub)
 {
 	int		i;
@@ -103,5 +113,6 @@ int	init_player(t_cub *cub)
 			}
 		}
 	}
+	init_key(cub);
 	return (0);
 }
