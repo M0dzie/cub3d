@@ -3,100 +3,100 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:41:02 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/07/17 13:15:38 by msapin           ###   ########.fr       */
+/*   Updated: 2023/07/20 21:05:12 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-static void	define_pos_and_dir(t_cub *cub)
-{
-	int	ray;
+// static void	define_pos_and_dir(t_cub *cub)
+// {
+// 	int	ray;
 
-	ray = -1;
-	while (cub->p->ray[++ray])
-	{
-		cub->p->ray[ray]->coef = ray * 2 / WIN_WIDTH - 1;
-		cub->p->ray[ray]->axis.x = cub->p->axis.x + cub->p->fov.x * \
-		cub->p->ray[ray]->coef;
-		cub->p->ray[ray]->axis.y = cub->p->axis.y + cub->p->fov.y * \
-		cub->p->ray[ray]->coef;
-	}
-}
+// 	ray = -1;
+// 	while (cub->p->ray[++ray])
+// 	{
+// 		cub->p->ray[ray]->coef = ray * 2 / WIN_WIDTH - 1;
+// 		cub->p->ray[ray]->axis.x = cub->p->axis.x + cub->p->fov.x * \
+// 		cub->p->ray[ray]->coef;
+// 		cub->p->ray[ray]->axis.y = cub->p->axis.y + cub->p->fov.y * \
+// 		cub->p->ray[ray]->coef;
+// 	}
+// }
 
-static int	define_move(t_player *p, t_ray *ray, t_map *map, int x)
-{
-	int	move;
+// static int	define_move(t_player *p, t_ray *ray, t_map *map, int x)
+// {
+// 	int	move;
 
-	move = 0;
-	if (x == 1)
-	{
-		if (ray->axis.x < 0)
-			return (ray->dist_next_inter.x = (p->pos.x - map->map_x) * \
-			ray->next_inter.x, move = -1);
-		else
-			return (ray->dist_next_inter.x = (map->map_x + 1.0 - p->pos.x) * \
-			ray->next_inter.x, move = 1);
-	}
-	if (ray->axis.y < 0)
-		return (ray->dist_next_inter.y = (p->pos.y - map->map_y) * \
-		ray->next_inter.y, move = -1);
-	else
-		return (ray->dist_next_inter.y = (map->map_y + 1.0 - p->pos.y) * \
-		ray->next_inter.y, move = 1);
-	return (move);
-}
+// 	move = 0;
+// 	if (x == 1)
+// 	{
+// 		if (ray->axis.x < 0)
+// 			return (ray->dist_next_inter.x = (p->pos.x - map->map_x) * \
+// 			ray->next_inter.x, move = -1);
+// 		else
+// 			return (ray->dist_next_inter.x = (map->map_x + 1.0 - p->pos.x) * \
+// 			ray->next_inter.x, move = 1);
+// 	}
+// 	if (ray->axis.y < 0)
+// 		return (ray->dist_next_inter.y = (p->pos.y - map->map_y) * \
+// 		ray->next_inter.y, move = -1);
+// 	else
+// 		return (ray->dist_next_inter.y = (map->map_y + 1.0 - p->pos.y) * \
+// 		ray->next_inter.y, move = 1);
+// 	return (move);
+// }
 
-static double	distance_from_wall(t_player *p, t_ray *ray, t_map *map, \
-t_vector move)
-{
-	while (1)
-	{
-		if (ray->dist_next_inter.x < ray->dist_next_inter.y)
-		{
-			ray->dist_next_inter.x += ray->next_inter.x;
-			map->map_x += move.x;
-			ray->side = (move.x > 0);
-		}
-		else
-		{
-			ray->dist_next_inter.y += ray->next_inter.y;
-			map->map_y += move.y;
-			ray->side = (move.y > 0) + 2;
-		}
-		if (map->array[map->map_y][map->map_x] == '1')
-			break ;
-	}
-	if (ray->side == 0 || ray->side == 1)
-		return ((map->map_x - p->pos.x + (1 - move.x) / 2) / ray->axis.x);
-	return ((map->map_y - p->pos.y + (1 - move.y) / 2) / ray->axis.y);
-}
+// static double	distance_from_wall(t_player *p, t_ray *ray, t_map *map, \
+// t_vector move)
+// {
+// 	while (1)
+// 	{
+// 		if (ray->dist_next_inter.x < ray->dist_next_inter.y)
+// 		{
+// 			ray->dist_next_inter.x += ray->next_inter.x;
+// 			map->map_x += move.x;
+// 			ray->side = (move.x > 0);
+// 		}
+// 		else
+// 		{
+// 			ray->dist_next_inter.y += ray->next_inter.y;
+// 			map->map_y += move.y;
+// 			ray->side = (move.y > 0) + 2;
+// 		}
+// 		if (map->array[map->map_y][map->map_x] == '1')
+// 			break ;
+// 	}
+// 	if (ray->side == 0 || ray->side == 1)
+// 		return ((map->map_x - p->pos.x + (1 - move.x) / 2) / ray->axis.x);
+// 	return ((map->map_y - p->pos.y + (1 - move.y) / 2) / ray->axis.y);
+// }
 
-void	init_raycasting(t_cub *cub)
-{
-	int			ray;
-	t_vector	move;
+// void	init_raycasting(t_cub *cub)
+// {
+// 	int			ray;
+// 	t_vector	move;
 
-	ray = -1;
-	define_pos_and_dir(cub);
-	while (cub->p->ray[++ray])
-	{
-		cub->map->map_x = floor(cub->p->pos.x);
-		cub->map->map_y = floor(cub->p->pos.y);
-		cub->p->ray[ray]->next_inter.x = 1 / cub->p->ray[ray]->axis.x;
-		if (cub->p->ray[ray]->next_inter.x < 0)
-			cub->p->ray[ray]->next_inter.x *= -1;
-		cub->p->ray[ray]->next_inter.y = 1 / cub->p->ray[ray]->axis.y;
-		if (cub->p->ray[ray]->next_inter.y < 0)
-			cub->p->ray[ray]->next_inter.y *= -1;
-		move.x = define_move(cub->p, cub->p->ray[ray], cub->map, 1);
-		move.y = define_move(cub->p, cub->p->ray[ray], cub->map, 0);
-		cub->p->ray[ray]->dist = distance_from_wall(cub->p, cub->p->ray[ray], \
-		cub->map, move);
-		cub->p->ray[ray]->wall_height = (int)(WIN_HEIGHT / \
-		cub->p->ray[ray]->dist);
-	}
-}
+// 	ray = -1;
+// 	define_pos_and_dir(cub);
+// 	while (cub->p->ray[++ray])
+// 	{
+// 		cub->map->map_x = floor(cub->p->pos.x);
+// 		cub->map->map_y = floor(cub->p->pos.y);
+// 		cub->p->ray[ray]->next_inter.x = 1 / cub->p->ray[ray]->axis.x;
+// 		if (cub->p->ray[ray]->next_inter.x < 0)
+// 			cub->p->ray[ray]->next_inter.x *= -1;
+// 		cub->p->ray[ray]->next_inter.y = 1 / cub->p->ray[ray]->axis.y;
+// 		if (cub->p->ray[ray]->next_inter.y < 0)
+// 			cub->p->ray[ray]->next_inter.y *= -1;
+// 		move.x = define_move(cub->p, cub->p->ray[ray], cub->map, 1);
+// 		move.y = define_move(cub->p, cub->p->ray[ray], cub->map, 0);
+// 		cub->p->ray[ray]->dist = distance_from_wall(cub->p, cub->p->ray[ray], \
+// 		cub->map, move);
+// 		cub->p->ray[ray]->wall_height = (int)(WIN_HEIGHT / \
+// 		cub->p->ray[ray]->dist);
+// 	}
+// }
