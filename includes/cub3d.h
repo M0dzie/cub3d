@@ -6,7 +6,7 @@
 /*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/07/20 22:17:46 by msapin           ###   ########.fr       */
+/*   Updated: 2023/07/21 00:30:48 by msapin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,14 +72,14 @@
 // 	char	**array;
 // }			t_map;
 
-// typedef struct s_tex_data
-// {
-// 	int		tex_x;
-// 	int		tex_y;
-// 	int		color;
-// 	double	tex_pos;
-// 	double	step;
-// }			t_tex_data;
+typedef struct s_tex_data
+{
+	int		tex_x;
+	int		tex_y;
+	int		color;
+	double	tex_pos;
+	double	step;
+}			t_tex_data;
 
 // typedef struct s_ray
 // {
@@ -102,19 +102,19 @@
 // 	t_ray		**ray;
 // }				t_player;
 
-// typedef struct s_xpm
-// {
-// 	int		fd;
-// 	int		width;
-// 	int		height;
-// 	int		bits_per_pixel;
-// 	int		line_length;
-// 	int		endian;
-// 	int		*data;
-// 	char	*path;
-// 	void	*tex;
-// 	int		*px;
-// }			t_xpm;
+typedef struct s_xpm
+{
+	int		fd;
+	int		width;
+	int		height;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+	int		*data;
+	char	*path;
+	void	*tex;
+	int		*px;
+}			t_xpm;
 
 // typedef struct s_key
 // {
@@ -201,11 +201,11 @@
 
 # ifndef COLORS
 #  define WALL_COLOR 0x00202020
-#  define NORTH 0x00202021
-#  define SOUTH 0x00202022
-#  define WEST 0x00202023
-#  define EAST 0x00202024
-#  define ANGLE 0x00202025
+#  define NORTH 0x000362fc
+#  define SOUTH 0x00fc0367
+#  define WEST 0x0000ff3c
+#  define EAST 0x00ffe600
+#  define ANGLE 0x0000ffb7
 # endif
 
 # ifndef KEYS
@@ -216,6 +216,14 @@
 #   define S 115
 #   define D 100
 #   define M 109
+
+
+
+#   define TEST 112
+
+
+
+
 #   define L_ARROW 65361
 #   define R_ARROW 65363
 #  elif __APPLE__
@@ -285,6 +293,7 @@ typedef struct s_ray_map
 	// double		dist;
 	double			angle;
 	unsigned int	side;
+	t_tex_data	tex;
 }				t_ray_map;
 
 typedef struct s_ray
@@ -297,7 +306,20 @@ typedef struct s_ray
 	t_dist		dist;
 	// int			angle;
 	double		angle;
+	
 }				t_ray;
+
+// typedef struct s_ray
+// {
+// 	int				side;
+// 	int				wall_height;
+// 	double			coef;
+// 	double			dist;
+// 	t_vector		axis;
+// 	t_vector		dist_next_inter;
+// 	t_vector		next_inter;
+// 	t_tex_data		tex;
+// }					t_ray;
 
 typedef struct s_player
 {
@@ -320,6 +342,14 @@ typedef struct s_key
 	int		s;
 	int		a;
 	int		d;
+
+
+
+	int		test;
+
+
+
+
 	int		r_arrow;
 	int		l_arrow;
 }			t_key;
@@ -344,6 +374,12 @@ typedef struct s_cub
 	t_key			key;
 	struct s_map	*map;
 	struct s_player	*p;
+
+	t_xpm			north;
+	t_xpm			south;
+	t_xpm			west;
+	t_xpm			east;
+	t_data			game;
 }					t_cub;
 
 int		are_rgb_valid(t_cub *cub);
@@ -375,5 +411,9 @@ void	init_raycasting(t_cub *cub);
 void	init_side_wall(t_cub *cub, t_data *minimap, int ray);;
 void	move_player(t_cub *cub, t_vector coef, int sign);
 void	render_minimap(t_cub *cub);
+
+int		parse_xpm(t_cub *cub);
+int		is_valid_number(char *rgb);
+void	save_texture(int *fd, char *path, char **path_save);
 
 #endif
