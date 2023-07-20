@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   display_error_texture.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
+/*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 17:17:04 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/07/20 21:24:29 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/21 00:12:33 by msapin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,28 +66,8 @@
 // 		ft_putstr_fd("roof:   C 255,125,0    range [0->255]\n", 2);
 // }
 
-// int	display_error_texture(t_cub *cub)
-// {
-// 	if (cub->north.fd <= 0 || cub->south.fd <= 0 || cub->west.fd <= 0 \
-// 	|| cub->east.fd <= 0 || !cub->rgb_floor || !cub->rgb_roof)
-// 		ft_putstr_fd("Error\n", 2);
-// 	if (cub->north.fd == 0 || cub->south.fd == 0 || cub->west.fd == 0 \
-// 	|| cub->east.fd == 0)
-// 		display_missing_texture(cub);
-// 	if (cub->north.fd < 0 || cub->south.fd < 0 || cub->west.fd < 0 \
-// 	|| cub->east.fd < 0)
-// 		display_invalid_texture(cub);
-// 	if ((cub->north.fd <= 0 || cub->south.fd <= 0 || cub->west.fd <= 0 \
-// 	|| cub->east.fd <= 0) && (!cub->rgb_floor || !cub->rgb_roof))
-// 		ft_putstr_fd("\n", 2);
-// 	if (!are_rgb_valid(cub))
-// 		return (-1);
-// 	display_invalid_rgb(cub);
-// 	if (cub->north.fd <= 0 || cub->south.fd <= 0 || cub->west.fd <= 0 \
-// 	|| cub->east.fd <= 0 || !cub->rgb_floor || !cub->rgb_roof)
-// 		return (-1);
-// 	return (0);
-// }
+
+
 void	display_path(t_cub *cub, char *id, char *str)
 {
 	int		i;
@@ -142,25 +122,48 @@ void	display_invalid_rgb(t_cub *cub)
 		ft_putstr_fd("roof:   C 255,125,0    range [0->255]\n", 2);
 }
 
+// int	display_error_texture(t_cub *cub)
+// {
+// 	if (cub->fd_north <= 0 || cub->fd_south <= 0 || cub->fd_west <= 0 \
+// 	|| cub->fd_east <= 0 || !cub->rgb_floor || !cub->rgb_roof)
+// 		ft_putstr_fd("Error\n", 2);
+// 	if (cub->fd_north == 0 || cub->fd_south == 0 || cub->fd_west == 0 \
+// 	|| cub->fd_east == 0)
+// 		display_missing_texture(cub);
+// 	if (cub->fd_north < 0 || cub->fd_south < 0 || cub->fd_west < 0 \
+// 	|| cub->fd_east < 0)
+// 		display_invalid_texture(cub);
+// 	if ((cub->fd_north <= 0 || cub->fd_south <= 0 || cub->fd_west <= 0 \
+// 	|| cub->fd_east <= 0) && (!cub->rgb_floor || !cub->rgb_roof))
+// 		ft_putstr_fd("\n", 2);
+// 	if (!are_rgb_valid(cub))
+// 		return (-1);
+// 	display_invalid_rgb(cub);
+// 	if (cub->fd_north <= 0 || cub->fd_south <= 0 || cub->fd_west <= 0 \
+// 	|| cub->fd_east <= 0 || !cub->rgb_floor || !cub->rgb_roof)
+// 		return (-1);
+// 	return (0);
+// }
+
 int	display_error_texture(t_cub *cub)
 {
-	if (cub->fd_north <= 0 || cub->fd_south <= 0 || cub->fd_west <= 0 \
-	|| cub->fd_east <= 0 || !cub->rgb_floor || !cub->rgb_roof)
+	if (cub->north.fd <= 0 || cub->south.fd <= 0 || cub->west.fd <= 0 \
+	|| cub->east.fd <= 0 || !cub->rgb_floor || !cub->rgb_roof)
 		ft_putstr_fd("Error\n", 2);
-	if (cub->fd_north == 0 || cub->fd_south == 0 || cub->fd_west == 0 \
-	|| cub->fd_east == 0)
+	if (cub->north.fd == 0 || cub->south.fd == 0 || cub->west.fd == 0 \
+	|| cub->east.fd == 0)
 		display_missing_texture(cub);
-	if (cub->fd_north < 0 || cub->fd_south < 0 || cub->fd_west < 0 \
-	|| cub->fd_east < 0)
+	if (cub->north.fd < 0 || cub->south.fd < 0 || cub->west.fd < 0 \
+	|| cub->east.fd < 0)
 		display_invalid_texture(cub);
-	if ((cub->fd_north <= 0 || cub->fd_south <= 0 || cub->fd_west <= 0 \
-	|| cub->fd_east <= 0) && (!cub->rgb_floor || !cub->rgb_roof))
+	if ((cub->north.fd <= 0 || cub->south.fd <= 0 || cub->west.fd <= 0 \
+	|| cub->east.fd <= 0) && (!cub->rgb_floor || !cub->rgb_roof))
 		ft_putstr_fd("\n", 2);
 	if (!are_rgb_valid(cub))
 		return (-1);
 	display_invalid_rgb(cub);
-	if (cub->fd_north <= 0 || cub->fd_south <= 0 || cub->fd_west <= 0 \
-	|| cub->fd_east <= 0 || !cub->rgb_floor || !cub->rgb_roof)
+	if (cub->north.fd <= 0 || cub->south.fd <= 0 || cub->west.fd <= 0 \
+	|| cub->east.fd <= 0 || !cub->rgb_floor || !cub->rgb_roof)
 		return (-1);
 	return (0);
 }

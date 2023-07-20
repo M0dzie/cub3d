@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_map_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
+/*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 17:41:24 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/05/23 18:02:31 by mehdisapin       ###   ########.fr       */
+/*   Updated: 2023/07/21 00:10:25 by msapin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,23 +32,23 @@ int	is_surrounded(t_cub *cub, int y, int x)
 	return (1);
 }
 
-int	check_border(t_cub *cub)
-{
-	int		i;
-	int		j;
-	char	c;
+// int	check_border(t_cub *cub)
+// {
+// 	int		i;
+// 	int		j;
+// 	char	c;
 
-	i = -1;
-	while (cub->map->array[++i])
-	{
-		j = -1;
-		while (cub->map->array[i][++j])
-		{
-			c = cub->map->array[i][j];
-			if (c == '0' || c == 'N' || c == 'S' || c == 'E' || c == 'W')
-				if (!is_surrounded(cub, i, j))
-					return (-1);
-		}
-	}
-	return (0);
-}
+// 	i = -1;
+// 	while (cub->map->array[++i])
+// 	{
+// 		j = -1;
+// 		while (cub->map->array[i][++j])
+// 		{
+// 			c = cub->map->array[i][j];
+// 			if (c == '0' || c == 'N' || c == 'S' || c == 'E' || c == 'W')
+// 				if (!is_surrounded(cub, i, j))
+// 					return (-1);
+// 		}
+// 	}
+// 	return (0);
+// }

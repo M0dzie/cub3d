@@ -6,19 +6,19 @@
 /*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:11:26 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/07/20 22:18:09 by msapin           ###   ########.fr       */
+/*   Updated: 2023/07/21 01:15:09 by msapin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "../../includes/cub3d.h"
+#include "../../includes/cub3d.h"
 
-// static void	init_image(t_cub *cub)
-// {
-// 	cub->game.img = mlx_new_image(cub->mlx, WIN_WIDTH, WIN_HEIGHT);
-// 	cub->game.addr = mlx_get_data_addr(cub->game.img, \
-// 	&cub->game.bits_per_pixel, &cub->game.line_length, \
-// 	&cub->game.endian);
-// }
+static void	init_image(t_cub *cub)
+{
+	cub->game.img = mlx_new_image(cub->mlx, WIN_WIDTH, WIN_HEIGHT);
+	cub->game.addr = mlx_get_data_addr(cub->game.img, \
+	&cub->game.bits_per_pixel, &cub->game.line_length, \
+	&cub->game.endian);
+}
 
 // static int	init_key_press(int key, t_cub *cub)
 // {
@@ -75,7 +75,7 @@
 // 	return (0);
 // }
 
-#include "../../includes/cub3d.h"
+// #include "../../includes/cub3d.h"
 
 static int	ft_exit(void)
 {
@@ -100,6 +100,7 @@ void	set_angle(t_cub *cub, int sign)
 
 static int	init_key_press(int key, t_cub *cub)
 {
+	// printf("%d\n", key);
 	if (key == ESC)
 		ft_exit();
 		// exit_cub(cub, 1);
@@ -115,6 +116,8 @@ static int	init_key_press(int key, t_cub *cub)
 		cub->key.l_arrow = TRUE;
 	if (key == R_ARROW)
 		cub->key.r_arrow = TRUE;
+	if (key == TEST)
+		cub->key.test = TRUE;
 	if (key == M)
 	{
 		if (cub->imgs->show_mini)
@@ -145,6 +148,8 @@ static int	init_key_release(int key, t_cub *cub)
 		cub->key.l_arrow = FALSE;
 	if (key == R_ARROW)
 		cub->key.r_arrow = FALSE;
+	if (key == TEST)
+		cub->key.test = FALSE;
 	return (0);
 }
 
@@ -168,8 +173,11 @@ static int	actions(t_cub *cub)
 		set_angle(cub, 1);
 		move_player(cub, cub->p->pos.coef_ns, 0);
 	}
-	generate_3d(cub);
-	display_images(cub);
+	if (cub->key.test)
+	{
+		generate_3d(cub);
+		display_images(cub);
+	}
 	return (0);
 }
 
@@ -186,19 +194,30 @@ void	display_images(t_cub *cub)
 
 int	init_mlx(t_cub *cub)
 {
+	cub->game.img = NULL;
 	cub->win = NULL;
 	cub->mlx = mlx_init();
 	if (!cub->mlx)
 		return (display_error("cub3d", 14), ft_exit(), -1);
+
+	if (parse_xpm(cub) != 0)
+		// return (exit_cub(cub, 1), -1);
+		return (ft_exit(), -1);
+	init_image(cub);
+		
 	cub->win = mlx_new_window(cub->mlx, WIN_WIDTH, WIN_HEIGHT, "cub3d");
 	cub->imgs = malloc(sizeof(t_imgs));
-	cub->imgs->show_mini = 1;
+	cub->imgs->show_mini = 0;
+
+	(void)actions;
 	
 	generate_minimap(cub);
 	calcul_coef(cub);
 
 	// TO DELETE LATER keep it for testings
-	// generate_minimap(cub);
+	generate_minimap(cub);
+	generate_3d(cub);
+	display_images(cub);
 
 	mlx_hook(cub->win, 2, 1l << 0, &init_key_press, cub);
 	mlx_hook(cub->win, 3, 1l << 1, &init_key_release, cub);
