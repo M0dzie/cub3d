@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
+/*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/07/20 21:25:46 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/20 22:17:46 by msapin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,8 +191,8 @@
 # define WIN_WIDTH 1980.0
 # define WIN_HEIGHT 1080.0
 
-# define SPEED_MINI 12.0
-# define SPEED_ANGLE 6.0
+# define SPEED_MINI 14.0
+# define SPEED_ANGLE 2.0
 
 # define FOV 66.0
 

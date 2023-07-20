@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rendering.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
+/*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:43:13 by msapin            #+#    #+#             */
-/*   Updated: 2023/07/20 20:54:24 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/20 22:17:20 by msapin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,15 +102,6 @@ void	calcul_distance(t_cub *cub)
 	cub->p->pos.dist.sw = distance_to_wall(cub, cub->p->pos.coef_nesw, -1, 0);
 }
 
-void	render_minimap(t_cub *cub)
-{
-	generate_minimap(cub);
-	calcul_coef(cub);
-	generate_player(cub);
-	generate_3d(cub);
-	display_images(cub);
-}
-
 void	move_player(t_cub *cub, t_vector coef, int sign)
 {
 	t_vector	tmp_coef;
@@ -132,7 +123,7 @@ void	move_player(t_cub *cub, t_vector coef, int sign)
 			cub->p->pos.start.y -= tmp_coef.y;
 		}
 	}
-	render_minimap(cub);
+	// render_minimap(cub);
 }
 
 int	put_pixel(t_data *data, int x, int y, int color)
@@ -202,8 +193,8 @@ void	generate_minimap(t_cub *cub)
 	int		x;
 	char	c;
 
-	if (cub->imgs->minimap.img)
-		mlx_destroy_image(cub->mlx, cub->imgs->minimap.img);
+	// if (cub->imgs->minimap.img)
+	// 	mlx_destroy_image(cub->mlx, cub->imgs->minimap.img);
 	cub->imgs->minimap.img = mlx_new_image(cub->mlx, cub->map->width * GRID_MINI, cub->map->height * GRID_MINI);
 	cub->imgs->minimap.addr = mlx_get_data_addr(cub->imgs->minimap.img, &cub->imgs->minimap.bits_per_pixel, &cub->imgs->minimap.line_length, &cub->imgs->minimap.endian);
 	y = -1;
@@ -299,6 +290,6 @@ void	draw_fov(t_cub *cub)
 
 void	generate_player(t_cub *cub)
 {
-	draw_player_body(cub);
+	// draw_player_body(cub);
 	draw_fov(cub);
 }
