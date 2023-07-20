@@ -6,7 +6,7 @@
 /*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:19:40 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/07/19 18:56:07 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/20 19:06:24 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ static void	render_wall(t_cub *cub, t_ray *ray, int n_ray)
 	double	wall;
 	t_xpm	wall_side;
 
-	wall_side = cub->west;
 	init_floor_and_ceiling(ray, &ground, &ceiling);
 	init_wall_texture(cub, ray, &ceiling, &wall);
 	if (ray->side == 0)
