@@ -6,7 +6,7 @@
 /*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:43:13 by msapin            #+#    #+#             */
-/*   Updated: 2023/07/20 22:17:20 by msapin           ###   ########.fr       */
+/*   Updated: 2023/07/21 00:57:12 by msapin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,10 +150,10 @@ void	put_miniwall(t_data data, int start_x, int start_y)
 		x = -1;
 		while (++x < GRID_MINI)
 		{
-			if ((x == 0 && y == 0) || (x == 0 && y == GRID_MINI - 1) \
-			|| (x == GRID_MINI - 1 && y == 0) || (x == GRID_MINI - 1 \
-			&& y == GRID_MINI - 1))
-				put_pixel(&data, x + start_x, y + start_y, ANGLE);
+			/*// if ((x == 0 && y == 0) || (x == 0 && y == GRID_MINI - 1) \
+			// || (x == GRID_MINI - 1 && y == 0) || (x == GRID_MINI - 1 \
+			// && y == GRID_MINI - 1))
+			// 	put_pixel(&data, x + start_x, y + start_y, ANGLE);*/
 			if (x == 0)
 				put_pixel(&data, x + start_x, y + start_y, WEST);
 			else if (x == GRID_MINI - 1)
