@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_mlx.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:11:26 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/07/21 01:15:09 by msapin           ###   ########.fr       */
+/*   Updated: 2023/07/21 14:23:08 by mehdisapin       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,9 +175,11 @@ static int	actions(t_cub *cub)
 	}
 	if (cub->key.test)
 	{
-		generate_3d(cub);
-		display_images(cub);
 	}
+	generate_minimap(cub);
+	generate_player(cub);
+	generate_3d(cub);
+	display_images(cub);
 	return (0);
 }
 

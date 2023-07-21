@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
+/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:19:40 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/07/20 20:54:55 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/21 15:43:16 by mehdisapin       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 // 		*ground = WIN_HEIGHT;
 // }
 
-// static void	init_wall_texture(t_cub *cub, t_ray *ray, int *ceiling, \
+/*// static void	init_wall_texture(t_cub *cub, t_ray *ray, int *ceiling, \
 // double *wall)
 // {
 // 	t_xpm	wall_side;
@@ -104,7 +104,7 @@
 // 		render_wall(cub, cub->p->ray[ray], ray);
 // 		render_floor_and_ceiling(cub, ray);
 // 	}
-// }
+// }*/
 
 void	init_side_wall(t_cub *cub, t_data *minimap, int ray)
 {

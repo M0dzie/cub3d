@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_texture.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 17:15:35 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/07/21 00:05:32 by msapin           ###   ########.fr       */
+/*   Updated: 2023/07/21 15:42:37 by mehdisapin       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,7 +164,7 @@ static void	init_fds(t_cub *cub)
 // 	char	**line_split;
 // 	int		i;
 
-// 	init_fds(cub);
+/*// 	init_fds(cub);
 // 	cub->file_split = ft_split(cub->file, '\n');
 // 	i = -1;
 // 	while (cub->file_split[++i] && cub->file_split[i][0] != '1' && i < 6)
@@ -184,7 +184,7 @@ static void	init_fds(t_cub *cub)
 // 	if (display_error_texture(cub) != 0)
 // 		return (-1);
 // 	return (0);
-// }
+// }*/
 
 int	init_texture(t_cub *cub)
 {
