@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/07/21 00:30:48 by msapin           ###   ########.fr       */
+/*   Updated: 2023/07/21 15:38:00 by mehdisapin       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,14 +182,17 @@ typedef struct s_xpm
 
 # ifndef GRID_MINI
 #  define GRID_MINI 256
+// #  define GRID_MINI 64
 # endif
 
 # ifndef GRID_MAP
 #  define GRID_MAP 100
 # endif
 
-# define WIN_WIDTH 1980.0
-# define WIN_HEIGHT 1080.0
+// # define WIN_WIDTH 1980.0
+// # define WIN_HEIGHT 1080.0
+# define WIN_WIDTH 1280.0
+# define WIN_HEIGHT 720.0
 
 # define SPEED_MINI 14.0
 # define SPEED_ANGLE 2.0

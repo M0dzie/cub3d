@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_xpm.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:36:13 by msapin            #+#    #+#             */
-/*   Updated: 2023/07/21 00:01:56 by msapin           ###   ########.fr       */
+/*   Updated: 2023/07/21 15:26:13 by mehdisapin       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,13 +81,9 @@ int	parse_xpm(t_cub *cub)
 	cub->east.px = NULL;
 	validity = 0;
 	validity += init_xpm(cub, &cub->north);
-	printf("%d\n", validity);
 	validity += init_xpm(cub, &cub->south);
-	printf("%d\n", validity);
 	validity += init_xpm(cub, &cub->west);
-	printf("%d\n", validity);
 	validity += init_xpm(cub, &cub->east);
-	printf("%d\n", validity);
 	if (validity != 0)
 		return (display_error_xpm(cub), -1);
 	return (0);

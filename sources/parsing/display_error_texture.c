@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   display_error_texture.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 17:17:04 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/07/21 00:12:33 by msapin           ###   ########.fr       */
+/*   Updated: 2023/07/21 14:08:07 by mehdisapin       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ void	display_invalid_rgb(t_cub *cub)
 		ft_putstr_fd("roof:   C 255,125,0    range [0->255]\n", 2);
 }
 
-// int	display_error_texture(t_cub *cub)
+/*// int	display_error_texture(t_cub *cub)
 // {
 // 	if (cub->fd_north <= 0 || cub->fd_south <= 0 || cub->fd_west <= 0 \
 // 	|| cub->fd_east <= 0 || !cub->rgb_floor || !cub->rgb_roof)
@@ -143,7 +143,7 @@ void	display_invalid_rgb(t_cub *cub)
 // 	|| cub->fd_east <= 0 || !cub->rgb_floor || !cub->rgb_roof)
 // 		return (-1);
 // 	return (0);
-// }
+// }*/
 
 int	display_error_texture(t_cub *cub)
 {

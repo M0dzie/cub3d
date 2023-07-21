@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_3d.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:41:02 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/07/21 01:46:02 by msapin           ###   ########.fr       */
+/*   Updated: 2023/07/21 15:37:42 by mehdisapin       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,27 @@ static int	check_side_wall(t_cub *cub, int x)
 	return (0);
 }
 
-static void	draw_wall(t_cub *cub, int x, int y, int max, t_ray_map *ray, double wall_height)
+static void	draw_wall(t_cub *cub, int x, int y, int max, t_ray_map *ray, double wall_height, int margin)
 {
 	(void)wall_height;
 	(void)ray;
+	(void)margin;
 	int	side;
 	t_xpm	wall_side;
 	int		i;
+	(void)side;
 
 	side = check_side_wall(cub, x);
 	i = 0;
-	printf("%d/ %f  %d  %f\n", x, wall_height, cub->north.height, wall_height / (double)cub->north.height);
+	wall_side = cub->north;
+	// if (ray->side == EAST)
+	// 	wall_side = cub->east;
+	// else if (ray->side == WEST)
+	// 	wall_side = cub->west;
+	// else if (ray->side == SOUTH)
+	// 	wall_side = cub->south;
+	// else if (ray->side == NORTH)
+	// 	wall_side = cub->north;
 	while (y < max)
 	{
 		// if (side == NORTH)
@@ -67,35 +77,12 @@ static void	draw_wall(t_cub *cub, int x, int y, int max, t_ray_map *ray, double 
 		// 	// put_pixel(&cub->imgs->back, x, y, 0xFF33AC); // pink EAST
 		// 	wall_side = cub->east;
 
-		// if (ray->side == EAST)
-		// 	wall_side = cub->east;
-		// else if (ray->side == WEST)
-		// 	wall_side = cub->west;
-		// else if (ray->side == SOUTH)
-		// 	wall_side = cub->south;
-		// else if (ray->side == NORTH)
-		// 	wall_side = cub->north;
-
-		wall_side = cub->north;
-
-		// ray->tex.tex_y = (int)ray->tex.tex_pos & (wall_side.height - 1);
-		// ray->tex.tex_pos += ray->tex.step;
-		// int color = wall_side.px[wall_side.height * ray->tex.tex_y + ray->tex.tex_x];
-		// (void)color;
-		// put_pixel(&cub->game, x, y, color);
-
-		// int color = wall_side.px[wall_side.height * ];
-
 		int color = wall_side.px[(int)(((wall_side.height) * 1)) + (cub->north.height * i)];
 
-		// printf("x: %d  y: %d  -  %d\n%d\n", x, y, max, color);
-
 		put_pixel(&cub->imgs->back, x, y, color);
-
-		// y += wall_height / (double)cub->north.height;
-		y++;
-		if (y % (int)(wall_height / (double)cub->north.height) == 0)
+		if ((y - margin) > (wall_height / (double)cub->north.height * i))
 			i++;
+		y++;
 	}
 }
 
@@ -114,6 +101,9 @@ void	generate_3d(t_cub *cub)
 	cub->imgs->back.addr = mlx_get_data_addr(cub->imgs->back.img, &cub->imgs->back.bits_per_pixel, &cub->imgs->back.line_length, &cub->imgs->back.endian);
 	x = -1;
 	put_floor_and_ceiling(cub);
+
+	int nbWall = 0;
+	(void)nbWall;
 	while (cub->p->ray[++x])
 	{
 		distance = fix_fisheye(cub, x);
@@ -131,13 +121,18 @@ void	generate_3d(t_cub *cub)
 		(void)doubleMapX;
 		(void)doubleMapY;
 
-		// printf("%d/ \nmapX: %d     mapY: %d\ndoubleMapX: %f    doubleMapY: %f\n\n", x, mapX, mapY, doubleMapX, doubleMapY);
-		// printf("%d/ \n%f", x, doubleMapX - mapX);
+		if (x == 1279)
+		{
+			// printf("%d/ \nmapX: %d     mapY: %d\ndoubleMapX: %f    doubleMapY: %f\nratioWall: %f\n\n", x, mapX, mapY, doubleMapX, doubleMapY, doubleMapX - mapX);
+			// printf("%d/\nwallHeight%f\n", x, wall_height);
+
+		}
 		// printf("size wall: %f\n", wall_height);
 
 		if (margin > 0 && margin < WIN_HEIGHT)
-			draw_wall(cub, x, margin, margin + wall_height - 1, cub->p->ray[x], wall_height);
+			draw_wall(cub, x, margin, margin + wall_height - 1, cub->p->ray[x], wall_height, margin);
 		else
-			draw_wall(cub, x, 0, WIN_HEIGHT, cub->p->ray[x], wall_height);
+			draw_wall(cub, x, 0, WIN_HEIGHT, cub->p->ray[x], wall_height, margin);
 	}
+	// printf("nbWall: %d\n", nbWall);
 }
