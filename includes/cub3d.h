@@ -6,7 +6,7 @@
 /*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/07/21 15:38:00 by mehdisapin       ###   ########.fr       */
+/*   Updated: 2023/07/21 21:30:55 by mehdisapin       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,8 +181,8 @@ typedef struct s_xpm
 # include <math.h>
 
 # ifndef GRID_MINI
-#  define GRID_MINI 256
-// #  define GRID_MINI 64
+// #  define GRID_MINI 256
+#  define GRID_MINI 128
 # endif
 
 # ifndef GRID_MAP
@@ -287,6 +287,18 @@ typedef struct s_dist
 	int	sw;
 }		t_dist;
 
+// typedef struct s_ray
+// {
+// 	int				side;
+// 	int				wall_height;
+// 	double			coef;
+// 	double			dist;
+// 	t_vector		axis;
+// 	t_vector		dist_next_inter;
+// 	t_vector		next_inter;
+// 	t_tex_data		tex;
+// }					t_ray;
+
 typedef struct s_ray_map
 {
 	t_vector		coef_ns;
@@ -297,6 +309,15 @@ typedef struct s_ray_map
 	double			angle;
 	unsigned int	side;
 	t_tex_data	tex;
+
+	double		distance;
+	double		wall_height;
+	double		margin;
+	// int			map_x;
+	// int			map_y;
+	// t_vector	coord_wall;
+	t_vector	map;
+	int			index_wall;
 }				t_ray_map;
 
 typedef struct s_ray
@@ -312,23 +333,20 @@ typedef struct s_ray
 	
 }				t_ray;
 
-// typedef struct s_ray
-// {
-// 	int				side;
-// 	int				wall_height;
-// 	double			coef;
-// 	double			dist;
-// 	t_vector		axis;
-// 	t_vector		dist_next_inter;
-// 	t_vector		next_inter;
-// 	t_tex_data		tex;
-// }					t_ray;
+typedef struct s_wall
+{
+	int		width;
+	double	percent_start;
+	double	percent_end;
+}					t_wall;
 
 typedef struct s_player
 {
 	t_ray_map	**ray;
 	t_ray		pos;
 	double		coef;
+	int			nb_wall;
+	t_wall		*wall;
 }				t_player;
 
 typedef struct s_imgs
