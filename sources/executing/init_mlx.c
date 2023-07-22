@@ -6,7 +6,7 @@
 /*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:11:26 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/07/21 14:23:08 by mehdisapin       ###   ########.fr       */
+/*   Updated: 2023/07/21 22:01:04 by mehdisapin       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,27 +157,24 @@ static int	actions(t_cub *cub)
 {
 	if (cub->key.w)
 		move_player(cub, cub->p->pos.coef_ns, 1);
-	if (cub->key.s)
+	else if (cub->key.s)
 		move_player(cub, cub->p->pos.coef_ns, -1);
-	if (cub->key.a)
+	else if (cub->key.a)
 		move_player(cub, cub->p->pos.coef_we, 1);
-	if (cub->key.d)
+	else if (cub->key.d)
 		move_player(cub, cub->p->pos.coef_we, -1);
 	if (cub->key.l_arrow)
 	{
 		set_angle(cub, -1);
 		move_player(cub, cub->p->pos.coef_ns, 0);
 	}
-	if (cub->key.r_arrow)
+	else if (cub->key.r_arrow)
 	{
 		set_angle(cub, 1);
 		move_player(cub, cub->p->pos.coef_ns, 0);
 	}
-	if (cub->key.test)
-	{
-	}
-	generate_minimap(cub);
-	generate_player(cub);
+	// generate_minimap(cub);
+	// generate_player(cub);
 	generate_3d(cub);
 	display_images(cub);
 	return (0);
@@ -210,6 +207,7 @@ int	init_mlx(t_cub *cub)
 	cub->win = mlx_new_window(cub->mlx, WIN_WIDTH, WIN_HEIGHT, "cub3d");
 	cub->imgs = malloc(sizeof(t_imgs));
 	cub->imgs->show_mini = 0;
+	cub->p->wall = NULL;
 
 	(void)actions;
 	
@@ -217,9 +215,9 @@ int	init_mlx(t_cub *cub)
 	calcul_coef(cub);
 
 	// TO DELETE LATER keep it for testings
-	generate_minimap(cub);
-	generate_3d(cub);
-	display_images(cub);
+	// generate_minimap(cub);
+	// generate_3d(cub);
+	// display_images(cub);
 
 	mlx_hook(cub->win, 2, 1l << 0, &init_key_press, cub);
 	mlx_hook(cub->win, 3, 1l << 1, &init_key_release, cub);
