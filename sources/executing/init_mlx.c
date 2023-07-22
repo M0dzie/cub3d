@@ -6,7 +6,7 @@
 /*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:11:26 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/07/21 22:01:04 by mehdisapin       ###   ########.fr       */
+/*   Updated: 2023/07/22 14:46:24 by mehdisapin       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,11 +157,11 @@ static int	actions(t_cub *cub)
 {
 	if (cub->key.w)
 		move_player(cub, cub->p->pos.coef_ns, 1);
-	else if (cub->key.s)
+	if (cub->key.s)
 		move_player(cub, cub->p->pos.coef_ns, -1);
-	else if (cub->key.a)
+	if (cub->key.a)
 		move_player(cub, cub->p->pos.coef_we, 1);
-	else if (cub->key.d)
+	if (cub->key.d)
 		move_player(cub, cub->p->pos.coef_we, -1);
 	if (cub->key.l_arrow)
 	{
