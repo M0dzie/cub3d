@@ -6,7 +6,7 @@
 /*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:11:26 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/07/22 14:46:24 by mehdisapin       ###   ########.fr       */
+/*   Updated: 2023/07/22 20:11:58 by mehdisapin       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,6 +155,8 @@ static int	init_key_release(int key, t_cub *cub)
 
 static int	actions(t_cub *cub)
 {
+	generate_3d(cub);
+	display_images(cub);
 	if (cub->key.w)
 		move_player(cub, cub->p->pos.coef_ns, 1);
 	if (cub->key.s)
@@ -175,8 +177,7 @@ static int	actions(t_cub *cub)
 	}
 	// generate_minimap(cub);
 	// generate_player(cub);
-	generate_3d(cub);
-	display_images(cub);
+
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:41:02 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/07/22 15:04:13 by mehdisapin       ###   ########.fr       */
+/*   Updated: 2023/07/22 21:34:26 by mehdisapin       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,16 @@ static int	check_side_wall(t_cub *cub, int x)
 	return (0);
 }
 
-static void	draw_wall(t_cub *cub, int x, int y, int max, t_ray_map *ray, int tex_line)
+static void	draw_wall(t_cub *cub, int x, int y, int max, t_ray_map *ray, int px_column)
 {
 	(void)ray;
-	(void)tex_line;
+	(void)px_column;
 	int	side;
 	t_xpm	wall_side;
 	int		i;
 	(void)side;
 
 	side = check_side_wall(cub, x);
-	i = 0;
 	if (ray->side == EAST)
 		wall_side = cub->east;
 	else if (ray->side == WEST)
@@ -60,10 +59,12 @@ static void	draw_wall(t_cub *cub, int x, int y, int max, t_ray_map *ray, int tex
 		wall_side = cub->south;
 	else
 		wall_side = cub->north;
+	// i = -cub->p->ray[x]->margin;
+	i = 0;
 	while (y < max)
 	{
-		int color = wall_side.px[(wall_side.height) * i + tex_line];
-		ray->tex.color = wall_side.px[wall_side.height * ray->tex.tex_y + ray->tex.tex_x];
+		int color = wall_side.px[(wall_side.height) * i + px_column];
+		// ray->tex.color = wall_side.px[wall_side.height * ray->tex.tex_y + ray->tex.tex_x];
 		put_pixel(&cub->imgs->back, x, y, color);
 		if ((y - cub->p->ray[x]->margin) > (cub->p->ray[x]->wall_height / (double)cub->north.height * i))
 			i++;
@@ -131,6 +132,7 @@ int	calcul_wall_bloc(t_cub *cub)
 	if (!cub->p->wall)
 		return (printf("crash malloc\n"), -1);
 	ray = -1;
+	// int index_wall = -1;
 	int index_wall = -1;
 	while (cub->p->ray[++ray])
 	{
@@ -139,22 +141,30 @@ int	calcul_wall_bloc(t_cub *cub)
 			// use map x or y depending of side wall
 			if (ray != 0)
 			{
-				// if (cub->p->ray[0]->side == NORTH || cub->p->ray[0]->side == SOUTH)
-				// 	cub->p->wall[index_wall].percent_end = (cub->p->ray[ray - 1]->map.x - (int)cub->p->ray[ray - 1]->map.x) * 100;
-				// else if (cub->p->ray[0]->side == EAST || cub->p->ray[0]->side == WEST)
-				// 	cub->p->wall[index_wall].percent_end = (cub->p->ray[ray - 1]->map.y - (int)cub->p->ray[ray - 1]->map.y) * 100;
-				cub->p->wall[index_wall].percent_end = (cub->p->ray[ray - 1]->map.x - (int)cub->p->ray[ray - 1]->map.x) * 100;
-
+				if (cub->p->ray[ray]->side == NORTH)
+					cub->p->wall[index_wall].percent_end = (cub->p->ray[ray - 1]->map.x - (int)cub->p->ray[ray - 1]->map.x) * 100;
+				else if (cub->p->ray[ray]->side == SOUTH)
+					cub->p->wall[index_wall].percent_end = (cub->p->ray[ray - 1]->map.x - (int)cub->p->ray[ray - 1]->map.x) * 100;
+				else if (cub->p->ray[ray]->side == EAST)
+					cub->p->wall[index_wall].percent_end = (cub->p->ray[ray - 1]->map.y - (int)cub->p->ray[ray - 1]->map.y) * 100;
+				else if (cub->p->ray[ray]->side == WEST)
+					cub->p->wall[index_wall].percent_end = (cub->p->ray[ray - 1]->map.x - (int)cub->p->ray[ray - 1]->map.x) * 100;
+					// cub->p->wall[index_wall].percent_end = (cub->p->ray[ray - 1]->map.y - (int)cub->p->ray[ray - 1]->map.y) * 100;
+					// cub->p->wall[index_wall].percent_end = (cub->p->ray[ray - 1]->map.y - (int)cub->p->ray[ray - 1]->map.y) * 100;
 				cub->p->wall[index_wall].width = tmpWidth;
 			}
 			if (ray == WIN_WIDTH - 1)
 				break;
 			tmpWidth = 0;
 			index_wall++;
-			if (cub->p->ray[0]->side == NORTH || cub->p->ray[0]->side == SOUTH)
+			if (cub->p->ray[ray]->side == NORTH)
 				cub->p->wall[index_wall].percent_start = (cub->p->ray[ray]->map.x - (int)cub->p->ray[ray]->map.x) * 100;
-			else if (cub->p->ray[0]->side == EAST || cub->p->ray[0]->side == WEST)
-				cub->p->wall[index_wall].percent_start = (cub->p->ray[ray]->map.y - (int)cub->p->ray[ray]->map.y) * 100;
+			if (cub->p->ray[ray]->side == SOUTH)
+				cub->p->wall[index_wall].percent_start = (cub->p->ray[ray]->map.x - (int)cub->p->ray[ray]->map.x) * 100;
+			else if (cub->p->ray[ray]->side == EAST)
+				cub->p->wall[index_wall].percent_start = 100 - ((cub->p->ray[ray]->map.y - (int)cub->p->ray[ray]->map.y) * 100);
+			else if (cub->p->ray[ray]->side == WEST)
+				cub->p->wall[index_wall].percent_start = (cub->p->ray[ray]->map.x - (int)cub->p->ray[ray]->map.x) * 100;
 			tmpRatioX = cub->p->ray[ray]->map.x;
 			tmpRatioY = cub->p->ray[ray]->map.y;
 			
@@ -203,14 +213,14 @@ void	generate_3d(t_cub *cub)
 		}
 
 		int	px_line = (128 * ((cub->p->wall[cub->p->ray[x]->index_wall].percent_start) / 100)) + (tmp_index * ratio_percent);
-		if (x % 10 == 0)
-		// if (x == 800)
+		// if (x % 10 == 0)
+		if (x == 800)
 		{
 			// printf("ray: %d/   index_wall: %d    px_line: %d\n", x, cub->p->ray[x]->index_wall, (int)(px_line));
 			// printf("show: %f    full_width: %f\n", show_width, full_width);
 			// printf("ratio_percent show: %f\n", ratio_percent);
+			// printf("margin: %f\n", cub->p->ray[x]->margin);
 		}
-
 		// px_line = 50;
 		if (cub->p->ray[x]->margin > 0 && cub->p->ray[x]->margin < WIN_HEIGHT)
 			draw_wall(cub, x, cub->p->ray[x]->margin, cub->p->ray[x]->margin + cub->p->ray[x]->wall_height - 1, cub->p->ray[x], px_line);  // temporary
@@ -218,4 +228,9 @@ void	generate_3d(t_cub *cub)
 			draw_wall(cub, x, 0, WIN_HEIGHT, cub->p->ray[x], px_line);  // temporary
 		tmp_index++;
 	}
+	// for (int i = 0; i <= cub->p->nb_wall; i++)
+	// {
+	// 	printf("wall %d/   width: %d   percent_start: %f   percent_end: %f\n", i, cub->p->wall[i].width, cub->p->wall[i].percent_start, cub->p->wall[i].percent_end);
+	// }
+	// printf("\n");
 }

@@ -6,7 +6,7 @@
 /*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/07/21 21:30:55 by mehdisapin       ###   ########.fr       */
+/*   Updated: 2023/07/22 18:42:27 by mehdisapin       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,8 +181,8 @@ typedef struct s_xpm
 # include <math.h>
 
 # ifndef GRID_MINI
-// #  define GRID_MINI 256
-#  define GRID_MINI 128
+#  define GRID_MINI 256
+// #  define GRID_MINI 128
 # endif
 
 # ifndef GRID_MAP

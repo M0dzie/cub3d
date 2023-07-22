@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rendering.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msapin <msapin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:43:13 by msapin            #+#    #+#             */
-/*   Updated: 2023/07/21 00:57:12 by msapin           ###   ########.fr       */
+/*   Updated: 2023/07/22 21:00:39 by mehdisapin       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,7 +163,7 @@ void	put_miniwall(t_data data, int start_x, int start_y)
 			else if (y == GRID_MINI - 1)
 				put_pixel(&data, x + start_x, y + start_y, SOUTH);
 			else
-				put_pixel(&data, x + start_x, y + start_y, WALL_COLOR);
+				put_pixel(&data, x + start_x, y + start_y, WALL_COLOR);		/// need to fix line between two wall
 		}
 	}
 }
