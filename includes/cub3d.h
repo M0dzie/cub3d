@@ -6,7 +6,7 @@
 /*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/07/22 18:42:27 by mehdisapin       ###   ########.fr       */
+/*   Updated: 2023/07/23 10:15:56 by mehdisapin       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,6 +204,10 @@ typedef struct s_xpm
 
 # ifndef COLORS
 #  define WALL_COLOR 0x00202020
+// #  define NORTH 1
+// #  define SOUTH 2
+// #  define EAST 3
+// #  define WEST 4
 #  define NORTH 0x000362fc
 #  define SOUTH 0x00fc0367
 #  define WEST 0x0000ff3c
@@ -338,6 +342,7 @@ typedef struct s_wall
 	int		width;
 	double	percent_start;
 	double	percent_end;
+	int		side;
 }					t_wall;
 
 typedef struct s_player
