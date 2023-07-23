@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
+/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/07/20 21:10:56 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/23 20:42:16 by mehdisapin       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ int	calcul_coef(t_cub *cub)
 {
 	int		i;
 	double	tmp_angle;
+	(void)tmp_angle;
 
 	cub->p->pos.coef_ns.x = sin(cub->p->pos.angle * M_PI / 180);
 	cub->p->pos.coef_ns.y = -cos(cub->p->pos.angle * M_PI / 180);
@@ -141,6 +142,7 @@ int	calcul_coef(t_cub *cub)
 	cub->p->pos.coef_nesw.y = -cos((cub->p->pos.angle - 135) * M_PI / 180);
 	tmp_angle = get_angle(cub->p->pos.angle - FOV / 2, 0);
 	i = -1;
+
 	while (++i < WIN_WIDTH)
 	{
 		cub->p->ray[i]->angle = get_angle(tmp_angle + ((i + 1) * cub->p->coef), \

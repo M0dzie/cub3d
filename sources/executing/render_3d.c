@@ -6,7 +6,7 @@
 /*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:41:02 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/07/23 12:30:07 by mehdisapin       ###   ########.fr       */
+/*   Updated: 2023/07/23 21:32:58 by mehdisapin       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,8 @@ void	calcul_ray(t_cub *cub)
 	tmpRatioY = 0;
 	while (cub->p->ray[++ray])
 	{
-		cub->p->ray[ray]->distance = fix_fisheye(cub, ray);
+		// cub->p->ray[ray]->distance = fix_fisheye(cub, ray);
+		cub->p->ray[ray]->distance = distance_to_wall(cub, cub->p->pos.coef_ns, 1, 0) / GRID_MINI;
 		cub->p->ray[ray]->wall_height = WIN_HEIGHT / cub->p->ray[ray]->distance;
 		cub->p->ray[ray]->margin = (WIN_HEIGHT - cub->p->ray[ray]->wall_height) / 2;
 
@@ -93,6 +94,12 @@ void	calcul_ray(t_cub *cub)
 		cub->p->ray[ray]->map.y = (cub->p->ray[ray]->wall.y / GRID_MINI);
 
 		cub->p->ray[ray]->index_wall = cub->p->nb_wall;
+
+		// printf("wall: %d   distance: %f   mapX: %f   mapY: %f   (int)mapX: %d   (int)mapY: %d\n", ray, cub->p->ray[ray]->distance, cub->p->ray[ray]->map.x, cub->p->ray[ray]->map.y, (int)cub->p->ray[ray]->map.x, (int)cub->p->ray[ray]->map.y);
+
+		if (ray == 1279)
+			printf("wall: %d   distance: %f   wall_height %f   margin: %f\n", ray, cub->p->ray[ray]->distance, cub->p->ray[ray]->wall_height, cub->p->ray[ray]->margin);
+
 		if ((int)cub->p->ray[ray]->map.x != tmpRatioX || (int)cub->p->ray[ray]->map.y != tmpRatioY || ray == WIN_WIDTH - 1 || ray == 0)
 		{
 			tmpRatioX = cub->p->ray[ray]->map.x;
@@ -101,6 +108,7 @@ void	calcul_ray(t_cub *cub)
 				cub->p->nb_wall++;
 		}
 	}
+	// printf("\n");
 }
 
 int	get_middle(t_cub *cub, int index_wall)
@@ -217,6 +225,9 @@ void	generate_3d(t_cub *cub)
 
 	int tmp_index = 0;
 	int tmp_wall = 0;
+	(void)tmp_index;
+	(void)tmp_wall;
+	(void)x;
 	while (cub->p->ray[++x])
 	{
 		double	show_width = cub->p->wall[cub->p->ray[x]->index_wall].width;
@@ -235,7 +246,8 @@ void	generate_3d(t_cub *cub)
 			tmp_index = 0;
 		}
 
-		int	px_line = (128 * ((cub->p->wall[cub->p->ray[x]->index_wall].percent_start) / 100)) + (tmp_index * ratio_percent);
+		// int	px_line = (128 * ((cub->p->wall[cub->p->ray[x]->index_wall].percent_start) / 100)) + (tmp_index * ratio_percent);
+		int	px_line = 128;
 
 		if (cub->p->ray[x]->margin > 0 && cub->p->ray[x]->margin < WIN_HEIGHT)
 			draw_wall(cub, x, cub->p->ray[x]->margin, cub->p->ray[x]->margin + cub->p->ray[x]->wall_height - 1, cub->p->ray[x], px_line);  // temporary
@@ -243,9 +255,9 @@ void	generate_3d(t_cub *cub)
 			draw_wall(cub, x, 0, WIN_HEIGHT, cub->p->ray[x], px_line);  // temporary
 		tmp_index++;
 	}
-	for (int i = 0; i <= cub->p->nb_wall; i++)
-	{
-		printf("wall %d/   side: %d   width: %d   percent_start: %f   percent_end: %f\n", i, cub->p->wall[i].side, cub->p->wall[i].width, cub->p->wall[i].percent_start, cub->p->wall[i].percent_end);
-	}
-	printf("\n");
+	// for (int i = 0; i <= cub->p->nb_wall; i++)
+	// {
+	// 	printf("wall %d/   side: %d   width: %d   percent_start: %f   percent_end: %f\n", i, cub->p->wall[i].side, cub->p->wall[i].width, cub->p->wall[i].percent_start, cub->p->wall[i].percent_end);
+	// }
+	// printf("\n");
 }

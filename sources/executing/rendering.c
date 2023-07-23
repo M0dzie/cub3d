@@ -6,7 +6,7 @@
 /*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:43:13 by msapin            #+#    #+#             */
-/*   Updated: 2023/07/23 10:36:11 by mehdisapin       ###   ########.fr       */
+/*   Updated: 2023/07/23 21:21:07 by mehdisapin       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,11 @@ double	distance_to_wall(t_cub *cub, t_vector coef, int sign, int ray)
 	tmp.x = cub->p->pos.start.x;
 	tmp.y = cub->p->pos.start.y + (double)GRID_MINI / 2;
 	distance = 0;
+	(void)tmp;
+	(void)coef;
+	(void)sign;
+	(void)ray;
+
 	while (1)
 	{
 		if (tmp.x > 0 && tmp.y > 0)
@@ -89,6 +94,113 @@ double	distance_to_wall(t_cub *cub, t_vector coef, int sign, int ray)
 	}
 	return (distance);
 }
+
+// double	distance_to_wall(t_cub *cub, t_vector coef, int sign, int ray)
+// {
+// 	t_vector	tmp;
+// 	double		distance;
+
+// 	// tmp.x = cub->p->pos.start.x;
+// 	// tmp.y = cub->p->pos.start.y + (double)GRID_MINI / 2;
+// 	tmp.x = cub->p->pos.start.x / GRID_MINI + 0.5;
+// 	tmp.y = cub->p->pos.start.y / GRID_MINI + 0.5;
+// 	distance = 0;
+// 	(void)tmp;
+// 	(void)coef;
+// 	(void)sign;
+// 	(void)ray;
+
+// 	int	tmp_sign = -1;
+// 	double	total_distance = 0.0;
+// 	t_vector	offset;
+// 	(void)total_distance;
+// 	(void)tmp_sign;
+// 	(void)offset;
+
+// 	int i = -1;
+// 	while (++i < 5)
+// 	{
+// 		double distToNextX = (tmp.x - (int)tmp.x);
+// 		double distToNextY = (tmp.y - (int)tmp.y);
+// 		if (distToNextX == 0.0)
+// 			distToNextX = 1.0;
+// 		if (distToNextY == 0.0)
+// 			distToNextY = 1.0;
+
+// 		double numberTimeX;
+// 		double numberTimeY;
+
+// 		if (coef.x == 0.0)
+// 			numberTimeX = GRID_MINI + 1;
+// 		else
+// 			numberTimeX = distToNextX / (coef.x * sign / GRID_MINI) * tmp_sign;
+// 		if (coef.y == 0.0)
+// 			numberTimeY = GRID_MINI + 1;
+// 		else
+// 			numberTimeY = distToNextY / (coef.y * sign / GRID_MINI) * tmp_sign;
+
+// 		if (numberTimeX < 0)
+// 			numberTimeX *= -1;
+// 		if (numberTimeY < 0)
+// 			numberTimeY *= -1;
+
+// 		// printf("coef.x : %f tmp.x: %f   tmp.y: %f   distToNextX: %f   distToNextY: %f   numberTimeX: %f   numberTimeY: %f\n", coef.x, tmp.x, tmp.y, distToNextX, distToNextY, numberTimeX, numberTimeY);
+
+// 		if (numberTimeX < numberTimeY)
+// 		{
+// 			// printf("closer is X\n\n");
+// 			tmp.x += distToNextX * tmp_sign;
+// 			tmp.y += (coef.y * numberTimeX * sign / GRID_MINI);
+// 			total_distance += numberTimeX;
+// 			offset.x = 1;
+// 			offset.y = 0;
+// 		}
+// 		else
+// 		{
+// 			// printf("closer is Y\n\n");
+// 			// printf("%f\n", (coef.x * numberTimeY * sign / GRID_MINI));
+// 			tmp.x += (coef.x * numberTimeY * sign / GRID_MINI);
+// 			tmp.y += distToNextY * tmp_sign;
+// 			total_distance += numberTimeY;
+// 			offset.x = 0;
+// 			offset.y = 1;
+// 		}
+
+// 		// printf("x: %d  y: %d   %c\n", (int)(tmp.x - offset.x), (int)(tmp.y - offset.y), cub->map->array[(int)(tmp.y - offset.y)][(int)(tmp.x - offset.x)]);
+
+// 		// printf("tmp.x: %f   tmp.y: %f   distToNextX: %f   distToNextY: %f   numberTimeX: %f   numberTimeY: %f\n", tmp.x, tmp.y, distToNextX, distToNextY, numberTimeX, numberTimeY);
+// 		if (cub->map->array[(int)(tmp.y - offset.y)][(int)(tmp.x - offset.x)] == '1')
+// 		{
+// 			// printf("%d wall hit at %f of distance  x: %f  y: %f\n\n", ray, total_distance, tmp.x - offset.x, tmp.y - offset.y);
+// 			// return (distance);
+// 			cub->p->ray[ray - 1]->wall.x = tmp.x;
+// 			cub->p->ray[ray - 1]->wall.y = tmp.y;
+// 			break ;
+// 		}
+// 	}
+
+// 	// while (1)
+// 	// {
+// 	// 	if (tmp.x > 0 && tmp.y > 0)
+// 	// 	{
+// 	// 		if (is_wall(&cub->imgs->minimap, tmp.x + GRID_MINI / 2, tmp.y - 1))
+// 	// 			break ;
+// 	// 	}
+// 	// 	else
+// 	// 		break ;
+// 	// 	tmp.x += (coef.x) * sign;
+// 	// 	tmp.y += (coef.y) * sign;
+// 	// 	distance++;
+// 	// }
+// 	// if (!ray)
+// 	// 	distance -= GRID_MINI / 3;
+// 	// else
+// 	// {
+// 	// 	cub->p->ray[ray - 1]->wall = tmp;
+// 		// init_side_wall(cub, &cub->imgs->minimap, ray - 1);
+// 	// }
+// 	return (distance);
+// }
 
 void	calcul_distance(t_cub *cub)
 {
