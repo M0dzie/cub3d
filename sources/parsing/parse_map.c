@@ -6,7 +6,7 @@
 /*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/07/24 16:24:46 by mehdisapin       ###   ########.fr       */
+/*   Updated: 2023/07/24 17:22:02 by mehdisapin       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,12 +207,8 @@ int	init_player(t_cub *cub)
 			if (c == 'N' || c == 'S' || c == 'W' || c == 'E')
 			{
 				parse_player_angle(cub, c);
-				// cub->p->pos.start.x = j * GRID_MINI + GRID_MINI / 2;
-				// cub->p->pos.start.y = i * GRID_MINI + GRID_MINI / 2;
 				cub->p->pos.start.x = j * GRID_MINI + GRID_MINI / 2;
 				cub->p->pos.start.y = i * GRID_MINI + GRID_MINI / 2;
-				// cub->p->pos.start.x = j;
-				// cub->p->pos.start.y = i;
 			}
 		}
 	}

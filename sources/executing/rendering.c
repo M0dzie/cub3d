@@ -6,7 +6,7 @@
 /*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:43:13 by msapin            #+#    #+#             */
-/*   Updated: 2023/07/24 16:34:27 by mehdisapin       ###   ########.fr       */
+/*   Updated: 2023/07/24 17:21:06 by mehdisapin       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,40 +105,20 @@ double	distance_to_wall(t_cub *cub, t_vector coef, int sign, int ray)
 double	new_distance_to_wall(t_cub *cub, t_vector coef, int sign, int ray)
 {
 	t_vector	tmp;
-	// double		distance;
-
-	// tmp.x = cub->p->pos.start.x;
-	// tmp.y = cub->p->pos.start.y + (double)GRID_MINI / 2;
-	tmp.x = cub->p->pos.start.x / GRID_MINI;
-	// tmp.y = cub->p->pos.start.y / GRID_MINI + 0.5;
-	tmp.y = cub->p->pos.start.y / GRID_MINI + 0.5;
-	// distance = 0;
-	(void)tmp;
-	(void)coef;
-	(void)sign;
-	(void)ray;
-
-	int	tmp_sign = -1;
-	double	total_distance = 0.0;
 	t_vector	offset;
-	(void)total_distance;
-	(void)tmp_sign;
-	(void)offset;
+	int			tmp_sign;
+	double		total_distance;
 
-	// if (ray == WIN_WIDTH - 1)
-	// 	printf("ray %d/   coef.x: %f   coef.y: %f\n", ray, coef.x, coef.y);
-
-	int i = -1;
-	while (++i < 5)
+	tmp.x = cub->p->pos.start.x / GRID_MINI;
+	tmp.y = cub->p->pos.start.y / GRID_MINI + 0.5;
+	tmp_sign = -1;
+	total_distance = 0.0;
+	while (1)
 	{
 		double distToNextX;
 		double distToNextY;
-
-		// if (ray == 0 || ray == 639 || ray == 1279)
-		// {
-			// printf("ray %d  OLD/  tmp.x: %f   tmp.y: %f     ", ray, tmp.x, tmp.y);
-			// printf("ray %d/   wallX: %f   wallY: %f\n", ray, cub->p->ray[ray]->wall.x, cub->p->ray[ray]->wall.y);
-		// }
+		double numberTimeX;
+		double numberTimeY;
 
 		if (coef.x > 0)
 			distToNextX = 1 - (tmp.x - (int)tmp.x);
@@ -154,9 +134,6 @@ double	new_distance_to_wall(t_cub *cub, t_vector coef, int sign, int ray)
 		if (distToNextY == 0.0)
 			distToNextY = 1.0;
 
-		double numberTimeX;
-		double numberTimeY;
-
 		if (coef.x == 0.0)
 			numberTimeX = GRID_MINI + 1;
 		else
@@ -171,15 +148,8 @@ double	new_distance_to_wall(t_cub *cub, t_vector coef, int sign, int ray)
 		if (numberTimeY < 0)
 			numberTimeY *= -1;
 
-		// if (ray == 0 || ray == 639 || ray == 1279)
-		// 	printf("ray %d/  coefX: %f   coefY: %f\n", ray, coef.x, coef.y);
-
-		// printf("coef.x : %f tmp.x: %f   tmp.y: %f   distToNextX: %f   distToNextY: %f   numberTimeX: %f   numberTimeY: %f\n", coef.x, tmp.x, tmp.y, distToNextX, distToNextY, numberTimeX, numberTimeY);
-
 		if (numberTimeX < numberTimeY)
 		{
-			// if (ray == 0 || ray == 639 || ray == 1279)
-				// printf("ray %d/  closer is X\n", ray);
 			// 0 to 90 deg angle
 			if (coef.x > 0)
 			{
@@ -197,8 +167,6 @@ double	new_distance_to_wall(t_cub *cub, t_vector coef, int sign, int ray)
 		}
 		else
 		{
-			// if (ray == 0 || ray == 639 || ray == 1279)
-				// printf("ray %d/  closer is Y\n", ray);
 			if (coef.y > 0)
 			{
 				tmp.y += distToNextY;
@@ -214,25 +182,10 @@ double	new_distance_to_wall(t_cub *cub, t_vector coef, int sign, int ray)
 			total_distance += numberTimeY;
 			offset.x = 0;
 		}
-
-		// printf("x: %d  y: %d   %c\n", (int)(tmp.x - offset.x), (int)(tmp.y - offset.y), cub->map->array[(int)(tmp.y - offset.y)][(int)(tmp.x - offset.x)]);
-
-		// if (ray == 0 || ray == 639 || ray == 1279)
-		if (ray == 639)
-		{
-			// printf("NEW/  tmp.x: %f   tmp.y: %f\n", tmp.x, tmp.y);
-
-			// printf("ray %d/  tmp.x: %f   tmp.y: %f   tmp.x - offset: %f   tmp.y - offset: %f   distToNextX: %f   distToNextY: %f   numberTimeX: %f   numberTimeY: %f\n", ray, tmp.x, tmp.y, tmp.x - offset.x, tmp.y - offset.y, distToNextX, distToNextY, numberTimeX, numberTimeY);
-			// printf("ray %d/  tmp.x: %f   tmp.y: %f   tmp.x - offset: %f   tmp.y - offset: %f\n", ray, tmp.x, tmp.y, tmp.x - offset.x, tmp.y - offset.y);
-			// printf("ray %d/   wallX: %f   wallY: %f\n", ray, cub->p->ray[ray]->wall.x, cub->p->ray[ray]->wall.y);
-		}
 		if (cub->map->array[(int)(tmp.y - offset.y)][(int)(tmp.x - offset.x)] == '1')
 		{
 			cub->p->ray[ray]->wall.x = tmp.x * GRID_MINI;
 			cub->p->ray[ray]->wall.y = tmp.y * GRID_MINI;
-			// if (ray == 0 || ray == WIN_WIDTH -1)
-				// printf("%d wall hit at %f of distance  x: %f  y: %f\n\n", ray, total_distance, tmp.x - offset.x, tmp.y - offset.y);
-			// 	printf("%d NEW/  tmp.x: %f   tmp.y: %f\n", ray, tmp.x, tmp.y);
 			break ;
 		}
 	}
@@ -272,7 +225,6 @@ void	move_player(t_cub *cub, t_vector coef, int sign)
 			cub->p->pos.start.y -= tmp_coef.y;
 		}
 	}
-	// render_minimap(cub);
 }
 
 int	put_pixel(t_data *data, int x, int y, int color)
