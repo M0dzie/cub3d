@@ -6,7 +6,7 @@
 /*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:41:02 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/07/24 20:44:11 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/24 21:01:34 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,8 @@ void	calcul_ray(t_cub *cub)
 
 	ray = -1;
 	cub->p->nb_wall = 0;
-	cur_map_x = cub->p->ray[0]->wall.x / GRID_MINI + 0.5;
-	cur_map_y = cub->p->ray[0]->wall.y / GRID_MINI;
+	cur_map_x = (int)cub->p->ray[0]->wall.x / GRID_MINI + 0.5;
+	cur_map_y = (int)cub->p->ray[0]->wall.y / GRID_MINI;
 	int tmp_side = cub->p->ray[0]->side;
 	while (cub->p->ray[++ray])
 	{
@@ -131,7 +131,8 @@ void	calcul_ray(t_cub *cub)
 		// 		cub->p->nb_wall++;
 		// }
 	}
-	printf("nb_wall = %d\n", cub->p->nb_wall);
+	// printf("ray[%d] = %d\tray [%d] = %d\tray [%d] = %d\n", 300, cub->p->ray[300]->side, 700, cub->p->ray[700]->side, 1000, cub->p->ray[1000]->side);
+	// printf("nb_wall = %d\n", cub->p->nb_wall);
 }
 
 int	get_middle(t_cub *cub, int index_wall)
