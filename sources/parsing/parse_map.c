@@ -6,7 +6,7 @@
 /*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/07/23 20:42:16 by mehdisapin       ###   ########.fr       */
+/*   Updated: 2023/07/24 16:24:46 by mehdisapin       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,9 @@ int	calcul_coef(t_cub *cub)
 		0);
 		cub->p->ray[i]->coef_ns.x = sin(cub->p->ray[i]->angle * M_PI / 180);
 		cub->p->ray[i]->coef_ns.y = -cos(cub->p->ray[i]->angle * M_PI / 180);
-		distance_to_wall(cub, cub->p->ray[i]->coef_ns, 1, i + 1);
+		// distance_to_wall(cub, cub->p->ray[i]->coef_ns, 1, i + 1);
+		// new_distance_to_wall(cub, cub->p->ray[i]->coef_ns, 1, i + 1);
+		new_distance_to_wall(cub, cub->p->ray[i]->coef_ns, 1, i);
 	}
 	return (1);
 }
@@ -205,8 +207,12 @@ int	init_player(t_cub *cub)
 			if (c == 'N' || c == 'S' || c == 'W' || c == 'E')
 			{
 				parse_player_angle(cub, c);
-				cub->p->pos.start.x = j * GRID_MINI;
-				cub->p->pos.start.y = i * GRID_MINI;
+				// cub->p->pos.start.x = j * GRID_MINI + GRID_MINI / 2;
+				// cub->p->pos.start.y = i * GRID_MINI + GRID_MINI / 2;
+				cub->p->pos.start.x = j * GRID_MINI + GRID_MINI / 2;
+				cub->p->pos.start.y = i * GRID_MINI + GRID_MINI / 2;
+				// cub->p->pos.start.x = j;
+				// cub->p->pos.start.y = i;
 			}
 		}
 	}

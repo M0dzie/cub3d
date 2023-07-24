@@ -6,7 +6,7 @@
 /*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:41:02 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/07/23 21:32:58 by mehdisapin       ###   ########.fr       */
+/*   Updated: 2023/07/24 13:33:39 by mehdisapin       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,18 @@ void	calcul_ray(t_cub *cub)
 	tmpRatioY = 0;
 	while (cub->p->ray[++ray])
 	{
-		// cub->p->ray[ray]->distance = fix_fisheye(cub, ray);
-		cub->p->ray[ray]->distance = distance_to_wall(cub, cub->p->pos.coef_ns, 1, 0) / GRID_MINI;
+		// double oldDistance = fix_fisheye(cub, ray);
+		// double oldWall_height = WIN_HEIGHT / oldDistance;
+		// double oldMargin = (WIN_HEIGHT - oldWall_height) / 2;
+
+		cub->p->ray[ray]->distance = fix_fisheye(cub, ray);
 		cub->p->ray[ray]->wall_height = WIN_HEIGHT / cub->p->ray[ray]->distance;
 		cub->p->ray[ray]->margin = (WIN_HEIGHT - cub->p->ray[ray]->wall_height) / 2;
+
+		// cub->p->ray[ray]->distance = new_distance_to_wall(cub, cub->p->pos.coef_ns, 1, 0);
+		// cub->p->ray[ray]->wall_height = WIN_HEIGHT / cub->p->ray[ray]->distance;
+		// cub->p->ray[ray]->wall_height = WIN_HEIGHT / cub->p->ray[ray]->distance * GRID_MINI;
+
 
 		cub->p->ray[ray]->map.x = (cub->p->ray[ray]->wall.x / GRID_MINI) + 0.5;
 		cub->p->ray[ray]->map.y = (cub->p->ray[ray]->wall.y / GRID_MINI);
@@ -97,8 +105,12 @@ void	calcul_ray(t_cub *cub)
 
 		// printf("wall: %d   distance: %f   mapX: %f   mapY: %f   (int)mapX: %d   (int)mapY: %d\n", ray, cub->p->ray[ray]->distance, cub->p->ray[ray]->map.x, cub->p->ray[ray]->map.y, (int)cub->p->ray[ray]->map.x, (int)cub->p->ray[ray]->map.y);
 
-		if (ray == 1279)
-			printf("wall: %d   distance: %f   wall_height %f   margin: %f\n", ray, cub->p->ray[ray]->distance, cub->p->ray[ray]->wall_height, cub->p->ray[ray]->margin);
+		// if (ray == 0 || ray == 639 || ray == 1279)
+		// {
+		// 	// printf("old wall: %d   distance: %f   wall_height %f   margin: %f\n", ray, oldDistance, oldWall_height, oldMargin);
+		// 	printf("new wall: %d   distance: %f   wall_height %f   margin: %f   wallX: %f   wallY: %f\n", ray, cub->p->ray[ray]->distance, cub->p->ray[ray]->wall_height, cub->p->ray[ray]->margin, cub->p->ray[ray]->wall.x, cub->p->ray[ray]->wall.y);
+		// 	printf("\n");
+		// }
 
 		if ((int)cub->p->ray[ray]->map.x != tmpRatioX || (int)cub->p->ray[ray]->map.y != tmpRatioY || ray == WIN_WIDTH - 1 || ray == 0)
 		{
@@ -212,6 +224,7 @@ void	generate_3d(t_cub *cub)
 	int		x;
 
 	(void)draw_wall;
+	(void)x;
 	
 	if (cub->imgs->back.img)
 		mlx_destroy_image(cub->mlx, cub->imgs->back.img);

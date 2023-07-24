@@ -6,7 +6,7 @@
 /*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:11:26 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/07/23 21:21:50 by mehdisapin       ###   ########.fr       */
+/*   Updated: 2023/07/24 16:34:33 by mehdisapin       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,11 +159,11 @@ static int	actions(t_cub *cub)
 	display_images(cub);
 	if (cub->key.w)
 		move_player(cub, cub->p->pos.coef_ns, 1);
-	if (cub->key.s)
+	else if (cub->key.s)
 		move_player(cub, cub->p->pos.coef_ns, -1);
-	if (cub->key.a)
+	else if (cub->key.a)
 		move_player(cub, cub->p->pos.coef_we, 1);
-	if (cub->key.d)
+	else if (cub->key.d)
 		move_player(cub, cub->p->pos.coef_we, -1);
 	if (cub->key.l_arrow)
 	{
@@ -212,7 +212,7 @@ int	init_mlx(t_cub *cub)
 
 	(void)actions;
 	
-	generate_minimap(cub);
+	// generate_minimap(cub);
 	calcul_coef(cub);
 
 	// TO DELETE LATER keep it for testings

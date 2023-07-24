@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   camera.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
+/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 10:29:51 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/07/20 21:11:02 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/24 15:29:31 by mehdisapin       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,7 @@ double	fix_fisheye(t_cub *cub, int i)
 	distance = adjust_distance(cub->p->pos.start, cub->p->ray[i]->wall);
 	distance /= GRID_MINI;
 	distance = distance * cos(new_angle);
+	// if (i == 0 || i == WIN_WIDTH - 1)
+	// 	printf("ray %d/   wallX: %f   wallY: %f   distance: %f\n", i, cub->p->ray[i]->wall.x, cub->p->ray[i]->wall.y, distance);
 	return (distance);
 }
