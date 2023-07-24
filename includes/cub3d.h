@@ -6,7 +6,7 @@
 /*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/07/23 10:15:56 by mehdisapin       ###   ########.fr       */
+/*   Updated: 2023/07/24 16:13:53 by mehdisapin       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,6 +196,8 @@ typedef struct s_xpm
 
 # define SPEED_MINI 14.0
 # define SPEED_ANGLE 2.0
+// # define SPEED_MINI 0.1
+// # define SPEED_ANGLE 0.05
 
 # define FOV 66.0
 
@@ -441,5 +443,7 @@ void	render_minimap(t_cub *cub);
 int		parse_xpm(t_cub *cub);
 int		is_valid_number(char *rgb);
 void	save_texture(int *fd, char *path, char **path_save);
+
+double	new_distance_to_wall(t_cub *cub, t_vector coef, int sign, int ray);
 
 #endif

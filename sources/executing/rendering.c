@@ -6,7 +6,7 @@
 /*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:43:13 by msapin            #+#    #+#             */
-/*   Updated: 2023/07/23 10:36:11 by mehdisapin       ###   ########.fr       */
+/*   Updated: 2023/07/24 17:21:06 by mehdisapin       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,15 @@ double	distance_to_wall(t_cub *cub, t_vector coef, int sign, int ray)
 	t_vector	tmp;
 	double		distance;
 
+	// tmp.x = cub->p->pos.start.x;
 	tmp.x = cub->p->pos.start.x;
 	tmp.y = cub->p->pos.start.y + (double)GRID_MINI / 2;
 	distance = 0;
+	(void)tmp;
+	(void)coef;
+	(void)sign;
+	(void)ray;
+
 	while (1)
 	{
 		if (tmp.x > 0 && tmp.y > 0)
@@ -80,6 +86,12 @@ double	distance_to_wall(t_cub *cub, t_vector coef, int sign, int ray)
 		tmp.y += (coef.y) * sign;
 		distance++;
 	}
+	if (ray == 0 || ray == 639 || ray == 1279)
+		{
+			// printf("ray %d/  tmp.x: %f   tmp.y: %f\n", ray, tmp.x, tmp.y);
+			// printf("ray %d/   wallX: %f   wallY: %f\n", ray, cub->p->ray[ray]->wall.x, cub->p->ray[ray]->wall.y);
+			printf("distance: %f\n", distance);
+		}
 	if (!ray)
 		distance -= GRID_MINI / 3;
 	else
@@ -88,6 +100,96 @@ double	distance_to_wall(t_cub *cub, t_vector coef, int sign, int ray)
 		init_side_wall(cub, &cub->imgs->minimap, ray - 1);
 	}
 	return (distance);
+}
+
+double	new_distance_to_wall(t_cub *cub, t_vector coef, int sign, int ray)
+{
+	t_vector	tmp;
+	t_vector	offset;
+	int			tmp_sign;
+	double		total_distance;
+
+	tmp.x = cub->p->pos.start.x / GRID_MINI;
+	tmp.y = cub->p->pos.start.y / GRID_MINI + 0.5;
+	tmp_sign = -1;
+	total_distance = 0.0;
+	while (1)
+	{
+		double distToNextX;
+		double distToNextY;
+		double numberTimeX;
+		double numberTimeY;
+
+		if (coef.x > 0)
+			distToNextX = 1 - (tmp.x - (int)tmp.x);
+		else
+			distToNextX = (tmp.x - (int)tmp.x);
+		if (coef.y > 0)
+			distToNextY = 1 - (tmp.y - (int)tmp.y);
+		else
+			distToNextY = (tmp.y - (int)tmp.y);
+
+		if (distToNextX == 0.0)
+			distToNextX = 1.0;
+		if (distToNextY == 0.0)
+			distToNextY = 1.0;
+
+		if (coef.x == 0.0)
+			numberTimeX = GRID_MINI + 1;
+		else
+			numberTimeX = distToNextX / (coef.x * sign / GRID_MINI) * tmp_sign;
+		if (coef.y == 0.0)
+			numberTimeY = GRID_MINI + 1;
+		else
+			numberTimeY = distToNextY / (coef.y * sign / GRID_MINI) * tmp_sign;
+
+		if (numberTimeX < 0)
+			numberTimeX *= -1;
+		if (numberTimeY < 0)
+			numberTimeY *= -1;
+
+		if (numberTimeX < numberTimeY)
+		{
+			// 0 to 90 deg angle
+			if (coef.x > 0)
+			{
+				tmp.x += distToNextX;
+				offset.x = 0;
+			}
+			else
+			{
+				tmp.x += distToNextX * tmp_sign;
+				offset.x = 1;
+			}
+			tmp.y += (coef.y * numberTimeX * sign / GRID_MINI);
+			total_distance += numberTimeX;
+			offset.y = 0;
+		}
+		else
+		{
+			if (coef.y > 0)
+			{
+				tmp.y += distToNextY;
+				offset.y = 0;
+			}
+			else
+			{
+				tmp.y += distToNextY * tmp_sign;
+				offset.y = 1;
+			}
+
+			tmp.x += (coef.x * numberTimeY * sign / GRID_MINI);
+			total_distance += numberTimeY;
+			offset.x = 0;
+		}
+		if (cub->map->array[(int)(tmp.y - offset.y)][(int)(tmp.x - offset.x)] == '1')
+		{
+			cub->p->ray[ray]->wall.x = tmp.x * GRID_MINI;
+			cub->p->ray[ray]->wall.y = tmp.y * GRID_MINI;
+			break ;
+		}
+	}
+	return (total_distance);
 }
 
 void	calcul_distance(t_cub *cub)
@@ -113,7 +215,7 @@ void	move_player(t_cub *cub, t_vector coef, int sign)
 	{
 		cub->p->pos.start.x += tmp_coef.x;
 		cub->p->pos.start.y += tmp_coef.y;
-		calcul_distance(cub);
+		// calcul_distance(cub);
 		if (cub->p->pos.dist.n < 0 || cub->p->pos.dist.s < 0 \
 		|| cub->p->pos.dist.w < 0 || cub->p->pos.dist.e < 0 \
 		|| cub->p->pos.dist.nw < 0 || cub->p->pos.dist.se < 0 \
@@ -123,7 +225,6 @@ void	move_player(t_cub *cub, t_vector coef, int sign)
 			cub->p->pos.start.y -= tmp_coef.y;
 		}
 	}
-	// render_minimap(cub);
 }
 
 int	put_pixel(t_data *data, int x, int y, int color)

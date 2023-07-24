@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
+/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/07/20 21:10:56 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/24 17:22:02 by mehdisapin       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ int	calcul_coef(t_cub *cub)
 {
 	int		i;
 	double	tmp_angle;
+	(void)tmp_angle;
 
 	cub->p->pos.coef_ns.x = sin(cub->p->pos.angle * M_PI / 180);
 	cub->p->pos.coef_ns.y = -cos(cub->p->pos.angle * M_PI / 180);
@@ -141,13 +142,16 @@ int	calcul_coef(t_cub *cub)
 	cub->p->pos.coef_nesw.y = -cos((cub->p->pos.angle - 135) * M_PI / 180);
 	tmp_angle = get_angle(cub->p->pos.angle - FOV / 2, 0);
 	i = -1;
+
 	while (++i < WIN_WIDTH)
 	{
 		cub->p->ray[i]->angle = get_angle(tmp_angle + ((i + 1) * cub->p->coef), \
 		0);
 		cub->p->ray[i]->coef_ns.x = sin(cub->p->ray[i]->angle * M_PI / 180);
 		cub->p->ray[i]->coef_ns.y = -cos(cub->p->ray[i]->angle * M_PI / 180);
-		distance_to_wall(cub, cub->p->ray[i]->coef_ns, 1, i + 1);
+		// distance_to_wall(cub, cub->p->ray[i]->coef_ns, 1, i + 1);
+		// new_distance_to_wall(cub, cub->p->ray[i]->coef_ns, 1, i + 1);
+		new_distance_to_wall(cub, cub->p->ray[i]->coef_ns, 1, i);
 	}
 	return (1);
 }
@@ -203,8 +207,8 @@ int	init_player(t_cub *cub)
 			if (c == 'N' || c == 'S' || c == 'W' || c == 'E')
 			{
 				parse_player_angle(cub, c);
-				cub->p->pos.start.x = j * GRID_MINI;
-				cub->p->pos.start.y = i * GRID_MINI;
+				cub->p->pos.start.x = j * GRID_MINI + GRID_MINI / 2;
+				cub->p->pos.start.y = i * GRID_MINI + GRID_MINI / 2;
 			}
 		}
 	}

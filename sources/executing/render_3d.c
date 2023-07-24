@@ -6,7 +6,7 @@
 /*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:41:02 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/07/23 12:30:07 by mehdisapin       ###   ########.fr       */
+/*   Updated: 2023/07/24 17:54:48 by mehdisapin       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,18 @@ static void	draw_wall(t_cub *cub, int x, int y, int max, t_ray_map *ray, int px_
 	else
 		wall_side = cub->north;
 	// i = -cub->p->ray[x]->margin;
+
+	double coef_i;
+	(void)coef_i;
 	i = 0;
+
+	if ((int)ray->wall_height < wall_side.height)
+		coef_i = wall_side.height / ray->wall_height;
+	else
+		coef_i = 1;
+
+	// if (x == 639)
+	// 	printf("coef: %f   wall_height: %f   wall_sideWidth: %d\n", coef_i, ray->wall_height, wall_side.width);
 	while (y < max)
 	{
 		int color = wall_side.px[wall_side.height * i + px_column];
@@ -93,6 +104,7 @@ void	calcul_ray(t_cub *cub)
 		cub->p->ray[ray]->map.y = (cub->p->ray[ray]->wall.y / GRID_MINI);
 
 		cub->p->ray[ray]->index_wall = cub->p->nb_wall;
+
 		if ((int)cub->p->ray[ray]->map.x != tmpRatioX || (int)cub->p->ray[ray]->map.y != tmpRatioY || ray == WIN_WIDTH - 1 || ray == 0)
 		{
 			tmpRatioX = cub->p->ray[ray]->map.x;
@@ -144,7 +156,6 @@ int	calcul_wall_bloc(t_cub *cub)
 			{
 				cub->p->wall[index_wall].width = tmpWidth;
 				middle_wall = get_middle(cub, index_wall);
-				// printf("%d\n", get_middle(cub, index_wall));
 				if (cub->p->ray[middle_wall]->side == NORTH)
 				{
 					cub->p->wall[index_wall].percent_end = 100 - (cub->p->ray[ray - 1]->map.x - (int)cub->p->ray[ray - 1]->map.x) * 100;
@@ -187,23 +198,14 @@ int	calcul_wall_bloc(t_cub *cub)
 		}
 		tmpWidth++;
 	}
-	// for (int i = 0; i <= cub->p->nb_wall; i++)
-	// {
-	// 	if (cub->p->wall[i].side == 1)
-	// 	{
-	// 		double tmp = cub->p->wall[i].percent_start;
-	// 		cub->p->wall[i].percent_start = cub->p->wall[i].percent_end;
-	// 		cub->p->wall[i].percent_end = tmp;
-	// 	}
-	// }
 	return (0);
 }
 
 void	generate_3d(t_cub *cub)
 {
-	int		x;
-
-	(void)draw_wall;
+	int	x;
+	int tmp_index;
+	int tmp_wall;
 	
 	if (cub->imgs->back.img)
 		mlx_destroy_image(cub->mlx, cub->imgs->back.img);
@@ -213,21 +215,19 @@ void	generate_3d(t_cub *cub)
 	put_floor_and_ceiling(cub);
 
 	calcul_ray(cub);
-	calcul_wall_bloc(cub);
+	if (calcul_wall_bloc(cub) != 0)
+		printf("return malloc crash\n");
 
-	int tmp_index = 0;
-	int tmp_wall = 0;
+	tmp_index = 0;
+	tmp_wall = 0;
 	while (cub->p->ray[++x])
 	{
 		double	show_width = cub->p->wall[cub->p->ray[x]->index_wall].width;
 		double	full_width = cub->p->wall[cub->p->ray[x]->index_wall].width * 100 / (cub->p->wall[cub->p->ray[x]->index_wall].percent_end - cub->p->wall[cub->p->ray[x]->index_wall].percent_start);
 		double	percent_show = show_width / full_width * 100;
+		double	percent_line = 128 / full_width;
 		(void)percent_show;
-		double	ratio_percent = 128 / full_width;
-
-		(void)show_width;
-		(void)full_width;
-		(void)ratio_percent;
+		(void)percent_line;
 
 		if (tmp_wall != cub->p->ray[x]->index_wall)
 		{
@@ -235,7 +235,8 @@ void	generate_3d(t_cub *cub)
 			tmp_index = 0;
 		}
 
-		int	px_line = (128 * ((cub->p->wall[cub->p->ray[x]->index_wall].percent_start) / 100)) + (tmp_index * ratio_percent);
+		// int	px_line = (128 * ((cub->p->wall[cub->p->ray[x]->index_wall].percent_start) / 100)) + (tmp_index * percent_line);
+		int	px_line = 128;
 
 		if (cub->p->ray[x]->margin > 0 && cub->p->ray[x]->margin < WIN_HEIGHT)
 			draw_wall(cub, x, cub->p->ray[x]->margin, cub->p->ray[x]->margin + cub->p->ray[x]->wall_height - 1, cub->p->ray[x], px_line);  // temporary
@@ -243,9 +244,9 @@ void	generate_3d(t_cub *cub)
 			draw_wall(cub, x, 0, WIN_HEIGHT, cub->p->ray[x], px_line);  // temporary
 		tmp_index++;
 	}
-	for (int i = 0; i <= cub->p->nb_wall; i++)
-	{
-		printf("wall %d/   side: %d   width: %d   percent_start: %f   percent_end: %f\n", i, cub->p->wall[i].side, cub->p->wall[i].width, cub->p->wall[i].percent_start, cub->p->wall[i].percent_end);
-	}
-	printf("\n");
+	// for (int i = 0; i <= cub->p->nb_wall; i++)
+	// {
+	// 	printf("wall %d/   side: %d   width: %d   percent_start: %f   percent_end: %f\n", i, cub->p->wall[i].side, cub->p->wall[i].width, cub->p->wall[i].percent_start, cub->p->wall[i].percent_end);
+	// }
+	// printf("\n");
 }
