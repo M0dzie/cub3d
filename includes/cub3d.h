@@ -6,7 +6,7 @@
 /*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/07/24 20:03:34 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/24 20:20:19 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,16 +205,16 @@ typedef struct s_xpm
 # define FALSE 0
 
 # ifndef COLORS
-#  define WALL_COLOR 0x00202020
-// #  define NORTH 1
-// #  define SOUTH 2
-// #  define EAST 3
-// #  define WEST 4
-#  define NORTH 0x000362fc
-#  define SOUTH 0x00fc0367
-#  define WEST 0x0000ff3c
-#  define EAST 0x00ffe600
-#  define ANGLE 0x0000ffb7
+// #  define WALL_COLOR 0x00202020
+#  define NORTH 3
+#  define SOUTH 2
+#  define EAST 0
+#  define WEST 1
+// #  define NORTH 0x000362fc
+// #  define SOUTH 0x00fc0367
+// #  define WEST 0x0000ff3c
+// #  define EAST 0x00ffe600
+// #  define ANGLE 0x0000ffb7
 # endif
 
 # ifndef KEYS
@@ -308,13 +308,14 @@ typedef struct s_dist
 
 typedef struct s_ray_map
 {
-	t_vector		coef_ns;
-	t_vector		wall;
+	t_vector	coef_ns;
+	t_vector	wall;
 	// t_vector	coef_we;
 	// t_vector	start;
 	// double		dist;
-	double			angle;
-	unsigned int	side;
+	double		angle;
+	// unsigned int	side;
+	int			side;
 	t_tex_data	tex;
 
 	double		distance;
