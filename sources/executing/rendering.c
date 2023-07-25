@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rendering.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:43:13 by msapin            #+#    #+#             */
-/*   Updated: 2023/07/25 13:33:16 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/25 14:20:25 by mehdisapin       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ int	is_wall(t_data *data, int x, int y)
 	// char	*dst;
 
 	// dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	// if (*(unsigned int *)dst == WALL_COLOR || *(unsigned int *)dst == NORTH \
-	// || *(unsigned int *)dst == SOUTH || *(unsigned int *)dst == WEST \
+	// if (*(unsigned int *)dst == WALL_COLOR || *(unsigned int *)dst == NORTH 
+	// || *(unsigned int *)dst == SOUTH || *(unsigned int *)dst == WEST 
 	// || *(unsigned int *)dst == EAST || *(unsigned int *)dst == ANGLE)
 	// 	return (1);
 	return (0);
@@ -236,8 +236,8 @@ int	put_pixel(t_data *data, int x, int y, int color)
 	char	*dst;
 
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	// if (*(unsigned int *)dst == WALL_COLOR || *(unsigned int *)dst == NORTH \
-	// || *(unsigned int *)dst == SOUTH || *(unsigned int *)dst == WEST \
+	// if (*(unsigned int *)dst == WALL_COLOR || *(unsigned int *)dst == NORTH 
+	// || *(unsigned int *)dst == SOUTH || *(unsigned int *)dst == WEST 
 	// || *(unsigned int *)dst == EAST || *(unsigned int *)dst == ANGLE)
 	// 	return (0);
 	*(unsigned int *)dst = color;
@@ -258,8 +258,8 @@ void	put_miniwall(t_data data, int start_x, int start_y)
 	// 	x = -1;
 	// 	while (++x < GRID_MINI)
 	// 	{
-	// 		/*// if ((x == 0 && y == 0) || (x == 0 && y == GRID_MINI - 1) \
-	// 		// || (x == GRID_MINI - 1 && y == 0) || (x == GRID_MINI - 1 \
+	// 		/*// if ((x == 0 && y == 0) || (x == 0 && y == GRID_MINI - 1)
+	// 		// || (x == GRID_MINI - 1 && y == 0) || (x == GRID_MINI - 1 
 	// 		// && y == GRID_MINI - 1))
 	// 		// 	put_pixel(&data, x + start_x, y + start_y, ANGLE);*/
 	// 		if (x == 0)
