@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rendering.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
+/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:43:13 by msapin            #+#    #+#             */
-/*   Updated: 2023/07/25 14:20:25 by mehdisapin       ###   ########.fr       */
+/*   Updated: 2023/07/25 18:16:13 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,25 +208,31 @@ void	calcul_distance(t_cub *cub)
 	cub->p->pos.dist.sw = distance_to_wall(cub, cub->p->pos.coef_nesw, -1, 0);
 }
 
+static int	is_blocked(double x, double y, char **map)
+{
+	if (map[(int)(y / GRID_MINI + 0.5)][(int)(x / GRID_MINI)] == '1')
+		return (1);
+	return (0);
+}
+
 void	move_player(t_cub *cub, t_vector coef, int sign)
 {
-	t_vector	tmp_coef;
+	double		x;
+	double		y;
 
 	calcul_coef(cub);
-	tmp_coef.x = (coef.x * SPEED_MINI) * sign;
-	tmp_coef.y = (coef.y * SPEED_MINI) * sign;
+	x = cub->p->pos.start.x + (coef.x * SPEED_MINI) * sign;
+	y = cub->p->pos.start.y + (coef.y * SPEED_MINI) * sign;
 	if (sign)
 	{
-		cub->p->pos.start.x += tmp_coef.x;
-		cub->p->pos.start.y += tmp_coef.y;
-		// calcul_distance(cub);
-		if (cub->p->pos.dist.n < 0 || cub->p->pos.dist.s < 0 \
-		|| cub->p->pos.dist.w < 0 || cub->p->pos.dist.e < 0 \
-		|| cub->p->pos.dist.nw < 0 || cub->p->pos.dist.se < 0 \
-		|| cub->p->pos.dist.ne < 0 || cub->p->pos.dist.sw < 0)
+		if (is_blocked(x + 50, y - 50, cub->map->array) || is_blocked(x + 50, \
+		y + 50, cub->map->array) || is_blocked(x - 50, y + 50, cub->map->array) \
+		|| is_blocked(x - 50, y - 50, cub->map->array))
+			return ;
+		else
 		{
-			cub->p->pos.start.x -= tmp_coef.x;
-			cub->p->pos.start.y -= tmp_coef.y;
+			cub->p->pos.start.x = x;
+			cub->p->pos.start.y = y;
 		}
 	}
 }

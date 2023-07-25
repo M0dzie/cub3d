@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_3d.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
+/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:41:02 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/07/25 16:36:50 by mehdisapin       ###   ########.fr       */
+/*   Updated: 2023/07/25 16:49:03 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -251,29 +251,29 @@ int	calcul_wall_bloc(t_cub *cub)
 			cub->p->wall[index_wall].width = tmpWidth;
 
 			if (cub->p->ray[ray - 1]->side == NORTH)
-			{
+			// {
 				cub->p->wall[index_wall].percent_end = 100 - (cub->p->ray[ray - 1]->map.x - (int)cub->p->ray[ray - 1]->map.x) * 100;
-				cub->p->wall[index_wall].side = 2;
+				// cub->p->wall[index_wall].side = 2;
 				// printf("%d/   NORTH: %d\n", ray, cub->p->ray[ray - 1]->side);
-			}
+			// }
 			else if (cub->p->ray[ray - 1]->side == SOUTH)
-			{
+			// {
 				cub->p->wall[index_wall].percent_end = (cub->p->ray[ray - 1]->map.x - (int)cub->p->ray[ray - 1]->map.x) * 100;
-				cub->p->wall[index_wall].side = 3;
+				// cub->p->wall[index_wall].side = 3;
 				// printf("%d/   SOUTH: %d\n", ray, cub->p->ray[ray - 1]->side);
-			}
+			// }
 			else if (cub->p->ray[ray - 1]->side == EAST)
-			{
+			// {
 				cub->p->wall[index_wall].percent_end = (cub->p->ray[ray - 1]->map.y - (int)cub->p->ray[ray - 1]->map.y) * 100;
-				cub->p->wall[index_wall].side = 1;
+				// cub->p->wall[index_wall].side = 1;
 				// printf("%d/   EAST: %d\n", ray, cub->p->ray[ray - 1]->side);
-			}
+			// }
 			else if (cub->p->ray[ray - 1]->side == WEST)
-			{
+			// {
 				cub->p->wall[index_wall].percent_end = (cub->p->ray[ray - 1]->map.y - (int)cub->p->ray[ray - 1]->map.y) * 100;
-				cub->p->wall[index_wall].side = 0;
+				// cub->p->wall[index_wall].side = 0;
 				// printf("%d/   WEST: %d\n", ray, cub->p->ray[ray - 1]->side);
-			}
+			// }
 
 			tmpWidth = 0;
 			index_wall++;

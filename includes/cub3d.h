@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
+/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/07/25 15:32:33 by mehdisapin       ###   ########.fr       */
+/*   Updated: 2023/07/25 18:09:56 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,7 +194,7 @@ typedef struct s_xpm
 # define WIN_WIDTH 1280.0
 # define WIN_HEIGHT 720.0
 
-# define SPEED_MINI 14.0
+# define SPEED_MINI 4.0
 # define SPEED_ANGLE 2.0
 // # define SPEED_MINI 0.1
 // # define SPEED_ANGLE 0.05
