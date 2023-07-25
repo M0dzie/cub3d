@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/07/25 13:10:29 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/25 15:32:33 by mehdisapin       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,10 +206,10 @@ typedef struct s_xpm
 
 # ifndef COLORS
 // #  define WALL_COLOR 0x00202020
-#  define NORTH 3
-#  define SOUTH 2
-#  define EAST 0
-#  define WEST 1
+#  define NORTH 2
+#  define SOUTH 3
+#  define EAST 1
+#  define WEST 0
 // #  define NORTH 0x000362fc
 // #  define SOUTH 0x00fc0367
 // #  define WEST 0x0000ff3c
