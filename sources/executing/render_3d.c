@@ -6,7 +6,7 @@
 /*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:41:02 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/07/25 15:51:26 by mehdisapin       ###   ########.fr       */
+/*   Updated: 2023/07/25 16:36:50 by mehdisapin       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ static void	draw_wall(t_cub *cub, int x, int y, int max, t_ray_map *ray, int px_
 	// 	printf("coef: %f   wall_height: %f   wall_sideWidth: %d\n", coef_i, ray->wall_height, wall_side.width);
 	while (y < max)
 	{
+		if (i >= wall_side.height)
+			i = 127;
 		int color = wall_side.px[wall_side.height * i + px_column];
 		// int color = 0x000362fc;
 		(void)wall_side;
@@ -84,6 +86,10 @@ static void	draw_wall(t_cub *cub, int x, int y, int max, t_ray_map *ray, int px_
 			i++;
 		y++;
 	}
+	// if (x == 639)
+	// {
+	// 	printf("i: %d\n", i);
+	// }
 }
 
 void	calcul_ray(t_cub *cub)
@@ -337,13 +343,26 @@ void	generate_3d(t_cub *cub)
 			tmp_side = cub->p->ray[x]->side;
 		}
 
-		int	px_line = (128 * ((cub->p->wall[cub->p->ray[x]->index_wall].percent_start) / 100)) + (tmp_index * percent_line);
-		// int	px_line = 128;
+		int	px_column;
+		if (cub->p->ray[x]->side == EAST)
+			px_column = 128 - ((128 * ((cub->p->wall[cub->p->ray[x]->index_wall].percent_start) / 100)) + (tmp_index * percent_line));
+		else
+			px_column = (128 * ((cub->p->wall[cub->p->ray[x]->index_wall].percent_start) / 100)) + (tmp_index * percent_line);
+		// int	px_column = 128;
+
+
+		if (px_column <= 0)
+			px_column = 1;
+		// else if (px_column == 127)
+		// 	px_column++;
+
+		// if (x == 639)
+		// 	printf("px_column: %d\n", px_column);
 
 		if (cub->p->ray[x]->margin > 0 && cub->p->ray[x]->margin < WIN_HEIGHT)
-			draw_wall(cub, x, cub->p->ray[x]->margin, cub->p->ray[x]->margin + cub->p->ray[x]->wall_height - 1, cub->p->ray[x], px_line);  // temporary
+			draw_wall(cub, x, cub->p->ray[x]->margin, cub->p->ray[x]->margin + cub->p->ray[x]->wall_height - 1, cub->p->ray[x], px_column);  // temporary
 		else
-			draw_wall(cub, x, 0, WIN_HEIGHT, cub->p->ray[x], px_line);  // temporary
+			draw_wall(cub, x, 0, WIN_HEIGHT, cub->p->ray[x], px_column);  // temporary
 		tmp_index++;
 		// // printf("wall %d/   side: %d   width: %d   percent_start: %f   percent_end: %f\n", x, cub->p->ray[x]->side, cub->p->wall[x].width, cub->p->wall[x].percent_start, cub->p->wall[x].percent_end);
 	}
