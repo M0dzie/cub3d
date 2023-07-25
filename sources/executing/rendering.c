@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rendering.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
+/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:43:13 by msapin            #+#    #+#             */
-/*   Updated: 2023/07/24 17:21:06 by mehdisapin       ###   ########.fr       */
+/*   Updated: 2023/07/25 13:33:16 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,16 @@
 
 int	is_wall(t_data *data, int x, int y)
 {
-	char	*dst;
+	(void)data;
+	(void)x;
+	(void)y;
+	// char	*dst;
 
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	if (*(unsigned int *)dst == WALL_COLOR || *(unsigned int *)dst == NORTH \
-	|| *(unsigned int *)dst == SOUTH || *(unsigned int *)dst == WEST \
-	|| *(unsigned int *)dst == EAST || *(unsigned int *)dst == ANGLE)
-		return (1);
+	// dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+	// if (*(unsigned int *)dst == WALL_COLOR || *(unsigned int *)dst == NORTH \
+	// || *(unsigned int *)dst == SOUTH || *(unsigned int *)dst == WEST \
+	// || *(unsigned int *)dst == EAST || *(unsigned int *)dst == ANGLE)
+	// 	return (1);
 	return (0);
 }
 
@@ -161,6 +164,7 @@ double	new_distance_to_wall(t_cub *cub, t_vector coef, int sign, int ray)
 				tmp.x += distToNextX * tmp_sign;
 				offset.x = 1;
 			}
+			cub->p->ray[ray]->side = (coef.x > 0);
 			tmp.y += (coef.y * numberTimeX * sign / GRID_MINI);
 			total_distance += numberTimeX;
 			offset.y = 0;
@@ -177,7 +181,7 @@ double	new_distance_to_wall(t_cub *cub, t_vector coef, int sign, int ray)
 				tmp.y += distToNextY * tmp_sign;
 				offset.y = 1;
 			}
-
+			cub->p->ray[ray]->side = (coef.y > 0) + 2;
 			tmp.x += (coef.x * numberTimeY * sign / GRID_MINI);
 			total_distance += numberTimeY;
 			offset.x = 0;
@@ -232,41 +236,44 @@ int	put_pixel(t_data *data, int x, int y, int color)
 	char	*dst;
 
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	if (*(unsigned int *)dst == WALL_COLOR || *(unsigned int *)dst == NORTH \
-	|| *(unsigned int *)dst == SOUTH || *(unsigned int *)dst == WEST \
-	|| *(unsigned int *)dst == EAST || *(unsigned int *)dst == ANGLE)
-		return (0);
+	// if (*(unsigned int *)dst == WALL_COLOR || *(unsigned int *)dst == NORTH \
+	// || *(unsigned int *)dst == SOUTH || *(unsigned int *)dst == WEST \
+	// || *(unsigned int *)dst == EAST || *(unsigned int *)dst == ANGLE)
+	// 	return (0);
 	*(unsigned int *)dst = color;
 	return (1);
 }
 
 void	put_miniwall(t_data data, int start_x, int start_y)
 {
-	int	y;
-	int	x;
+	(void)data;
+	(void)start_x;
+	(void)start_y;
+	// int	y;
+	// int	x;
 
-	y = -1;
-	while (++y < GRID_MINI)
-	{
-		x = -1;
-		while (++x < GRID_MINI)
-		{
-			/*// if ((x == 0 && y == 0) || (x == 0 && y == GRID_MINI - 1) \
-			// || (x == GRID_MINI - 1 && y == 0) || (x == GRID_MINI - 1 \
-			// && y == GRID_MINI - 1))
-			// 	put_pixel(&data, x + start_x, y + start_y, ANGLE);*/
-			if (x == 0)
-				put_pixel(&data, x + start_x, y + start_y, WEST);
-			else if (x == GRID_MINI - 1)
-				put_pixel(&data, x + start_x, y + start_y, EAST);
-			if (y == 0)
-				put_pixel(&data, x + start_x, y + start_y, NORTH);
-			else if (y == GRID_MINI - 1)
-				put_pixel(&data, x + start_x, y + start_y, SOUTH);
-			// else
-			// 	put_pixel(&data, x + start_x, y + start_y, WALL_COLOR);		/// need to fix line between two wall
-		}
-	}
+	// y = -1;
+	// while (++y < GRID_MINI)
+	// {
+	// 	x = -1;
+	// 	while (++x < GRID_MINI)
+	// 	{
+	// 		/*// if ((x == 0 && y == 0) || (x == 0 && y == GRID_MINI - 1) \
+	// 		// || (x == GRID_MINI - 1 && y == 0) || (x == GRID_MINI - 1 \
+	// 		// && y == GRID_MINI - 1))
+	// 		// 	put_pixel(&data, x + start_x, y + start_y, ANGLE);*/
+	// 		if (x == 0)
+	// 			put_pixel(&data, x + start_x, y + start_y, WEST);
+	// 		else if (x == GRID_MINI - 1)
+	// 			put_pixel(&data, x + start_x, y + start_y, EAST);
+	// 		if (y == 0)
+	// 			put_pixel(&data, x + start_x, y + start_y, NORTH);
+	// 		else if (y == GRID_MINI - 1)
+	// 			put_pixel(&data, x + start_x, y + start_y, SOUTH);
+	// 		// else
+	// 		// 	put_pixel(&data, x + start_x, y + start_y, WALL_COLOR);		/// need to fix line between two wall
+	// 	}
+	// }
 }
 
 void	put_minifloor(t_data data, int start_x, int start_y)
@@ -290,27 +297,28 @@ void	put_minifloor(t_data data, int start_x, int start_y)
 
 void	generate_minimap(t_cub *cub)
 {
-	int		y;
-	int		x;
-	char	c;
+	(void)cub;
+	// int		y;
+	// int		x;
+	// char	c;
 
-	// if (cub->imgs->minimap.img)
-	// 	mlx_destroy_image(cub->mlx, cub->imgs->minimap.img);
-	cub->imgs->minimap.img = mlx_new_image(cub->mlx, cub->map->width * GRID_MINI, cub->map->height * GRID_MINI);
-	cub->imgs->minimap.addr = mlx_get_data_addr(cub->imgs->minimap.img, &cub->imgs->minimap.bits_per_pixel, &cub->imgs->minimap.line_length, &cub->imgs->minimap.endian);
-	y = -1;
-	while (++y < (cub->map->height))
-	{
-		x = -1;
-		while (++x < (cub->map->width))
-		{
-			c = cub->map->array[y][x];
-			if (c == '1')
-				put_miniwall(cub->imgs->minimap, x * GRID_MINI, y * GRID_MINI);
-			else if (c == '0' || c == 'N' || c == 'S' || c == 'E' || c == 'W')
-				put_minifloor(cub->imgs->minimap, x * GRID_MINI, y * GRID_MINI);
-		}
-	}
+	// // if (cub->imgs->minimap.img)
+	// // 	mlx_destroy_image(cub->mlx, cub->imgs->minimap.img);
+	// cub->imgs->minimap.img = mlx_new_image(cub->mlx, cub->map->width * GRID_MINI, cub->map->height * GRID_MINI);
+	// cub->imgs->minimap.addr = mlx_get_data_addr(cub->imgs->minimap.img, &cub->imgs->minimap.bits_per_pixel, &cub->imgs->minimap.line_length, &cub->imgs->minimap.endian);
+	// y = -1;
+	// while (++y < (cub->map->height))
+	// {
+	// 	x = -1;
+	// 	while (++x < (cub->map->width))
+	// 	{
+	// 		c = cub->map->array[y][x];
+	// 		if (c == '1')
+	// 			put_miniwall(cub->imgs->minimap, x * GRID_MINI, y * GRID_MINI);
+	// 		else if (c == '0' || c == 'N' || c == 'S' || c == 'E' || c == 'W')
+	// 			put_minifloor(cub->imgs->minimap, x * GRID_MINI, y * GRID_MINI);
+	// 	}
+	// }
 }
 
 void	draw_player_body(t_cub *cub)

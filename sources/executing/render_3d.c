@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_3d.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
+/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:41:02 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/07/24 17:54:48 by mehdisapin       ###   ########.fr       */
+/*   Updated: 2023/07/25 13:34:26 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,16 @@ static void	put_floor_and_ceiling(t_cub *cub)
 
 static int	check_side_wall(t_cub *cub, int x)
 {
-	if (cub->p->ray[x]->side == NORTH)
-		return (1);
-	if (cub->p->ray[x]->side == SOUTH)
-		return (2);
-	if (cub->p->ray[x]->side == WEST)
-		return (3);
-	if (cub->p->ray[x]->side == EAST)
-		return (4);
+	(void)cub;
+	(void)x;
+	// if (cub->p->ray[x]->side == NORTH)
+	// 	return (1);
+	// if (cub->p->ray[x]->side == SOUTH)
+	// 	return (2);
+	// if (cub->p->ray[x]->side == WEST)
+	// 	return (3);
+	// if (cub->p->ray[x]->side == EAST)
+	// 	return (4);
 	return (0);
 }
 
@@ -87,53 +89,81 @@ static void	draw_wall(t_cub *cub, int x, int y, int max, t_ray_map *ray, int px_
 void	calcul_ray(t_cub *cub)
 {
 	int	ray;
-	int tmpRatioX;
-	int tmpRatioY;
+	int old_map_x;
+	int old_map_y;
+	int tmp_side;
+	(void)tmp_side;
 
 	ray = -1;
 	cub->p->nb_wall = 0;
-	tmpRatioX = 0;
-	tmpRatioY = 0;
+	old_map_x = (int)(cub->p->ray[0]->wall.x / GRID_MINI + 0.5);
+	old_map_y = (int)(cub->p->ray[0]->wall.y / GRID_MINI);
+	tmp_side = cub->p->ray[0]->side;
 	while (cub->p->ray[++ray])
 	{
 		cub->p->ray[ray]->distance = fix_fisheye(cub, ray);
 		cub->p->ray[ray]->wall_height = WIN_HEIGHT / cub->p->ray[ray]->distance;
 		cub->p->ray[ray]->margin = (WIN_HEIGHT - cub->p->ray[ray]->wall_height) / 2;
 
-		cub->p->ray[ray]->map.x = (cub->p->ray[ray]->wall.x / GRID_MINI) + 0.5;
-		cub->p->ray[ray]->map.y = (cub->p->ray[ray]->wall.y / GRID_MINI);
+		cub->p->ray[ray]->map.x = (int)(cub->p->ray[ray]->wall.x / GRID_MINI + 0.5);
+		cub->p->ray[ray]->map.y = (int)(cub->p->ray[ray]->wall.y / GRID_MINI);
 
 		cub->p->ray[ray]->index_wall = cub->p->nb_wall;
+		
+		// printf("map_x = %d and map_y = %d\n", (int)cub->p->ray[ray]->map.x, (int)cub->p->ray[ray]->map.y);
 
-		if ((int)cub->p->ray[ray]->map.x != tmpRatioX || (int)cub->p->ray[ray]->map.y != tmpRatioY || ray == WIN_WIDTH - 1 || ray == 0)
+		// if (old_map_x != cub->p->ray[ray]->map.x || old_map_y != cub->p->ray[ray]->map.y)
+		if ((old_map_x != (int)cub->p->ray[ray]->map.x || old_map_y != (int)cub->p->ray[ray]->map.y) || tmp_side != cub->p->ray[ray]->side)
 		{
-			tmpRatioX = cub->p->ray[ray]->map.x;
-			tmpRatioY = cub->p->ray[ray]->map.y;
-			if (ray != 0 && ray != WIN_WIDTH - 1)
-				cub->p->nb_wall++;
+			// printf("NEW WALL %d\t%dpx\toldX = %d\tnewX = %d\toldY = %d\tnewY = %d\toldSide = %d\tnewSide = %d\n", cub->p->nb_wall, \
+			ray, old_map_x, (int)cub->p->ray[ray]->map.x, old_map_y, (int)cub->p->ray[ray]->map.y, tmp_side, cub->p->ray[ray]->side);
+			cub->p->nb_wall++;
+			old_map_x = cub->p->ray[ray]->map.x;
+			old_map_y = cub->p->ray[ray]->map.y;
+			tmp_side = cub->p->ray[ray]->side;
 		}
+
+		// if (tmp_side != cub->p->ray[ray]->side)
+		// {
+		// 	printf("tmp_side = %d and new_side = %d\n", tmp_side, cub->p->ray[ray]->side);
+		// 	cub->p->nb_wall++;
+		// 	tmp_side = cub->p->ray[ray]->side;
+		// }
+
+		// if ((int)cub->p->ray[ray]->map.x != old_map_x || (int)cub->p->ray[ray]->map.y != old_map_y || ray == WIN_WIDTH - 1 || ray == 0)
+		// {
+		// 	old_map_x = cub->p->ray[ray]->map.x;
+		// 	old_map_y = cub->p->ray[ray]->map.y;
+		// 	if (ray != 0 && ray != WIN_WIDTH - 1)
+		// 		cub->p->nb_wall++;
+		// }
 	}
+	// printf("ray[%d] = %d\tray [%d] = %d\tray [%d] = %d\n", 300, cub->p->ray[300]->side, 700, cub->p->ray[700]->side, 1000, cub->p->ray[1000]->side);
+	// printf("nb_wall = %d\n", cub->p->nb_wall);
 }
 
 int	get_middle(t_cub *cub, int index_wall)
 {
-	int	middle;
-	int	i;
+	(void)cub;
+	(void)index_wall;
+	return (0);
+	// int	middle;
+	// int	i;
 
-	i = -1;
-	middle = 0;
-	while (++i < index_wall)
-		middle += cub->p->wall[i].width;
-	middle += cub->p->wall[i].width / 2;
-	return (middle);
+	// i = -1;
+	// middle = 0;
+	// while (++i < index_wall)
+	// 	middle += cub->p->wall[i].width;
+	// middle += cub->p->wall[i].width / 2;
+	// return (middle);
 }
 
 int	calcul_wall_bloc(t_cub *cub)
 {
 	int	ray;
 	int	tmpWidth = 0;
-	int tmpRatioX = 0;
-	int tmpRatioY = 0;
+	int old_map_x = 0;
+	int old_map_y = 0;
 	int	tmpIndex = 0;
 	(void)ray;
 	(void)tmpWidth;
@@ -143,12 +173,30 @@ int	calcul_wall_bloc(t_cub *cub)
 		free(cub->p->wall);
 	cub->p->wall = ft_calloc(cub->p->nb_wall + 1, sizeof(t_wall));
 	if (!cub->p->wall)
-		return (printf("crash malloc\n"), -1);
+		return (display_error("cub->p->wall", 4));
 	ray = -1;
+	// int index_wall = 0;
+	// old_map_x = (int)cub->p->ray[0]->map.x;
+	// old_map_y = (int)cub->p->ray[0]->map.y;
+	// int tmp_side = cub->p->ray[0]->side;
+	// while (cub->p->ray[++ray])
+	// {
+	// 	if ((old_map_x != (int)cub->p->ray[ray]->map.x || old_map_y != (int)cub->p->ray[ray]->map.y) || tmp_side != cub->p->ray[ray]->side)
+	// 	{
+	// 		if (cub->p->ray[ray - 1]->side == NORTH)
+	// 			cub->p->wall[index_wall].percent_end = 100 - (cub->p->ray[ray - 1]->map.x - (int)cub->p->ray[ray - 1]->map.x) * 100;
+	// 		else
+	// 			cub->p->wall[index_wall].percent_end = (cub->p->ray[ray - 1]->map.y - (int)cub->p->ray[ray - 1]->map.y) * 100;
+	// 		old_map_x = (int)cub->p->ray[ray]->map.x;
+	// 		old_map_y = (int)cub->p->ray[ray]->map.y;
+	// 		tmp_side = cub->p->ray[ray]->side;
+	// 		index_wall++;
+	// 	}
+	// }
 	int index_wall = -1;
 	while (cub->p->ray[++ray])
 	{
-		if (((int)cub->p->ray[ray]->map.x != tmpRatioX || (int)cub->p->ray[ray]->map.y != tmpRatioY || ray == 0 || ray == WIN_WIDTH - 1))
+		if (((int)cub->p->ray[ray]->map.x != old_map_x || (int)cub->p->ray[ray]->map.y != old_map_y || ray == 0 || ray == WIN_WIDTH - 1))
 		{
 			// use map x or y depending of side wall
 			int middle_wall = get_middle(cub, index_wall);
@@ -193,8 +241,8 @@ int	calcul_wall_bloc(t_cub *cub)
 				cub->p->wall[index_wall].percent_start = ((cub->p->ray[ray]->map.y - (int)cub->p->ray[ray]->map.y) * 100);
 			else if (cub->p->ray[middle_wall]->side == WEST)
 				cub->p->wall[index_wall].percent_start = (cub->p->ray[ray]->map.y - (int)cub->p->ray[ray]->map.y) * 100;
-			tmpRatioX = cub->p->ray[ray]->map.x;
-			tmpRatioY = cub->p->ray[ray]->map.y;
+			old_map_x = cub->p->ray[ray]->map.x;
+			old_map_y = cub->p->ray[ray]->map.y;
 		}
 		tmpWidth++;
 	}
@@ -243,6 +291,7 @@ void	generate_3d(t_cub *cub)
 		else
 			draw_wall(cub, x, 0, WIN_HEIGHT, cub->p->ray[x], px_line);  // temporary
 		tmp_index++;
+		// printf("wall %d/   side: %d   width: %d   percent_start: %f   percent_end: %f\n", x, cub->p->ray[x]->side, cub->p->wall[x].width, cub->p->wall[x].percent_start, cub->p->wall[x].percent_end);
 	}
 	// for (int i = 0; i <= cub->p->nb_wall; i++)
 	// {
