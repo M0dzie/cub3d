@@ -6,7 +6,7 @@
 /*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:41:02 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/07/26 22:40:26 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/26 23:14:38 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -363,9 +363,9 @@ void	generate_3d(t_cub *cub)
 		// 	printf("px_column: %d\n", px_column);
 
 		if (cub->p->ray[x]->margin > 0 && cub->p->ray[x]->margin < WIN_HEIGHT)
-			draw_wall(cub, x, cub->p->ray[x]->margin, cub->p->ray[x]->margin + cub->p->ray[x]->wall_height - 1, cub->p->ray[x]);  // temporary
+			draw_wall(cub, x, cub->p->ray[x]->margin, cub->p->ray[x]->margin + cub->p->ray[x]->wall_height - 1, cub->p->ray[x]);
 		else
-			draw_wall(cub, x, 0, WIN_HEIGHT, cub->p->ray[x]);  // temporary
+			draw_wall(cub, x, 0, WIN_HEIGHT, cub->p->ray[x]);
 		// tmp_index++;
 		// // printf("wall %d/   side: %d   width: %d   percent_start: %f   percent_end: %f\n", x, cub->p->ray[x]->side, cub->p->wall[x].width, cub->p->wall[x].percent_start, cub->p->wall[x].percent_end);
 	}
