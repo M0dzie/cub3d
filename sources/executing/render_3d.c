@@ -6,7 +6,7 @@
 /*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:41:02 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/07/26 19:52:41 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/26 22:26:32 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,14 @@ static void	draw_wall(t_cub *cub, int x, int y, int max, t_ray_map *ray, int px_
 	else if (ray->side == NORTH)
 		tex = cub->north;
 	int tex_x = 0;
-	if (ray->side == NORTH || ray->side == SOUTH)
+	if (ray->side == NORTH || ray->side == SOUTH) // South and west need to be invert
 		tex_x = (cub->p->ray[x]->map.x - (int)cub->p->ray[x]->map.x) * tex.width;
 	else
 		tex_x = (cub->p->ray[x]->map.y - (int)cub->p->ray[x]->map.y) * tex.width;
 	int tex_y = 0;
 	int tmp_y = 0;
+	if (cub->p->ray[x]->wall_height > WIN_HEIGHT)
+		tmp_y = fabs((max / 2) - (cub->p->ray[x]->wall_height / 2));
 	while (y < max)
 	{
 		tex_y = tmp_y * (tex.height / cub->p->ray[x]->wall_height);
