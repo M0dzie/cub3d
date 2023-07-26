@@ -6,7 +6,7 @@
 /*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:43:13 by msapin            #+#    #+#             */
-/*   Updated: 2023/07/26 23:12:28 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/26 23:33:14 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,7 +220,6 @@ void	move_player(t_cub *cub, t_vector coef, int sign)
 	double		x;
 	double		y;
 
-	calcul_coef(cub);
 	x = cub->p->pos.start.x + (coef.x * SPEED_MINI) * sign;
 	y = cub->p->pos.start.y + (coef.y * SPEED_MINI) * sign;
 	if (sign)
@@ -235,6 +234,7 @@ void	move_player(t_cub *cub, t_vector coef, int sign)
 			cub->p->pos.start.y = y;
 		}
 	}
+	calcul_coef(cub);
 }
 
 int	put_pixel(t_data *data, int x, int y, int color)
