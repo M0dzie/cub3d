@@ -6,7 +6,7 @@
 /*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:41:02 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/07/26 13:38:32 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/26 19:05:33 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,20 @@ int	check_side_wall(t_cub *cub, int x)
 	return (0);
 }
 
+static char	*get_texture_pixel(t_xpm tex, int x, int y)
+{
+	char	*dst;
+
+	dst = tex.addr + (y * tex.line_length + x * (tex.bits_per_pixel / 8));
+	return (dst);
+}
+
 static void	draw_wall(t_cub *cub, int x, int y, int max, t_ray_map *ray, int px_column)
 {
 	(void)ray;
 	(void)px_column;
 	int	side;
-	t_xpm	wall_side;
+	t_xpm	tex;
 	int		i;
 	(void)side;
 	(void)i;
@@ -58,38 +66,55 @@ static void	draw_wall(t_cub *cub, int x, int y, int max, t_ray_map *ray, int px_
 
 	// side = check_side_wall(cub, x);
 	if (ray->side == EAST)
-		wall_side = cub->east;
+		tex = cub->east;
 	else if (ray->side == WEST)
-		wall_side = cub->west;
+		tex = cub->west;
 	else if (ray->side == SOUTH)
-		wall_side = cub->south;
+		tex = cub->south;
 	else
-		wall_side = cub->north;
-
-	// int tex_x = (cub->p->ray[x]->wall.x - (int)cub->p->ray[x]->wall.x) * wall_side.width;
+		tex = cub->north;
+	int tex_x = 0;
+	if (ray->side == NORTH || ray->side == SOUTH)
+		tex_x = (cub->p->ray[x]->map.x - (int)cub->p->ray[x]->map.x) * tex.width;
+	else
+		tex_x = (cub->p->ray[x]->map.y - (int)cub->p->ray[x]->map.y) * tex.width;
 	// printf("tex_x = %d\n", tex_x);
-
-	double coef_i;
-	(void)coef_i;
-	i = 0;
-
-	if ((int)ray->wall_height < wall_side.height)
-		coef_i = wall_side.height / ray->wall_height;
-	else
-		coef_i = 1;
-
+	int tex_y = 0;
+	int tmp_y = 0;
 	while (y < max)
 	{
-		if (i >= wall_side.height)
-			i = 127;
-		int color = wall_side.px[wall_side.height * i + px_column];
-		// int color = 0x000362fc;
-		(void)wall_side;
-		put_pixel(&cub->imgs->back, x, y, color);
-		if ((y - cub->p->ray[x]->margin) > (cub->p->ray[x]->wall_height / (double)cub->north.height * i))
-			i++;
+		tex_y = tmp_y * (tex.height / cub->p->ray[x]->wall_height);
+		// printf("tex_x = %d\ttex_y = %d\n", tex_x, tex_y);
+		char *color = get_texture_pixel(tex, tex_x, tex_y);
+		// printf("color = %d\n", color);
+		put_pixel(&cub->imgs->back, x, y, *(unsigned int *)color);
+		tmp_y++;
 		y++;
 	}
+	
+	// printf("tex_x = %d\n", tex_x);
+
+	// double coef_i;
+	// (void)coef_i;
+	// i = 0;
+
+	// if ((int)ray->wall_height < tex.height)
+	// 	coef_i = tex.height / ray->wall_height;
+	// else
+	// 	coef_i = 1;
+
+	// while (y < max)
+	// {
+	// 	if (i >= tex.height)
+	// 		i = 127;
+	// 	int color = tex.px[tex.height * i + px_column];
+	// 	// int color = 0x000362fc;
+	// 	(void)tex;
+	// 	put_pixel(&cub->imgs->back, x, y, color);
+	// 	if ((y - cub->p->ray[x]->margin) > (cub->p->ray[x]->wall_height / (double)cub->north.height * i))
+	// 		i++;
+	// 	y++;
+	// }
 }
 
 void	calcul_ray(t_cub *cub)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_xpm.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
+/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:36:13 by msapin            #+#    #+#             */
-/*   Updated: 2023/07/21 15:26:13 by mehdisapin       ###   ########.fr       */
+/*   Updated: 2023/07/26 19:02:42 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ static int	init_xpm(t_cub *cub, t_xpm *wall)
 	&wall->height);
 	if (!wall->tex)
 		return (-1);
+	wall->addr = mlx_get_data_addr(wall->tex, &wall->bits_per_pixel, \
+	&wall->line_length, &wall->endian);
 	wall->data = (int *)mlx_get_data_addr(wall->tex, &wall->bits_per_pixel, \
 	&wall->line_length, &wall->endian);
 	wall->px = ft_calloc(wall->width * wall->height + 1, sizeof(int));

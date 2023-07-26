@@ -6,7 +6,7 @@
 /*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/07/25 18:09:56 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/26 18:59:17 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ typedef struct s_xpm
 	int		endian;
 	int		*data;
 	char	*path;
+	char	*addr;
 	void	*tex;
 	int		*px;
 }			t_xpm;
