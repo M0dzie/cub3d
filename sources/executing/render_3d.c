@@ -6,7 +6,7 @@
 /*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:41:02 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/07/26 23:14:38 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/26 23:16:46 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,13 @@ static void	draw_wall(t_cub *cub, int x, int y, int max, t_ray_map *ray)
 	{
 		tex = cub->west;
 		tex_x = (cub->p->ray[x]->map.y - (int)cub->p->ray[x]->map.y) * tex.width;
-		tex_x = tex.width - tex_x;
+		tex_x = tex.width - tex_x - 1;
 	}
 	else if (ray->side == SOUTH)
 	{
 		tex = cub->south;
 		tex_x = (cub->p->ray[x]->map.x - (int)cub->p->ray[x]->map.x) * tex.width;
-		tex_x = tex.width - tex_x;
+		tex_x = tex.width - tex_x - 1;
 	}
 	else
 	{
