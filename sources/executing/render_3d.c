@@ -6,7 +6,7 @@
 /*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:41:02 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/07/25 16:49:03 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/26 13:38:32 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	put_floor_and_ceiling(t_cub *cub)
 	}
 }
 
-static int	check_side_wall(t_cub *cub, int x)
+int	check_side_wall(t_cub *cub, int x)
 {
 	(void)cub;
 	(void)x;
@@ -51,8 +51,12 @@ static void	draw_wall(t_cub *cub, int x, int y, int max, t_ray_map *ray, int px_
 	t_xpm	wall_side;
 	int		i;
 	(void)side;
+	(void)i;
+	(void)max;
+	(void)x;
+	(void)y;
 
-	side = check_side_wall(cub, x);
+	// side = check_side_wall(cub, x);
 	if (ray->side == EAST)
 		wall_side = cub->east;
 	else if (ray->side == WEST)
@@ -61,7 +65,9 @@ static void	draw_wall(t_cub *cub, int x, int y, int max, t_ray_map *ray, int px_
 		wall_side = cub->south;
 	else
 		wall_side = cub->north;
-	// i = -cub->p->ray[x]->margin;
+
+	// int tex_x = (cub->p->ray[x]->wall.x - (int)cub->p->ray[x]->wall.x) * wall_side.width;
+	// printf("tex_x = %d\n", tex_x);
 
 	double coef_i;
 	(void)coef_i;
@@ -72,8 +78,6 @@ static void	draw_wall(t_cub *cub, int x, int y, int max, t_ray_map *ray, int px_
 	else
 		coef_i = 1;
 
-	// if (x == 639)
-	// 	printf("coef: %f   wall_height: %f   wall_sideWidth: %d\n", coef_i, ray->wall_height, wall_side.width);
 	while (y < max)
 	{
 		if (i >= wall_side.height)
@@ -86,10 +90,6 @@ static void	draw_wall(t_cub *cub, int x, int y, int max, t_ray_map *ray, int px_
 			i++;
 		y++;
 	}
-	// if (x == 639)
-	// {
-	// 	printf("i: %d\n", i);
-	// }
 }
 
 void	calcul_ray(t_cub *cub)
@@ -235,7 +235,7 @@ int	calcul_wall_bloc(t_cub *cub)
 		{
 			if (cub->p->ray[ray]->side == NORTH)
 				cub->p->wall[index_wall].percent_start = 100 - (cub->p->ray[ray]->map.x - (int)cub->p->ray[ray]->map.x) * 100;
-			if (cub->p->ray[ray]->side == SOUTH)
+			else if (cub->p->ray[ray]->side == SOUTH)
 				cub->p->wall[index_wall].percent_start = (cub->p->ray[ray]->map.x - (int)cub->p->ray[ray]->map.x) * 100;
 			else if (cub->p->ray[ray]->side == EAST)
 				cub->p->wall[index_wall].percent_start = ((cub->p->ray[ray]->map.y - (int)cub->p->ray[ray]->map.y) * 100);
@@ -279,7 +279,7 @@ int	calcul_wall_bloc(t_cub *cub)
 			index_wall++;
 			if (cub->p->ray[ray]->side == NORTH)
 				cub->p->wall[index_wall].percent_start = 100 - (cub->p->ray[ray]->map.x - (int)cub->p->ray[ray]->map.x) * 100;
-			if (cub->p->ray[ray]->side == SOUTH)
+			else if (cub->p->ray[ray]->side == SOUTH)
 				cub->p->wall[index_wall].percent_start = (cub->p->ray[ray]->map.x - (int)cub->p->ray[ray]->map.x) * 100;
 			else if (cub->p->ray[ray]->side == EAST)
 				cub->p->wall[index_wall].percent_start = ((cub->p->ray[ray]->map.y - (int)cub->p->ray[ray]->map.y) * 100);
