@@ -6,7 +6,7 @@
 /*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/07/25 18:09:56 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/26 20:16:31 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ typedef struct s_xpm
 	int		endian;
 	int		*data;
 	char	*path;
+	char	*addr;
 	void	*tex;
 	int		*px;
 }			t_xpm;
@@ -194,7 +195,7 @@ typedef struct s_xpm
 # define WIN_WIDTH 1280.0
 # define WIN_HEIGHT 720.0
 
-# define SPEED_MINI 4.0
+# define SPEED_MINI 6.0
 # define SPEED_ANGLE 2.0
 // # define SPEED_MINI 0.1
 // # define SPEED_ANGLE 0.05
