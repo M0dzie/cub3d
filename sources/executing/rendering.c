@@ -6,7 +6,7 @@
 /*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:43:13 by msapin            #+#    #+#             */
-/*   Updated: 2023/07/25 18:16:13 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/26 23:12:28 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,12 +89,12 @@ double	distance_to_wall(t_cub *cub, t_vector coef, int sign, int ray)
 		tmp.y += (coef.y) * sign;
 		distance++;
 	}
-	if (ray == 0 || ray == 639 || ray == 1279)
-		{
+	// if (ray == 0 || ray == 639 || ray == 1279)
+	// 	{
 			// printf("ray %d/  tmp.x: %f   tmp.y: %f\n", ray, tmp.x, tmp.y);
 			// printf("ray %d/   wallX: %f   wallY: %f\n", ray, cub->p->ray[ray]->wall.x, cub->p->ray[ray]->wall.y);
-			printf("distance: %f\n", distance);
-		}
+			// printf("distance: %f\n", distance);
+		// }
 	if (!ray)
 		distance -= GRID_MINI / 3;
 	else
