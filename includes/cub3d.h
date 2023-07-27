@@ -6,7 +6,7 @@
 /*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/07/27 15:27:13 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/27 17:26:32 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ typedef struct s_xpm
 	char	*path;
 	char	*addr;
 	void	*tex;
-	// int		*px;
 }			t_xpm;
 
 typedef struct s_vector
@@ -211,6 +210,7 @@ int		init_color(t_cub *cub);
 int		init_file(t_cub *cub, char *file_name);
 int		init_map(t_cub *cub, char **argv);
 int		init_mlx(t_cub *cub);
+int		init_player(t_cub *cub);
 int		init_texture(t_cub *cub);
 int		is_valid_number(char *rgb);
 int		parse_xpm(t_cub *cub);

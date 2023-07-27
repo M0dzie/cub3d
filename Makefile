@@ -6,7 +6,7 @@
 #    By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#              #
-#    Updated: 2023/07/27 13:26:50 by thmeyer          ###   ########.fr        #
+#    Updated: 2023/07/27 17:24:46 by thmeyer          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,8 +70,8 @@ SRC_EXECUTING_FILES		=	main.c	init_mlx.c	color.c	texture.c	render_3d.c	\
 							movement.c	raycasting.c
 
 SRC_PARSING_FILES		=	parse_map.c	display_error.c	display_error_utils.c	\
-							display_error_texture.c	init_map.c					\
-							init_texture.c	parse_xpm.c init_utils.c
+							display_error_texture.c	init_map.c	init_texture.c	\
+							parse_xpm.c init_utils.c	init_player.c
 
 SRCS_PARSING		=	$(addprefix $(SRC_PARSING_PATH), $(SRC_PARSING_FILES))
 SRCS_EXECUTING		=	$(addprefix $(SRC_EXECUTING_PATH), $(SRC_EXECUTING_FILES))

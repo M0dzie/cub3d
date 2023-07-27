@@ -6,7 +6,7 @@
 /*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/07/27 16:13:20 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/27 17:26:12 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,6 @@ static void	init_var(t_cub *cub)
 	cub->win = NULL;
 	cub->map = NULL;
 	cub->p = NULL;
-}
-
-double	get_angle(double angle, int rotation)
-{
-	angle += rotation;
-	if (angle > 359)
-		angle -= 360;
-	else if (angle < 0)
-		angle += 360;
-	return (angle);
 }
 
 char	*get_only_name(char *file_name)
@@ -74,6 +64,16 @@ static int	is_extension_valid(char *file_name, char *extension)
 	return (free(tmp_name), 0);
 }
 
+double	get_angle(double angle, int rotation)
+{
+	angle += rotation;
+	if (angle > 359)
+		angle -= 360;
+	else if (angle < 0)
+		angle += 360;
+	return (angle);
+}
+
 int	calcul_coef(t_cub *cub)
 {
 	int		i;
@@ -99,65 +99,6 @@ int	calcul_coef(t_cub *cub)
 		find_wall(cub, cub->p->ray[i]->coef_ns, 1, i);
 	}
 	return (1);
-}
-
-void	parse_player_angle(t_cub *cub, char c)
-{
-	if (c == 'N')
-		cub->p->pos.angle = 0;
-	else if (c == 'S')
-		cub->p->pos.angle = 180;
-	else if (c == 'W')
-		cub->p->pos.angle = 270;
-	else if (c == 'E')
-		cub->p->pos.angle = 90;
-}
-
-int	malloc_player(t_cub *cub)
-{
-	int	i;
-
-	cub->p = malloc(sizeof(t_player));
-	if (!cub->p)
-		return (display_error("cub->p", 4));
-	cub->p->ray = ft_calloc(WIN_WIDTH + 1, sizeof(t_ray_map *));
-	if (!cub->p->ray)
-		return (display_error("cub->p->ray", 4));
-	i = -1;
-	while (++i < WIN_WIDTH)
-	{
-		cub->p->ray[i] = malloc(sizeof(t_ray_map));
-		if (!cub->p->ray[i])
-			return (display_error("cub->p->ray[i]", 4));
-	}
-	return (0);
-}
-
-int	init_player(t_cub *cub)
-{
-	int		i;
-	int		j;
-	char	c;
-
-	if (malloc_player(cub) != 0)
-		return (-1);
-	cub->p->coef = FOV / WIN_WIDTH;
-	i = -1;
-	while (cub->map->array[++i])
-	{
-		j = -1;
-		while (cub->map->array[i][++j])
-		{
-			c = cub->map->array[i][j];
-			if (c == 'N' || c == 'S' || c == 'W' || c == 'E')
-			{
-				parse_player_angle(cub, c);
-				cub->p->pos.start.x = j * GRID + GRID / 2;
-				cub->p->pos.start.y = i * GRID + (GRID / 2 - GRID / 2);
-			}
-		}
-	}
-	return (0);
 }
 
 int	parsing_map(t_cub *cub, char **argv)
