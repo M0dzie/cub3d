@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
+/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/07/27 01:32:29 by mehdisapin       ###   ########.fr       */
+/*   Updated: 2023/07/27 13:17:21 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,16 @@ static void	init_var(t_cub *cub)
 	cub->win = NULL;
 	cub->map = NULL;
 	cub->p = NULL;
+}
+
+double	get_angle(double angle, int rotation)
+{
+	angle += rotation;
+	if (angle > 359)
+		angle -= 360;
+	else if (angle < 0)
+		angle += 360;
+	return (angle);
 }
 
 char	*get_only_name(char *file_name)
