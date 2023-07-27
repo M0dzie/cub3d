@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
+/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/07/27 01:32:29 by mehdisapin       ###   ########.fr       */
+/*   Updated: 2023/07/27 17:33:39 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	init_var(t_cub *cub)
 	cub->p = NULL;
 }
 
-char	*get_only_name(char *file_name)
+static char	*get_only_name(char *file_name)
 {
 	char	*tmp_name;
 	int		len_name;
@@ -62,92 +62,6 @@ static int	is_extension_valid(char *file_name, char *extension)
 		i_last_c--;
 	}
 	return (free(tmp_name), 0);
-}
-
-int	calcul_coef(t_cub *cub)
-{
-	int		i;
-	double	tmp_angle;
-
-	cub->p->pos.coef_ns.x = sin(cub->p->pos.angle * M_PI / 180);
-	cub->p->pos.coef_ns.y = -cos(cub->p->pos.angle * M_PI / 180);
-	cub->p->pos.coef_we.x = sin((cub->p->pos.angle - 90) * M_PI / 180);
-	cub->p->pos.coef_we.y = -cos((cub->p->pos.angle - 90) * M_PI / 180);
-	cub->p->pos.coef_nwse.x = sin((cub->p->pos.angle - 45) * M_PI / 180);
-	cub->p->pos.coef_nwse.y = -cos((cub->p->pos.angle - 45) * M_PI / 180);
-	cub->p->pos.coef_nesw.x = sin((cub->p->pos.angle - 135) * M_PI / 180);
-	cub->p->pos.coef_nesw.y = -cos((cub->p->pos.angle - 135) * M_PI / 180);
-	tmp_angle = get_angle(cub->p->pos.angle - FOV / 2, 0);
-	i = -1;
-
-	while (++i < WIN_WIDTH)
-	{
-		cub->p->ray[i]->angle = get_angle(tmp_angle + ((i + 1) * cub->p->coef), \
-		0);
-		cub->p->ray[i]->coef_ns.x = sin(cub->p->ray[i]->angle * M_PI / 180);
-		cub->p->ray[i]->coef_ns.y = -cos(cub->p->ray[i]->angle * M_PI / 180);
-		distance_to_wall(cub, cub->p->ray[i]->coef_ns, 1, i);
-	}
-	return (1);
-}
-
-void	parse_player_angle(t_cub *cub, char c)
-{
-	if (c == 'N')
-		cub->p->pos.angle = 0;
-	else if (c == 'S')
-		cub->p->pos.angle = 180;
-	else if (c == 'W')
-		cub->p->pos.angle = 270;
-	else if (c == 'E')
-		cub->p->pos.angle = 90;
-}
-
-int	malloc_player(t_cub *cub)
-{
-	int	i;
-
-	cub->p = malloc(sizeof(t_player));
-	if (!cub->p)
-		return (display_error("cub->p", 4));
-	cub->p->ray = ft_calloc(WIN_WIDTH + 1, sizeof(t_ray_map *));
-	if (!cub->p->ray)
-		return (display_error("cub->p->ray", 4));
-	i = -1;
-	while (++i < WIN_WIDTH)
-	{
-		cub->p->ray[i] = malloc(sizeof(t_ray_map));
-		if (!cub->p->ray[i])
-			return (display_error("cub->p->ray[i]", 4));
-	}
-	return (0);
-}
-
-int	init_player(t_cub *cub)
-{
-	int		i;
-	int		j;
-	char	c;
-
-	if (malloc_player(cub) != 0)
-		return (-1);
-	cub->p->coef = FOV / WIN_WIDTH;
-	i = -1;
-	while (cub->map->array[++i])
-	{
-		j = -1;
-		while (cub->map->array[i][++j])
-		{
-			c = cub->map->array[i][j];
-			if (c == 'N' || c == 'S' || c == 'W' || c == 'E')
-			{
-				parse_player_angle(cub, c);
-				cub->p->pos.start.x = j * GRID + GRID / 2;
-				cub->p->pos.start.y = i * GRID + GRID / 2;
-			}
-		}
-	}
-	return (0);
 }
 
 int	parsing_map(t_cub *cub, char **argv)

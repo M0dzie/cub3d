@@ -3,24 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   init_mlx.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
+/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:11:26 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/07/27 02:03:39 by mehdisapin       ###   ########.fr       */
+/*   Updated: 2023/07/27 13:17:46 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
-
-double	get_angle(double angle, int rotation)
-{
-	angle += rotation;
-	if (angle > 359)
-		angle -= 360;
-	else if (angle < 0)
-		angle += 360;
-	return (angle);
-}
 
 static int	init_key_press(int key, t_cub *cub)
 {
@@ -84,7 +74,7 @@ static int	actions(t_cub *cub)
 	return (0);
 }
 
-void	init_keys(t_cub *cub)
+static void	init_keys(t_cub *cub)
 {
 	cub->key.w = FALSE;
 	cub->key.s = FALSE;
