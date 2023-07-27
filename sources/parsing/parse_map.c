@@ -6,7 +6,7 @@
 /*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/07/27 17:26:12 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/27 17:33:39 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	init_var(t_cub *cub)
 	cub->p = NULL;
 }
 
-char	*get_only_name(char *file_name)
+static char	*get_only_name(char *file_name)
 {
 	char	*tmp_name;
 	int		len_name;
@@ -62,43 +62,6 @@ static int	is_extension_valid(char *file_name, char *extension)
 		i_last_c--;
 	}
 	return (free(tmp_name), 0);
-}
-
-double	get_angle(double angle, int rotation)
-{
-	angle += rotation;
-	if (angle > 359)
-		angle -= 360;
-	else if (angle < 0)
-		angle += 360;
-	return (angle);
-}
-
-int	calcul_coef(t_cub *cub)
-{
-	int		i;
-	double	tmp_angle;
-
-	cub->p->pos.coef_ns.x = sin(cub->p->pos.angle * M_PI / 180);
-	cub->p->pos.coef_ns.y = -cos(cub->p->pos.angle * M_PI / 180);
-	cub->p->pos.coef_we.x = sin((cub->p->pos.angle - 90) * M_PI / 180);
-	cub->p->pos.coef_we.y = -cos((cub->p->pos.angle - 90) * M_PI / 180);
-	cub->p->pos.coef_nwse.x = sin((cub->p->pos.angle - 45) * M_PI / 180);
-	cub->p->pos.coef_nwse.y = -cos((cub->p->pos.angle - 45) * M_PI / 180);
-	cub->p->pos.coef_nesw.x = sin((cub->p->pos.angle - 135) * M_PI / 180);
-	cub->p->pos.coef_nesw.y = -cos((cub->p->pos.angle - 135) * M_PI / 180);
-	tmp_angle = get_angle(cub->p->pos.angle - FOV / 2, 0);
-	i = -1;
-
-	while (++i < WIN_WIDTH)
-	{
-		cub->p->ray[i]->angle = get_angle(tmp_angle + ((i + 1) * cub->p->coef), \
-		0);
-		cub->p->ray[i]->coef_ns.x = sin(cub->p->ray[i]->angle * M_PI / 180);
-		cub->p->ray[i]->coef_ns.y = -cos(cub->p->ray[i]->angle * M_PI / 180);
-		find_wall(cub, cub->p->ray[i]->coef_ns, 1, i);
-	}
-	return (1);
 }
 
 int	parsing_map(t_cub *cub, char **argv)
