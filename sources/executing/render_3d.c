@@ -6,7 +6,7 @@
 /*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:41:02 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/07/27 11:59:34 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/27 12:05:59 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ void	generate_3d(t_cub *cub)
 		cub->p->ray[x]->map.y = cub->p->ray[x]->wall.y / GRID;
 		if (cub->p->ray[x]->margin > 0 && cub->p->ray[x]->margin < WIN_HEIGHT)
 			draw_wall(cub, x, cub->p->ray[x]->margin, cub->p->ray[x]->margin + \
-			cub->p->ray[x]->wall_height - 1, cub->p->ray[x]);
+			cub->p->ray[x]->wall_height - 1);
 		else
-			draw_wall(cub, x, 0, WIN_HEIGHT, cub->p->ray[x]);
+			draw_wall(cub, x, 0, WIN_HEIGHT);
 	}
 }
