@@ -6,7 +6,7 @@
 /*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/07/27 17:32:56 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/27 17:57:09 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,42 +66,32 @@
 #  endif
 # endif
 
-typedef struct s_tex_data
-{
-	int		tex_x;
-	int		tex_y;
-	int		color;
-	double	tex_pos;
-	double	step;
-}			t_tex_data;
-
-typedef struct s_xpm
-{
-	int		fd;
-	int		width;
-	int		height;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-	int		*data;
-	char	*path;
-	char	*addr;
-	void	*tex;
-}			t_xpm;
-
 typedef struct s_vector
 {
 	double	x;
 	double	y;
 }			t_vector;
 
+typedef struct s_xpm
+{
+	int		fd;
+	int		width;
+	int		height;
+	int		endian;
+	int		line_length;
+	int		bits_per_pixel;
+	char	*path;
+	char	*addr;
+	void	*tex;
+}			t_xpm;
+
 typedef struct s_data
 {
-	void	*img;
 	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
 	int		endian;
+	int		line_length;
+	int		bits_per_pixel;
+	void	*img;
 }			t_data;
 
 typedef struct s_map
@@ -111,40 +101,26 @@ typedef struct s_map
 	int		height;
 }			t_map;
 
-typedef struct s_dist
-{
-	int	n;
-	int	s;
-	int	w;
-	int	e;
-	int	nw;
-	int	se;
-	int	ne;
-	int	sw;
-}		t_dist;
-
 typedef struct s_ray_map
 {
-	t_tex_data	tex;
-	t_vector	coef_ns;
+	int			side;
+	double		dist;
+	double		angle;
+	double		margin;
+	double		wall_height;
 	t_vector	map;
 	t_vector	wall;
-	double		angle;
-	double		distance;
-	double		wall_height;
-	double		margin;
-	int			index_wall;
-	int			side;
+	t_vector	coef_ns;
 }				t_ray_map;
 
 typedef struct s_ray
 {
+	double		angle;
+	t_vector	start;
 	t_vector	coef_ns;
 	t_vector	coef_we;
 	t_vector	coef_nwse;
 	t_vector	coef_nesw;
-	t_vector	start;
-	double		angle;
 	
 }				t_ray;
 
@@ -159,10 +135,9 @@ typedef struct	s_raycast
 
 typedef struct s_player
 {
-	t_ray_map	**ray;
-	t_ray		pos;
 	double		coef;
-	int			nb_wall;
+	t_ray		pos;
+	t_ray_map	**ray;
 }				t_player;
 
 typedef struct s_key
@@ -177,24 +152,24 @@ typedef struct s_key
 
 typedef struct s_cub
 {
-	void			*mlx;
-	void			*win;
-	int				fd_north;
-	int				fd_south;
+	int				roof;
+	int				floor;
 	int				fd_west;
 	int				fd_east;
-	int				floor;
-	int				roof;
+	int				fd_north;
+	int				fd_south;
 	int 			*rgb_floor;
 	int 			*rgb_roof;
 	char			*file;
 	char			**file_split;
-	t_data			img_cub;
+	void			*mlx;
+	void			*win;
 	t_xpm			north;
 	t_xpm			south;
 	t_xpm			west;
 	t_xpm			east;
 	t_key			key;
+	t_data			img_cub;
 	t_raycast		ray;
 	struct s_map	*map;
 	struct s_player	*p;

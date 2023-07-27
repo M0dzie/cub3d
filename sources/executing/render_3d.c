@@ -6,7 +6,7 @@
 /*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:41:02 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/07/27 13:25:44 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/27 17:49:10 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,13 @@ static double	adjust_distance(t_vector start, t_vector wall)
 static double	fix_fisheye(t_cub *cub, int i)
 {
 	double	new_angle;
-	double	distance;
+	double	dist;
 
 	new_angle = get_radian(cub->p->ray[i]->angle - cub->p->pos.angle);
-	distance = adjust_distance(cub->p->pos.start, cub->p->ray[i]->wall);
-	distance /= GRID;
-	distance = distance * cos(new_angle);
-	return (distance);
+	dist = adjust_distance(cub->p->pos.start, cub->p->ray[i]->wall);
+	dist /= GRID;
+	dist = dist * cos(new_angle);
+	return (dist);
 }
 
 void	generate_3d(t_cub *cub)
@@ -46,8 +46,8 @@ void	generate_3d(t_cub *cub)
 	x = -1;
 	while (cub->p->ray[++x])
 	{
-		cub->p->ray[x]->distance = fix_fisheye(cub, x);
-		cub->p->ray[x]->wall_height = WIN_HEIGHT / cub->p->ray[x]->distance * 1.3;
+		cub->p->ray[x]->dist = fix_fisheye(cub, x);
+		cub->p->ray[x]->wall_height = WIN_HEIGHT / cub->p->ray[x]->dist * 1.3;
 		cub->p->ray[x]->margin = (WIN_HEIGHT - cub->p->ray[x]->wall_height) / 2;
 		cub->p->ray[x]->map.x = cub->p->ray[x]->wall.x / GRID;
 		cub->p->ray[x]->map.y = cub->p->ray[x]->wall.y / GRID;
