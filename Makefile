@@ -6,7 +6,7 @@
 #    By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#              #
-#    Updated: 2023/07/27 13:21:44 by thmeyer          ###   ########.fr        #
+#    Updated: 2023/07/27 13:26:50 by thmeyer          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,8 +66,8 @@ OBJS_DIRS	=	$(OBJ_PARSING_PATH) $(OBJ_EXECUTING_PATH)
 #                SOURCES                #
 # ##################################### #
 
-SRC_EXECUTING_FILES		=	main.c	init_mlx.c	camera.c	color.c	texture.c	\
-							render_3d.c	movement.c	raycasting.c
+SRC_EXECUTING_FILES		=	main.c	init_mlx.c	color.c	texture.c	render_3d.c	\
+							movement.c	raycasting.c
 
 SRC_PARSING_FILES		=	parse_map.c	display_error.c	display_error_utils.c	\
 							display_error_texture.c	init_map.c					\

@@ -6,11 +6,20 @@
 /*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:19:40 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/07/27 13:13:32 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/27 13:27:42 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
+
+static int	put_pixel(t_data *data, int x, int y, int color)
+{
+	char	*dst;
+
+	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+	*(unsigned int *)dst = color;
+	return (1);
+}
 
 static int	get_texture_pixel(t_xpm tex, int x, int y)
 {
@@ -43,6 +52,22 @@ static void	init_texture_and_x(t_cub *cub, t_xpm *tex, int *tex_x, int x)
 	{
 		*tex = cub->north;
 		*tex_x = (cub->p->ray[x]->map.x - (int)cub->p->ray[x]->map.x) * tex->width;
+	}
+}
+
+void	put_floor_and_ceiling(t_cub *cub)
+{
+	int	x;
+	int	y;
+
+	x = -1;
+	while (cub->p->ray[++x])
+	{
+		y = -1;
+		while (++y < WIN_HEIGHT / 2)
+			put_pixel(&cub->img_cub, x, y, cub->roof);
+		while (++y < WIN_HEIGHT)
+			put_pixel(&cub->img_cub, x, y, cub->floor);
 	}
 }
 

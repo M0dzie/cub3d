@@ -6,35 +6,33 @@
 /*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:41:02 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/07/27 12:05:59 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/27 13:25:44 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-static void	put_floor_and_ceiling(t_cub *cub)
+static double	get_radian(double angle)
 {
-	int	x;
-	int	y;
-
-	x = -1;
-	while (cub->p->ray[++x])
-	{
-		y = -1;
-		while (++y < WIN_HEIGHT / 2)
-			put_pixel(&cub->img_cub, x, y, cub->roof);
-		while (++y < WIN_HEIGHT)
-			put_pixel(&cub->img_cub, x, y, cub->floor);
-	}
+	return (angle * M_PI / 180);
 }
 
-int	put_pixel(t_data *data, int x, int y, int color)
+static double	adjust_distance(t_vector start, t_vector wall)
 {
-	char	*dst;
+	return (sqrt(pow(wall.x - start.x, 2.0) + pow((wall.y - \
+	(double)GRID / 2) - start.y, 2.0)));
+}
 
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int *)dst = color;
-	return (1);
+static double	fix_fisheye(t_cub *cub, int i)
+{
+	double	new_angle;
+	double	distance;
+
+	new_angle = get_radian(cub->p->ray[i]->angle - cub->p->pos.angle);
+	distance = adjust_distance(cub->p->pos.start, cub->p->ray[i]->wall);
+	distance /= GRID;
+	distance = distance * cos(new_angle);
+	return (distance);
 }
 
 void	generate_3d(t_cub *cub)

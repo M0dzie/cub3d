@@ -6,7 +6,7 @@
 /*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/07/27 12:05:49 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/27 13:28:00 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,10 +205,8 @@ int		init_texture(t_cub *cub);
 int		is_valid_number(char *rgb);
 int		parse_xpm(t_cub *cub);
 int		parsing_map(t_cub *cub, char **argv);
-int		put_pixel(t_data *data, int x, int y, int color);;
 
 double	distance_to_wall(t_cub *cub, t_vector coef, int sign, int ray);
-double	fix_fisheye(t_cub *cub, int i);
 double	get_angle(double angle, int rotation);
 
 void	draw_wall(t_cub *cub, int x, int y, int max);
@@ -216,6 +214,7 @@ void	generate_3d(t_cub *cub);
 void	init_camera(t_cub *cub);
 void	init_raycasting(t_cub *cub);
 void	move_player(t_cub *cub, t_vector coef, int sign);
+void	put_floor_and_ceiling(t_cub *cub);
 void	save_texture(int *fd, char *path, char **path_save);
 
 #endif
