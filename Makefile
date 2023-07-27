@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+         #
+#    By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#              #
-#    Updated: 2023/07/27 01:38:29 by mehdisapin       ###   ########.fr        #
+#    Updated: 2023/07/27 11:52:32 by thmeyer          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,8 +66,8 @@ OBJS_DIRS	=	$(OBJ_PARSING_PATH) $(OBJ_EXECUTING_PATH)
 #                SOURCES                #
 # ##################################### #
 
-SRC_EXECUTING_FILES		=	main.c	init_mlx.c	rendering.c	camera.c	color.c	\
-							texture.c	render_3d.c	movement.c
+SRC_EXECUTING_FILES		=	main.c	init_mlx.c	camera.c	color.c	texture.c	\
+							render_3d.c	movement.c
 
 SRC_PARSING_FILES		=	parse_map.c	display_error.c	display_error_utils.c	\
 							display_error_texture.c	init_map.c					\
