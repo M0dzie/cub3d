@@ -6,7 +6,7 @@
 /*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/07/27 14:24:12 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/27 16:13:20 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,7 @@ int	init_player(t_cub *cub)
 			{
 				parse_player_angle(cub, c);
 				cub->p->pos.start.x = j * GRID + GRID / 2;
-				cub->p->pos.start.y = i * GRID + GRID / 2;
+				cub->p->pos.start.y = i * GRID + (GRID / 2 - GRID / 2);
 			}
 		}
 	}

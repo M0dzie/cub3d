@@ -6,7 +6,7 @@
 /*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 17:20:20 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/07/27 13:20:16 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/27 16:15:25 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,10 @@ void	move_player(t_cub *cub, t_vector coef, int sign)
 	y = cub->p->pos.start.y + (coef.y * MOVE) * sign;
 	if (sign)
 	{
-		if (is_blocked(x + 50, y - 50, cub->map->array) || is_blocked(x + 50, \
-		y + 50, cub->map->array) || is_blocked(x - 50, y + 50, cub->map->array) \
-		|| is_blocked(x - 50, y - 50, cub->map->array))
+		if (is_blocked(x + (GRID * 0.2), y - (GRID * 0.2), cub->map->array) || \
+		is_blocked(x + (GRID * 0.2), y + (GRID * 0.2), cub->map->array) || \
+		is_blocked(x - (GRID * 0.2), y + (GRID * 0.2), cub->map->array) || \
+		is_blocked(x - (GRID * 0.2), y - (GRID * 0.2), cub->map->array))
 			return ;
 		else
 		{
