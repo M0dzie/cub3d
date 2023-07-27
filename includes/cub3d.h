@@ -6,7 +6,7 @@
 /*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/07/27 13:28:00 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/27 15:27:13 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,15 @@ typedef struct s_ray
 	
 }				t_ray;
 
+typedef struct	s_raycast
+{
+	int			n_ray;
+	t_vector	tmp;
+	t_vector	repeat;
+	t_vector	offset;
+	t_vector	dist_next;
+}				t_raycast;
+
 typedef struct s_player
 {
 	t_ray_map	**ray;
@@ -187,6 +196,7 @@ typedef struct s_cub
 	t_xpm			west;
 	t_xpm			east;
 	t_key			key;
+	t_raycast		ray;
 	struct s_map	*map;
 	struct s_player	*p;
 }					t_cub;
@@ -206,13 +216,11 @@ int		is_valid_number(char *rgb);
 int		parse_xpm(t_cub *cub);
 int		parsing_map(t_cub *cub, char **argv);
 
-double	distance_to_wall(t_cub *cub, t_vector coef, int sign, int ray);
 double	get_angle(double angle, int rotation);
 
 void	draw_wall(t_cub *cub, int x, int y, int max);
+void	find_wall(t_cub *cub, t_vector coef, int sign, int ray);
 void	generate_3d(t_cub *cub);
-void	init_camera(t_cub *cub);
-void	init_raycasting(t_cub *cub);
 void	move_player(t_cub *cub, t_vector coef, int sign);
 void	put_floor_and_ceiling(t_cub *cub);
 void	save_texture(int *fd, char *path, char **path_save);

@@ -6,7 +6,7 @@
 /*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/07/27 13:17:21 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/27 14:24:12 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int	calcul_coef(t_cub *cub)
 		0);
 		cub->p->ray[i]->coef_ns.x = sin(cub->p->ray[i]->angle * M_PI / 180);
 		cub->p->ray[i]->coef_ns.y = -cos(cub->p->ray[i]->angle * M_PI / 180);
-		distance_to_wall(cub, cub->p->ray[i]->coef_ns, 1, i);
+		find_wall(cub, cub->p->ray[i]->coef_ns, 1, i);
 	}
 	return (1);
 }
