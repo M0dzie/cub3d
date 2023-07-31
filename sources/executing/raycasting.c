@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:41:02 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/07/27 15:28:06 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/31 19:51:56 by mehdisapin       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,10 @@ static void	init_dist_next(t_vector tmp, t_vector coef, t_vector *dist_next)
 		dist_next->y = 1.0;
 }
 
-static t_vector	init_repeat(t_vector coef, t_vector dist_next, int sign, int tmp_sign)
+static t_vector	init_repeat(t_vector coef, t_vector dist_next, int sign, \
+int tmp_sign)
 {
-	t_vector repeat;
+	t_vector	repeat;
 
 	if (coef.x == 0.0)
 		repeat.x = GRID + 1;
@@ -43,7 +44,7 @@ static t_vector	init_repeat(t_vector coef, t_vector dist_next, int sign, int tmp
 	if (repeat.x < 0)
 		repeat.x *= -1;
 	if (repeat.y < 0)
-		repeat.y *= -1;	
+		repeat.y *= -1;
 	return (repeat);
 }
 
@@ -97,7 +98,7 @@ void	find_wall(t_cub *cub, t_vector coef, int sign, int ray)
 			init_side_we(cub, coef, sign, tmp_sign);
 		else
 			init_side_ns(cub, coef, sign, tmp_sign);
-		if (cub->map->array[(int)(cub->ray.tmp.y - cub->ray.offset.y)]\
+		if (cub->map->array[(int)(cub->ray.tmp.y - cub->ray.offset.y)] \
 		[(int)(cub->ray.tmp.x - cub->ray.offset.x)] == '1')
 		{
 			cub->p->ray[ray]->wall.x = cub->ray.tmp.x * GRID;
