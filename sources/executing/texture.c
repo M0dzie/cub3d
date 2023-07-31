@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:19:40 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/07/27 13:27:42 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/31 20:22:25 by mehdisapin       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,27 +32,23 @@ static int	get_texture_pixel(t_xpm tex, int x, int y)
 static void	init_texture_and_x(t_cub *cub, t_xpm *tex, int *tex_x, int x)
 {
 	if (cub->p->ray[x]->side == EAST)
-	{
 		*tex = cub->east;
-		*tex_x = (cub->p->ray[x]->map.y - (int)cub->p->ray[x]->map.y) * tex->width;
-	}
 	else if (cub->p->ray[x]->side == WEST)
-	{
 		*tex = cub->west;
-		*tex_x = (cub->p->ray[x]->map.y - (int)cub->p->ray[x]->map.y) * tex->width;
-		*tex_x = tex->width - *tex_x - 1;
-	}
-	else if (cub->p->ray[x]->side == SOUTH)
-	{
-		*tex = cub->south;
-		*tex_x = (cub->p->ray[x]->map.x - (int)cub->p->ray[x]->map.x) * tex->width;
-		*tex_x = tex->width - *tex_x - 1;
-	}
-	else
-	{
+	else if (cub->p->ray[x]->side == NORTH)
 		*tex = cub->north;
-		*tex_x = (cub->p->ray[x]->map.x - (int)cub->p->ray[x]->map.x) * tex->width;
-	}
+	else
+		*tex = cub->south;
+	if (cub->p->ray[x]->side == EAST || cub->p->ray[x]->side == WEST)
+		*tex_x = (cub->p->ray[x]->map.y - (int)cub->p->ray[x]->map.y) * \
+		tex->width;
+	else
+		*tex_x = (cub->p->ray[x]->map.x - (int)cub->p->ray[x]->map.x) * \
+		tex->width;
+	if (cub->p->ray[x]->side == WEST)
+		*tex_x = tex->width - *tex_x - 1;
+	else if (cub->p->ray[x]->side == SOUTH)
+		*tex_x = tex->width - *tex_x - 1;
 }
 
 void	put_floor_and_ceiling(t_cub *cub)
@@ -74,9 +70,10 @@ void	put_floor_and_ceiling(t_cub *cub)
 void	draw_wall(t_cub *cub, int x, int y, int max)
 {
 	t_xpm	tex;
-	int tex_x;
-	int tex_y;
-	int tmp_y;
+	int		tex_x;
+	int		tex_y;
+	int		tmp_y;
+	int		color;
 
 	init_texture_and_x(cub, &tex, &tex_x, x);
 	if (cub->p->ray[x]->wall_height > WIN_HEIGHT)
@@ -86,7 +83,7 @@ void	draw_wall(t_cub *cub, int x, int y, int max)
 	while (y < max)
 	{
 		tex_y = tmp_y * (tex.height / cub->p->ray[x]->wall_height);
-		int color = get_texture_pixel(tex, tex_x, tex_y);
+		color = get_texture_pixel(tex, tex_x, tex_y);
 		put_pixel(&cub->img_cub, x, y, color);
 		tmp_y++;
 		y++;

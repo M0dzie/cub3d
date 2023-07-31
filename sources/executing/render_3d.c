@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_3d.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:41:02 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/07/27 17:49:10 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/31 19:53:32 by mehdisapin       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,9 @@ void	generate_3d(t_cub *cub)
 	int	x;
 
 	cub->img_cub.img = mlx_new_image(cub->mlx, WIN_WIDTH, WIN_HEIGHT);
-	cub->img_cub.addr = mlx_get_data_addr(cub->img_cub.img, &cub->img_cub.bits_per_pixel, \
-	&cub->img_cub.line_length, &cub->img_cub.endian);
+	cub->img_cub.addr = mlx_get_data_addr(cub->img_cub.img, \
+	&cub->img_cub.bits_per_pixel, &cub->img_cub.line_length, \
+	&cub->img_cub.endian);
 	put_floor_and_ceiling(cub);
 	x = -1;
 	while (cub->p->ray[++x])

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   movement.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 17:20:20 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/07/27 17:33:44 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/07/31 19:55:12 by mehdisapin       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ int	calcul_coef(t_cub *cub)
 	cub->p->pos.coef_nesw.y = -cos((cub->p->pos.angle - 135) * M_PI / 180);
 	tmp_angle = get_angle(cub->p->pos.angle - FOV / 2, 0);
 	i = -1;
-
 	while (++i < WIN_WIDTH)
 	{
 		cub->p->ray[i]->angle = get_angle(tmp_angle + ((i + 1) * cub->p->coef), \
