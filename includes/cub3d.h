@@ -6,7 +6,7 @@
 /*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/07/31 20:24:30 by mehdisapin       ###   ########.fr       */
+/*   Updated: 2023/07/31 20:53:45 by mehdisapin       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,10 +153,10 @@ typedef struct s_cub
 {
 	int				roof;
 	int				floor;
-	int				fd_west;
-	int				fd_east;
-	int				fd_north;
-	int				fd_south;
+	// int				fd_west;
+	// int				fd_east;
+	// int				fd_north;
+	// int				fd_south;
 	int				*rgb_floor;
 	int				*rgb_roof;
 	char			*file;

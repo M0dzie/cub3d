@@ -6,7 +6,7 @@
 /*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 17:17:04 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/07/27 01:20:04 by mehdisapin       ###   ########.fr       */
+/*   Updated: 2023/07/31 20:55:49 by mehdisapin       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,26 +33,26 @@ void	display_path(t_cub *cub, char *id, char *str)
 void	display_missing_texture(t_cub *cub)
 {
 	ft_putstr_fd("missing texture line:\n\n", 2);
-	if (cub->fd_north == 0)
+	if (cub->north.fd == 0)
 		ft_putstr_fd("north:  NO ./path_to_the_north_texture\n", 2);
-	if (cub->fd_south == 0)
+	if (cub->south.fd == 0)
 		ft_putstr_fd("south:  SO ./path_to_the_south_texture\n", 2);
-	if (cub->fd_west == 0)
+	if (cub->west.fd == 0)
 		ft_putstr_fd("west:   WE ./path_to_the_west_texture\n", 2);
-	if (cub->fd_east == 0)
+	if (cub->east.fd == 0)
 		ft_putstr_fd("east:   EA ./path_to_the_east_texture\n", 2);
 }
 
 void	display_invalid_texture(t_cub *cub)
 {
 	ft_putstr_fd("no such texture file:\n\n", 2);
-	if (cub->fd_north == -1)
+	if (cub->north.fd < 0)
 		display_path(cub, "NO", "north:  NO ");
-	if (cub->fd_south == -1)
+	if (cub->south.fd == -1)
 		display_path(cub, "SO", "south:  SO ");
-	if (cub->fd_west == -1)
+	if (cub->west.fd == -1)
 		display_path(cub, "WE", "west:   WE ");
-	if (cub->fd_east == -1)
+	if (cub->east.fd == -1)
 		display_path(cub, "EA", "east:   EA ");
 }
 
