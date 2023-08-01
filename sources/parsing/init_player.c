@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_player.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 17:23:45 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/07/27 17:25:10 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/08/01 10:14:51 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	init_player(t_cub *cub)
 			{
 				parse_player_angle(cub, c);
 				cub->p->pos.start.x = j * GRID + GRID / 2;
-				cub->p->pos.start.y = i * GRID + (GRID / 2 - GRID / 2);
+				cub->p->pos.start.y = i * GRID;
 			}
 		}
 	}

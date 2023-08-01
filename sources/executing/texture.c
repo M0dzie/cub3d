@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
+/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:19:40 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/07/31 20:22:25 by mehdisapin       ###   ########.fr       */
+/*   Updated: 2023/08/01 10:08:54 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,7 @@ static void	init_texture_and_x(t_cub *cub, t_xpm *tex, int *tex_x, int x)
 	else
 		*tex_x = (cub->p->ray[x]->map.x - (int)cub->p->ray[x]->map.x) * \
 		tex->width;
-	if (cub->p->ray[x]->side == WEST)
-		*tex_x = tex->width - *tex_x - 1;
-	else if (cub->p->ray[x]->side == SOUTH)
+	if (cub->p->ray[x]->side == WEST || cub->p->ray[x]->side == SOUTH)
 		*tex_x = tex->width - *tex_x - 1;
 }
 

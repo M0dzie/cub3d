@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
+/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/07/31 21:06:57 by mehdisapin       ###   ########.fr       */
+/*   Updated: 2023/08/01 10:50:48 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,8 @@
 #  define GRID 128
 # endif
 
-// # define WIN_WIDTH 1980.0
-// # define WIN_HEIGHT 1080.0
-# define WIN_WIDTH 1280.0
-# define WIN_HEIGHT 720.0
+# define WIN_WIDTH 1980.0
+# define WIN_HEIGHT 1080.0
 
 # if __linux__
 #  define MOVE 6.0
@@ -191,7 +189,7 @@ double	get_angle(double angle, int rotation);
 void	draw_wall(t_cub *cub, int x, int y, int max);
 void	find_wall(t_cub *cub, t_vector coef, int sign, int ray);
 void	generate_3d(t_cub *cub);
-void	move_player(t_cub *cub, t_vector coef, int sign);
+void	move_player(t_cub *cub, t_vector coef, int move);
 void	put_floor_and_ceiling(t_cub *cub);
 void	save_texture(int *fd, char *path, char **path_save);
 

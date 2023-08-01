@@ -1,7 +1,7 @@
 NO textures/space_plain.xpm
 SO textures/space_plain.xpm
-WE textures/space_window.xpm
-EA textures/space_aeration.xpm
+WE textures/space_aeration.xpm
+EA textures/space_window.xpm
 
 F 45,45,45
 C 25,25,25
