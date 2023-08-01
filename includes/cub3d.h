@@ -6,7 +6,7 @@
 /*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/08/01 10:50:48 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/08/01 11:16:31 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@
 # define WIN_HEIGHT 1080.0
 
 # if __linux__
-#  define MOVE 6.0
-#  define ROTATE 3.0
+#  define MOVE 4.0
+#  define ROTATE 2.0
 # elif __APPLE__
 #  define MOVE 3.0
 #  define ROTATE 2.0
