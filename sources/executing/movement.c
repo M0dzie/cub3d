@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   movement.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
+/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 17:20:20 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/07/31 19:55:12 by mehdisapin       ###   ########.fr       */
+/*   Updated: 2023/08/01 10:50:41 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,19 +55,21 @@ int	calcul_coef(t_cub *cub)
 	return (1);
 }
 
-void	move_player(t_cub *cub, t_vector coef, int sign)
+void	move_player(t_cub *cub, t_vector coef, int move)
 {
-	double		x;
-	double		y;
+	double	x;
+	double	y;
+	double	hit_box;
 
-	x = cub->p->pos.start.x + (coef.x * MOVE) * sign;
-	y = cub->p->pos.start.y + (coef.y * MOVE) * sign;
-	if (sign)
+	x = cub->p->pos.start.x + (coef.x * MOVE) * move;
+	y = cub->p->pos.start.y + (coef.y * MOVE) * move;
+	hit_box = GRID * 0.2;
+	if (move)
 	{
-		if (is_blocked(x + (GRID * 0.2), y - (GRID * 0.2), cub->map->array) || \
-		is_blocked(x + (GRID * 0.2), y + (GRID * 0.2), cub->map->array) || \
-		is_blocked(x - (GRID * 0.2), y + (GRID * 0.2), cub->map->array) || \
-		is_blocked(x - (GRID * 0.2), y - (GRID * 0.2), cub->map->array))
+		if (is_blocked(x + hit_box, y - hit_box, cub->map->array) || \
+		is_blocked(x + hit_box, y + hit_box, cub->map->array) || \
+		is_blocked(x - hit_box, y + hit_box, cub->map->array) || \
+		is_blocked(x - hit_box, y - hit_box, cub->map->array))
 			return ;
 		else
 		{

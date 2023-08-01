@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   color.c                                            :+:      :+:    :+:   */
+/*   init_color.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 18:43:40 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/07/11 12:04:53 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/08/01 10:21:30 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ static char	*rgb_to_hexa(int *rgb, char *base)
 	hexa = ft_strjoin(tmp, blue);
 	free(tmp);
 	if (!hexa)
-		return (display_error("hexa", 4), NULL);
+		return (free(red), free(green), free(blue), display_error("hexa", 4), \
+		NULL);
 	return (free(red), free(green), free(blue), hexa);
 }
 
