@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: thmeyer <marvin@42.fr>                     +#+  +:+       +#+         #
+#    By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/21 12:20:01 by mehdisapin        #+#    #+#              #
-#    Updated: 2023/07/27 17:28:52 by thmeyer          ###   ########.fr        #
+#    Updated: 2023/08/01 13:54:53 by thmeyer          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 #               VARIABLES               #
 # ##################################### #
 
-NAME		=	cub3d
+NAME		=	cub3D
 
 UNAME		=	$(shell uname)
 
