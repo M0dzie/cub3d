@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   display_error.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehdisapin <mehdisapin@student.42.fr>      +#+  +:+       +#+        */
+/*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 17:18:05 by mehdisapin        #+#    #+#             */
-/*   Updated: 2023/07/27 01:22:40 by mehdisapin       ###   ########.fr       */
+/*   Updated: 2023/08/14 17:50:01 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	display_error(char *name, int num_error)
 {
 	char	*err[16];
 
-	err[0] = ": wrong function call\n\nexpected:  ./cub3d   *.cub";
+	err[0] = ": wrong function call\n\nexpected:  ./cub3D   *.cub";
 	err[1] = ": wrong file extension\n\nexpected:   .cub file";
 	err[2] = ": no such file or directory";
 	err[3] = ": invalid map\n\ncheck:    maps/example.cub";

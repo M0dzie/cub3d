@@ -6,7 +6,7 @@
 /*   By: thmeyer < thmeyer@student.42lyon.fr >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:11:26 by thmeyer           #+#    #+#             */
-/*   Updated: 2023/08/01 09:39:39 by thmeyer          ###   ########.fr       */
+/*   Updated: 2023/08/14 17:49:27 by thmeyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,10 +90,10 @@ int	init_mlx(t_cub *cub)
 	cub->win = NULL;
 	cub->mlx = mlx_init();
 	if (!cub->mlx)
-		return (display_error("cub3d", 14), exit_cub(cub, 1));
+		return (display_error("cub3D", 14), exit_cub(cub, 1));
 	if (parse_xpm(cub) != 0)
 		return (exit_cub(cub, 1));
-	cub->win = mlx_new_window(cub->mlx, WIN_WIDTH, WIN_HEIGHT, "cub3d");
+	cub->win = mlx_new_window(cub->mlx, WIN_WIDTH, WIN_HEIGHT, "cub3D");
 	calcul_coef(cub);
 	init_keys(cub);
 	mlx_hook(cub->win, 2, 1l << 0, &init_key_press, cub);
